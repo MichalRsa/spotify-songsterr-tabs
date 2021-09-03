@@ -1,35 +1,34 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
+const path = require('path');
 
 module.exports = {
-  mode: "development",
-  devtool: "inline-source-map",
-  entry: "./src/index.tsx",
-  //   target: ["web", "es5"],
-
-  //   devServer: {
-  //     static: "./dist",
-  //   },
+  mode: 'development',
+  devtool: 'inline-source-map',
+  entry: './src/index.tsx',
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Development auu",
-      template: path.join(__dirname, "index.html"),
+      title: 'Development auu',
+      template: path.join(__dirname, 'index.html'),
+    }),
+    new ESLintPlugin({
+      extensions: ['ts', 'tsx', 'js'],
     }),
   ],
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
   },
 };
