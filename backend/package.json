@@ -2,12 +2,10 @@
   "name": "mern-template",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "node ts-build/server",
-    "nodemon": "nodemon  ts-built/server",
-    "client": "npm start --prefix frontend",
+    "nodemon": "nodemon ts-built/server",
+    "client": "npm start --prefix ../frontend",
     "dev": "concurrently \"npm run nodemon\" \"npm run client\"",
     "build": "tsc -w"
   },
