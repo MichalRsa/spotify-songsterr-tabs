@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "node ts-build/server",
-    "nodemon": "nodemon ts-built/server",
+    "nodemon": "nodemon ts-build/server",
     "client": "npm start --prefix ../frontend",
     "dev": "concurrently \"npm run nodemon\" \"npm run client\"",
     "build": "tsc -w"
@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.4",
     "bcryptjs": "^2.4.3",
     "concurrently": "^6.2.0",
     "dotenv": "^10.0.0",

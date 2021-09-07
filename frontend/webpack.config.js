@@ -6,6 +6,12 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   entry: './src/index.tsx',
+  devServer: {
+    open: true,
+    proxy: {
+      '/api': 'http://localhost:3000',
+    },
+  },
   module: {
     rules: [
       {
@@ -20,7 +26,6 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Development auu',
       template: path.join(__dirname, 'index.html'),
     }),
     new ESLintPlugin({
