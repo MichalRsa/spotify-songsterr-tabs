@@ -4,6 +4,7 @@ import * as React from 'react';
 import axios from 'axios';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Redirect from './screens/Redirect';
+import Main from './screens/Main';
 
 const App = () => {
   const redirectToAuth = () => {
@@ -33,6 +34,7 @@ const App = () => {
           )}
         />
         <Route path='/redirect' component={Redirect} />
+        <Route path='/main' component={Main} />
       </Switch>
     </BrowserRouter>
   );

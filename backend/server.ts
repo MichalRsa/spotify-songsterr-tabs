@@ -2,11 +2,10 @@
 import axios from 'axios';
 import express from 'express';
 import dotenv from 'dotenv';
-// import { Buffer } from 'buffer';
+import params from './utils/songsterQueryParameters';
 dotenv.config();
 
-const spotifyAuth =
-  'https://accounts.spotify.com/authorize?client_id=378f1ce509b643ae809011e62f85b8d9&response_type=code&redirect_uri=http://localhost:8080/redirect&state=34fFs29kd09';
+const spotifyAuth = `https://accounts.spotify.com/authorize?client_id=${params.client_id}&scope=${params.scope}&response_type=${params.response_type}&redirect_uri=${params.redirect_uri}&state=${params.state}`;
 
 const app = express();
 
@@ -56,13 +55,28 @@ app.post(`/api/auth`, async (req, res) => {
     },
   };
   try {
-    const { data } = await axios.post(
+    const {
+      data: { refresh_token, access_token },
+    } = await axios.post(
       `https://accounts.spotify.com/api/token`,
       new URLSearchParams(reqData),
       reqConfig
     );
-    res.json(data);
-    console.log('data resived from spotify api', data);
+    // tutaj kolejne zapytanie zawierające token autoryzacyjny
+    const { data: userData } = await axios.get(
+      `https://api.spotify.com/v1/me`,
+      {
+        headers: { Authorization: `Bearer ${access_token}` },
+      }
+    );
+    const { data: songsData } = await axios.get(
+      `https://api.spotify.com/v1/me/player/recently-played`,
+      {
+        headers: { Authorization: `Bearer ${access_token}` },
+      }
+    );
+    res.json({ refresh_token, userData, songsData });
+    // console.log('data resived from spotify api', data);
   } catch (err: any) {
     if (err.response) {
       console.log(err.response.data);

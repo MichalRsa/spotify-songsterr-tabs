@@ -43,9 +43,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var axios_1 = __importDefault(require("axios"));
 var express_1 = __importDefault(require("express"));
 var dotenv_1 = __importDefault(require("dotenv"));
-// import { Buffer } from 'buffer';
+var songsterQueryParameters_1 = __importDefault(require("./utils/songsterQueryParameters"));
 dotenv_1.default.config();
-var spotifyAuth = 'https://accounts.spotify.com/authorize?client_id=378f1ce509b643ae809011e62f85b8d9&response_type=code&redirect_uri=http://localhost:8080/redirect&state=34fFs29kd09';
+var spotifyAuth = "https://accounts.spotify.com/authorize?client_id=" + songsterQueryParameters_1.default.client_id + "&scope=" + songsterQueryParameters_1.default.scope + "&response_type=" + songsterQueryParameters_1.default.response_type + "&redirect_uri=" + songsterQueryParameters_1.default.redirect_uri + "&state=" + songsterQueryParameters_1.default.state;
 var app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(function (req, res, next) {
@@ -71,9 +71,9 @@ app.get('/api/songs', function (req, res) { return __awaiter(void 0, void 0, voi
     });
 }); });
 app.post("/api/auth", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var code, reqData, encodedAuthToken, reqConfig, data, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var code, reqData, encodedAuthToken, reqConfig, _a, refresh_token, access_token, userData, songsData, err_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
                 code = req.body.code;
                 console.log(code);
@@ -89,17 +89,26 @@ app.post("/api/auth", function (req, res) { return __awaiter(void 0, void 0, voi
                         'content-type': 'application/x-www-form-urlencoded',
                     },
                 };
-                _a.label = 1;
+                _b.label = 1;
             case 1:
-                _a.trys.push([1, 3, , 4]);
+                _b.trys.push([1, 5, , 6]);
                 return [4 /*yield*/, axios_1.default.post("https://accounts.spotify.com/api/token", new URLSearchParams(reqData), reqConfig)];
             case 2:
-                data = (_a.sent()).data;
-                res.json(data);
-                console.log('data resived from spotify api', data);
-                return [3 /*break*/, 4];
+                _a = (_b.sent()).data, refresh_token = _a.refresh_token, access_token = _a.access_token;
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me", {
+                        headers: { Authorization: "Bearer " + access_token },
+                    })];
             case 3:
-                err_1 = _a.sent();
+                userData = (_b.sent()).data;
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played", {
+                        headers: { Authorization: "Bearer " + access_token },
+                    })];
+            case 4:
+                songsData = (_b.sent()).data;
+                res.json({ refresh_token: refresh_token, userData: userData, songsData: songsData });
+                return [3 /*break*/, 6];
+            case 5:
+                err_1 = _b.sent();
                 if (err_1.response) {
                     console.log(err_1.response.data);
                     console.log(err_1.response.status);
@@ -111,8 +120,8 @@ app.post("/api/auth", function (req, res) { return __awaiter(void 0, void 0, voi
                 else {
                     console.log('Error', err_1.message);
                 }
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 6];
+            case 6: return [2 /*return*/];
         }
     });
 }); });
