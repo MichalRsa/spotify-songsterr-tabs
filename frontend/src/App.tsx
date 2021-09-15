@@ -5,15 +5,15 @@ import axios from 'axios';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Redirect from './screens/Redirect';
 import Main from './screens/Main';
+import { Button, CssBaseline } from '@material-ui/core';
 
 const App = () => {
   const redirectToAuth = () => {
     const redirectAuth = async () => {
-      const { data } = await axios.get('/api');
+      const { data } = await axios.get('/api/user');
       console.log(data);
     };
-    window.location.href = '/api';
-    console.log('hej');
+    window.location.href = '/api/user';
   };
   const getSongs = async () => {
     const { data } = await axios.get('/api/songs');
@@ -21,6 +21,7 @@ const App = () => {
   };
   return (
     <BrowserRouter>
+      <CssBaseline />
       <Switch>
         <Route
           path='/'
@@ -28,8 +29,20 @@ const App = () => {
           render={() => (
             <>
               <h1>Log in with your Spotify account</h1>
-              <button onClick={() => redirectToAuth()}>Sign in</button>
-              <button onClick={() => getSongs()}>Show random songs</button>
+              <Button
+                color='primary'
+                variant='contained'
+                onClick={() => redirectToAuth()}
+              >
+                Sign in
+              </Button>
+              <Button
+                color='primary'
+                variant='outlined'
+                onClick={() => getSongs()}
+              >
+                Show random songs
+              </Button>
             </>
           )}
         />

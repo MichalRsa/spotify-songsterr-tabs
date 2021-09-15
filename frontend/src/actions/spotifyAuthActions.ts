@@ -5,14 +5,14 @@ import {
   USER_SPOTIFY_AUTH_REQUEST,
   USER_SPOTIFY_AUTH_SUCCESS,
 } from '../constants/userConstants';
-import setTokenInLocalStorage from '../utils/setLocalStorage';
+import { setTokenInLocalStorage } from '../utils/setLocalStorage';
 
 const fetchToken =
   (user: any, body: object) => async (dispatch: Dispatch<any>) => {
     dispatch({ type: USER_SPOTIFY_AUTH_REQUEST });
     //     if (!user)
     try {
-      const { data } = await axios.post(`api/auth`, body, {
+      const { data } = await axios.post(`/api/user/auth`, body, {
         headers: {
           'Content-Type': 'application/json',
         },

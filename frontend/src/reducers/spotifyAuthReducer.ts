@@ -8,28 +8,42 @@ import {
 } from '../constants/userConstants';
 
 export interface UserInfo {
-  name: string;
+  display_name: string;
   email: string;
-  password: string;
-  isAdmin: boolean;
-  timestamps: boolean;
+  external_urls: {
+    spotify: string;
+  };
+  href: string;
+  id: string;
+  images: [
+    {
+      height: null;
+      url: string;
+      width: null;
+    }
+  ];
+  product: string;
+  type: string;
+  uristring: string;
 }
+export interface ISongsData {}
 export interface ILoginState {
   loading?: boolean;
-  userInfo?: UserInfo;
+  userData?: UserInfo;
+  songsData?: ISongsData;
   error?: string;
 }
 const userLoginReducer: Reducer<ILoginState | undefined, AnyAction> = (
-  state = { loading: true, userInfo: undefined, error: undefined },
+  state = { loading: true, userData: undefined, error: undefined },
   action
 ) => {
   switch (action.type) {
     case USER_SPOTIFY_AUTH_REQUEST:
-      return { loading: true, userInfo: undefined, error: undefined };
+      return { loading: true, userData: undefined, error: undefined };
     case USER_SPOTIFY_AUTH_SUCCESS:
-      return { loading: false, userInfo: action.payload, error: undefined };
+      return { loading: false, userData: action.payload, error: undefined };
     case USER_SPOTIFY_AUTH_FAIL:
-      return { loading: false, userInfo: undefined, error: action.payload };
+      return { loading: false, userData: undefined, error: action.payload };
     case USER_SPOTIFY_AUTH_LOGOUT:
       return {};
     default:
