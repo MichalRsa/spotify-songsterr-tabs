@@ -41,52 +41,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable camelcase */
 var axios_1 = __importDefault(require("axios"));
-var express_1 = __importDefault(require("express"));
-var exchangeTokenMiddleware_1 = __importDefault(require("../middleware/exchangeTokenMiddleware"));
-// import exchangeSpotifyToken from '../utils/getSpotifyData';
-var router = express_1.default.Router();
-router.get('/random', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var data;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0: return [4 /*yield*/, axios_1.default.get("https://www.songsterr.com/api/songs?size=50&pattern=metallica")];
-            case 1:
-                data = (_a.sent()).data;
-                res.json({ songs: data });
-                return [2 /*return*/];
-        }
-    });
-}); });
-router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, access_token, refresh_token, songsData, err_1;
+var exchangeTokenMiddleware = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var tokenFromStorage, reqData, encodedAuthToken, reqConfig, _a, access_token, refresh_token, err_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
-                _a = req.body.tokens, access_token = _a.access_token, refresh_token = _a.refresh_token;
-                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played", {
-                        headers: { Authorization: "Bearer " + access_token },
-                    })];
+                tokenFromStorage = '';
+                if (!(req.body && req.body.tokenFromStorage)) return [3 /*break*/, 4];
+                _b.label = 1;
             case 1:
-                songsData = (_b.sent()).data;
-                res.json({ songsData: songsData, refresh_token: refresh_token });
-                return [3 /*break*/, 3];
+                _b.trys.push([1, 3, , 4]);
+                tokenFromStorage = req.body.tokenFromStorage;
+                reqData = {
+                    grant_type: 'refresh_token',
+                    refresh_token: tokenFromStorage,
+                };
+                encodedAuthToken = Buffer.from(process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET).toString('base64');
+                reqConfig = {
+                    headers: {
+                        Authorization: "Basic " + encodedAuthToken,
+                        'content-type': 'application/x-www-form-urlencoded',
+                    },
+                };
+                return [4 /*yield*/, axios_1.default.post("https://accounts.spotify.com/api/token", new URLSearchParams(reqData), reqConfig)];
             case 2:
+                _a = (_b.sent()).data, access_token = _a.access_token, refresh_token = _a.refresh_token;
+                req.body.tokens = { access_token: access_token, refresh_token: refresh_token };
+                next();
+                return [3 /*break*/, 4];
+            case 3:
                 err_1 = _b.sent();
-                if (err_1.response) {
-                    console.log(err_1.response.data);
-                    console.log(err_1.response.status);
-                    console.log(err_1.response.headers);
+                res.status(401);
+                throw new Error('Not authorized, token failed');
+            case 4:
+                if (!tokenFromStorage) {
+                    res.status(401);
+                    throw new Error('Not authorized, no token');
                 }
-                else if (err_1.request) {
-                    console.log(err_1.request);
-                }
-                else {
-                    console.log('Error', err_1.message);
-                }
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [2 /*return*/];
         }
     });
-}); });
-exports.default = router;
+}); };
+exports.default = exchangeTokenMiddleware;
