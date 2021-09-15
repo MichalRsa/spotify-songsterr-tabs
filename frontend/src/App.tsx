@@ -16,7 +16,7 @@ const App = () => {
     window.location.href = '/api/user';
   };
   const getSongs = async () => {
-    const { data } = await axios.get('/api/songs');
+    const { data } = await axios.get('/api/songs/random');
     console.log(data);
   };
   return (

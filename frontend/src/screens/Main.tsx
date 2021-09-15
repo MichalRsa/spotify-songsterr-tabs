@@ -27,7 +27,7 @@ const Main = () => {
       try {
         const {
           data: { songsData, refresh_token },
-        } = await axios.post('api/home', {
+        } = await axios.post('api/songs/recent', {
           tokenFromStorage,
         });
         setSongs(songsData);
