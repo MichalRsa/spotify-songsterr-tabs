@@ -66,6 +66,7 @@ var exchangeTokenMiddleware = function (req, res, next) { return __awaiter(void 
                 return [4 /*yield*/, axios_1.default.post("https://accounts.spotify.com/api/token", new URLSearchParams(reqData), reqConfig)];
             case 2:
                 _a = (_b.sent()).data, access_token = _a.access_token, refresh_token = _a.refresh_token;
+                console.log('middleware', access_token, refresh_token);
                 req.body.tokens = { access_token: access_token, refresh_token: refresh_token };
                 next();
                 return [3 /*break*/, 4];

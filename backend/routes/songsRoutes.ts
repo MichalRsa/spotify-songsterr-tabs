@@ -18,13 +18,12 @@ router.post(
   exchangeTokenMiddleware,
   async (req: Request, res: Response) => {
     //   const { tokenFromStorage } = req.body;
-    //   console.log(tokenFromStorage);
-    //   console.log(req.body);
     try {
       //     const { refresh_token, access_token } = await exchangeSpotifyToken(
       //       tokenFromStorage
       //     );
       const { access_token, refresh_token } = req.body.tokens;
+      console.log('recent/ route', access_token, refresh_token);
       const { data: songsData } = await axios.get(
         `https://api.spotify.com/v1/me/player/recently-played`,
         {

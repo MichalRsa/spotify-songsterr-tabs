@@ -5,7 +5,10 @@ import {
   USER_SPOTIFY_AUTH_REQUEST,
   USER_SPOTIFY_AUTH_SUCCESS,
 } from '../constants/userConstants';
-import { setTokenInLocalStorage } from '../utils/setLocalStorage';
+import {
+  setTokenInLocalStorage,
+  setUserInLocalStorage,
+} from '../utils/setLocalStorage';
 
 const fetchToken =
   (user: any, body: object) => async (dispatch: Dispatch<any>) => {
@@ -19,7 +22,8 @@ const fetchToken =
       });
 
       setTokenInLocalStorage(data.refresh_token);
-      dispatch({ type: USER_SPOTIFY_AUTH_SUCCESS, payload: data });
+      setUserInLocalStorage(data.userData);
+      dispatch({ type: USER_SPOTIFY_AUTH_SUCCESS, payload: data.userData });
     } catch (err) {
       dispatch({ type: USER_SPOTIFY_AUTH_FAIL, payload: err });
     }

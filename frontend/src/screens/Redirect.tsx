@@ -8,11 +8,10 @@ import { useHistory } from 'react-router';
 import fetchToken from '../actions/spotifyAuthActions';
 import useQuery from '../hooks/useQuery';
 import { RootState } from '../store';
-// import setTokenInLocalStorage from '../utils/setLocalStorage';
 
 const Redirect = () => {
   // const [user, setUser] = useState('');
-  const user = useSelector((state: RootState) => state.spotifyAuth?.userData);
+  const user = useSelector((state: RootState) => state.spotifyAuth?.user);
   const dispatch = useDispatch();
   const history = useHistory();
   const query = useQuery();

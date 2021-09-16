@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './store';
 
 const App = () => {
-  const user = useSelector((store: RootState) => store.spotifyAuth?.userData);
+  const user = useSelector((store: RootState) => store.spotifyAuth?.user);
 
   const history = useHistory();
   useEffect(() => {

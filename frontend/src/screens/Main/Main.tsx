@@ -13,14 +13,10 @@ import { useEffect } from 'react';
 // import { useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router';
 // import useQuery from '../hooks/useQuery';
-import {
-  getTokenFromLocalStorage,
-  setTokenInLocalStorage,
-} from '../../utils/setLocalStorage';
+import { getTokenFromLocalStorage } from '../../utils/setLocalStorage';
 import { ISongs } from './interfaces';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../store';
-// import setTokenInLocalStorage from '../utils/setLocalStorage';
 
 const Main = () => {
   const [songs, setSongs] = React.useState<ISongs>();
@@ -38,19 +34,19 @@ const Main = () => {
       console.log(tokenFromStorage);
       try {
         const {
-          data: { songsData, refresh_token },
+          data: { songsData },
         } = await axios.post('api/songs/recent', {
           tokenFromStorage,
         });
         setSongs(songsData);
-        setTokenInLocalStorage(refresh_token);
+        // setTokenInLocalStorage(refresh_token);
         console.log(songs);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  }, [songs]);
+  }, []);
   return (
     <>
       <p>Hejka</p>

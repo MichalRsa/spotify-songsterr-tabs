@@ -7,7 +7,7 @@ import {
   USER_SPOTIFY_AUTH_SUCCESS,
 } from '../constants/userConstants';
 
-export interface UserInfo {
+export interface IUser {
   display_name: string;
   email: string;
   external_urls: {
@@ -28,20 +28,20 @@ export interface UserInfo {
 }
 export interface ILoginState {
   loading?: boolean;
-  userData?: UserInfo;
+  user?: IUser;
   error?: string;
 }
 const userLoginReducer: Reducer<ILoginState | undefined, AnyAction> = (
-  state = { loading: true, userData: undefined, error: undefined },
+  state = { loading: true, user: undefined, error: undefined },
   action
 ) => {
   switch (action.type) {
     case USER_SPOTIFY_AUTH_REQUEST:
-      return { loading: true, userData: undefined, error: undefined };
+      return { loading: true, user: undefined, error: undefined };
     case USER_SPOTIFY_AUTH_SUCCESS:
-      return { loading: false, userData: action.payload, error: undefined };
+      return { loading: false, user: action.payload, error: undefined };
     case USER_SPOTIFY_AUTH_FAIL:
-      return { loading: false, userData: undefined, error: action.payload };
+      return { loading: false, user: undefined, error: action.payload };
     case USER_SPOTIFY_AUTH_LOGOUT:
       return {};
     default:

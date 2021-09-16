@@ -64,6 +64,7 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
             case 0:
                 _b.trys.push([0, 2, , 3]);
                 _a = req.body.tokens, access_token = _a.access_token, refresh_token = _a.refresh_token;
+                console.log('recent/ route', access_token, refresh_token);
                 return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played", {
                         headers: { Authorization: "Bearer " + access_token },
                     })];

@@ -54,7 +54,6 @@ router.post('/auth', function (req, res) { return __awaiter(void 0, void 0, void
         switch (_b.label) {
             case 0:
                 code = req.body.code;
-                console.log(code);
                 reqData = {
                     grant_type: 'authorization_code',
                     code: code,

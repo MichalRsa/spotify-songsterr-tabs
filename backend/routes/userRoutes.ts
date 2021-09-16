@@ -13,7 +13,6 @@ router.get('/', (req, res) => {
 
 router.post('/auth', async (req, res) => {
   const { code } = req.body;
-  console.log(code);
   const reqData = {
     grant_type: 'authorization_code',
     code,
