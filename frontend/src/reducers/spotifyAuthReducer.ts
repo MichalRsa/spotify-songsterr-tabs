@@ -26,11 +26,9 @@ export interface UserInfo {
   type: string;
   uristring: string;
 }
-export interface ISongsData {}
 export interface ILoginState {
   loading?: boolean;
   userData?: UserInfo;
-  songsData?: ISongsData;
   error?: string;
 }
 const userLoginReducer: Reducer<ILoginState | undefined, AnyAction> = (

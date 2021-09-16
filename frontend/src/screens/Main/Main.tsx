@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable no-console */
-// @ts-nocheck
 // import {
 //   Container,
 //   List,
@@ -11,15 +9,29 @@
 // } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
-import { useState, useEffect } from 'react';
-import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
+import { useEffect } from 'react';
+// import { useDispatch } from 'react-redux';
+// import { useHistory } from 'react-router';
+// import useQuery from '../hooks/useQuery';
+import {
+  getTokenFromLocalStorage,
+  setTokenInLocalStorage,
+} from '../../utils/setLocalStorage';
+import { ISongs } from './interfaces';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '../store';
 // import setTokenInLocalStorage from '../utils/setLocalStorage';
 
 const Main = () => {
-  const [songs, setSongs] = useState([]);
-
+  const [songs, setSongs] = React.useState<ISongs>();
+  // const dispatch = useDispatch();
+  // const history = useHistory();
+  // const query = useQuery();
+  // const code = query.get('code');
+  // const body = {
+  //   code,
+  // };
+  console.log('render main component!', songs);
   useEffect(() => {
     const fetchData = async () => {
       const tokenFromStorage = getTokenFromLocalStorage();
@@ -32,16 +44,23 @@ const Main = () => {
         });
         setSongs(songsData);
         setTokenInLocalStorage(refresh_token);
+        console.log(songs);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
-  }, []);
-  console.log(songs);
+  }, [songs]);
   return (
     <>
       <p>Hejka</p>
+      {songs && (
+        <ul>
+          {songs.items.map((song) => (
+            <li>{song.track.name}</li>
+          ))}
+        </ul>
+      )}
     </>
   );
 };

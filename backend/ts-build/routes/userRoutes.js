@@ -49,7 +49,7 @@ router.get('/', function (req, res) {
     res.redirect(spotifyAuth);
 });
 router.post('/auth', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var code, reqData, encodedAuthToken, reqConfig, _a, refresh_token, access_token, userData, songsData, err_1;
+    var code, reqData, encodedAuthToken, reqConfig, _a, refresh_token, access_token, userData, err_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
@@ -69,7 +69,7 @@ router.post('/auth', function (req, res) { return __awaiter(void 0, void 0, void
                 };
                 _b.label = 1;
             case 1:
-                _b.trys.push([1, 5, , 6]);
+                _b.trys.push([1, 4, , 5]);
                 return [4 /*yield*/, axios_1.default.post("https://accounts.spotify.com/api/token", new URLSearchParams(reqData), reqConfig)];
             case 2:
                 _a = (_b.sent()).data, refresh_token = _a.refresh_token, access_token = _a.access_token;
@@ -78,14 +78,9 @@ router.post('/auth', function (req, res) { return __awaiter(void 0, void 0, void
                     })];
             case 3:
                 userData = (_b.sent()).data;
-                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played", {
-                        headers: { Authorization: "Bearer " + access_token },
-                    })];
+                res.json({ refresh_token: refresh_token, userData: userData });
+                return [3 /*break*/, 5];
             case 4:
-                songsData = (_b.sent()).data;
-                res.json({ refresh_token: refresh_token, userData: userData, songsData: songsData });
-                return [3 /*break*/, 6];
-            case 5:
                 err_1 = _b.sent();
                 if (err_1.response) {
                     console.log(err_1.response.data);
@@ -98,8 +93,8 @@ router.post('/auth', function (req, res) { return __awaiter(void 0, void 0, void
                 else {
                     console.log('Error', err_1.message);
                 }
-                return [3 /*break*/, 6];
-            case 6: return [2 /*return*/];
+                return [3 /*break*/, 5];
+            case 5: return [2 /*return*/];
         }
     });
 }); });

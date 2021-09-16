@@ -37,21 +37,13 @@ router.post('/auth', async (req, res) => {
       new URLSearchParams(reqData),
       reqConfig
     );
-    // tutaj kolejne zapytanie zawierające token autoryzacyjny
     const { data: userData } = await axios.get(
       `https://api.spotify.com/v1/me`,
       {
         headers: { Authorization: `Bearer ${access_token}` },
       }
     );
-    const { data: songsData } = await axios.get(
-      `https://api.spotify.com/v1/me/player/recently-played`,
-      {
-        headers: { Authorization: `Bearer ${access_token}` },
-      }
-    );
-    res.json({ refresh_token, userData, songsData });
-    // console.log('data resived from spotify api', data);
+    res.json({ refresh_token, userData });
   } catch (err: any) {
     if (err.response) {
       console.log(err.response.data);
