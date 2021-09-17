@@ -58,21 +58,32 @@ router.get('/random', function (req, res) { return __awaiter(void 0, void 0, voi
     });
 }); });
 router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, access_token, refresh_token, songsData, err_1;
+    var _a, access_token, refresh_token, data, idsArray, ids, songsData, err_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
-                _b.trys.push([0, 2, , 3]);
+                _b.trys.push([0, 3, , 4]);
                 _a = req.body.tokens, access_token = _a.access_token, refresh_token = _a.refresh_token;
                 console.log('recent/ route', access_token, refresh_token);
                 return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played", {
                         headers: { Authorization: "Bearer " + access_token },
                     })];
             case 1:
-                songsData = (_b.sent()).data;
-                res.json({ songsData: songsData, refresh_token: refresh_token });
-                return [3 /*break*/, 3];
+                data = (_b.sent()).data;
+                idsArray = data.items.map(function (song) { return song.track.id; });
+                ids = idsArray.join(',');
+                console.log(ids);
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/tracks?ids=" + ids, {
+                        headers: {
+                            Authorization: "Bearer " + access_token,
+                        },
+                    })];
             case 2:
+                songsData = (_b.sent()).data;
+                console.log(songsData);
+                res.json({ songsData: songsData, refresh_token: refresh_token });
+                return [3 /*break*/, 4];
+            case 3:
                 err_1 = _b.sent();
                 if (err_1.response) {
                     console.log(err_1.response.data);
@@ -85,8 +96,8 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
                 else {
                     console.log('Error', err_1.message);
                 }
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });

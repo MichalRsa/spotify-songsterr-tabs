@@ -24,13 +24,25 @@ router.post(
       //     );
       const { access_token, refresh_token } = req.body.tokens;
       console.log('recent/ route', access_token, refresh_token);
-      const { data: songsData } = await axios.get(
+      const { data } = await axios.get(
         `https://api.spotify.com/v1/me/player/recently-played`,
         {
           headers: { Authorization: `Bearer ${access_token}` },
         }
       );
+      const idsArray = data.items.map((song: any) => song.track.id);
+      const ids = idsArray.join(',');
+      console.log(ids);
 
+      const { data: songsData } = await axios.get(
+        `https://api.spotify.com/v1/tracks?ids=${ids}`,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+      console.log(songsData);
       res.json({ songsData, refresh_token });
     } catch (err: any) {
       if (err.response) {

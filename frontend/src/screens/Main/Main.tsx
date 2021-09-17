@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-console */
 import {
+  Avatar,
   Container,
   List,
   ListItem,
+  ListItemAvatar,
   ListItemText,
   Typography,
 } from '@material-ui/core';
@@ -40,7 +42,6 @@ const Main = () => {
         });
         setSongs(songsData);
         // setTokenInLocalStorage(refresh_token);
-        console.log(songs);
       } catch (err) {
         console.log(err);
       }
@@ -53,13 +54,18 @@ const Main = () => {
       <h2>Your recent played tracks:</h2>
       {songs && (
         <List component='ol'>
-          {songs.items.map((song) => (
+          {songs.tracks.map((song) => (
             <ListItem button divider>
+              <ListItemAvatar>
+                <Avatar
+                  variant='square'
+                  alt={song.album.name}
+                  src={`${song.album.images[song.album.images.length - 1].url}`}
+                />
+              </ListItemAvatar>
               <ListItemText>
-                <Typography variant='h6'>{song.track.name}</Typography>
-                <Typography component='span'>
-                  {song.track.artists[0].name}
-                </Typography>
+                <Typography variant='h6'>{song.name}</Typography>
+                <Typography component='span'>{song.artists[0].name}</Typography>
               </ListItemText>
             </ListItem>
           ))}
