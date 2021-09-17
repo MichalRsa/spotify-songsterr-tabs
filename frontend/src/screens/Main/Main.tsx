@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-console */
-// import {
-//   Container,
-//   List,
-//   ListItem,
-//   ListItemText,
-//   Typography,
-// } from '@material-ui/core';
+import {
+  Container,
+  List,
+  ListItem,
+  ListItemText,
+  Typography,
+} from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -48,16 +48,24 @@ const Main = () => {
     fetchData();
   }, []);
   return (
-    <>
+    <Container maxWidth='md'>
       <p>Hejka</p>
+      <h2>Your recent played tracks:</h2>
       {songs && (
-        <ul>
+        <List component='ol'>
           {songs.items.map((song) => (
-            <li>{song.track.name}</li>
+            <ListItem button divider>
+              <ListItemText>
+                <Typography variant='h6'>{song.track.name}</Typography>
+                <Typography component='span'>
+                  {song.track.artists[0].name}
+                </Typography>
+              </ListItemText>
+            </ListItem>
           ))}
-        </ul>
+        </List>
       )}
-    </>
+    </Container>
   );
 };
 
