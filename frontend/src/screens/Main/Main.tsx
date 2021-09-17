@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-console */
 import {
-  Avatar,
+  // Avatar,
   Container,
   List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
+  // ListItem,
+  // ListItemAvatar,
+  // ListItemText,
+  // Typography,
 } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
+import SongBar from '../../components/SongsBar';
 // import { useDispatch } from 'react-redux';
 // import { useHistory } from 'react-router';
 // import useQuery from '../hooks/useQuery';
@@ -55,19 +56,7 @@ const Main = () => {
       {songs && (
         <List component='ol'>
           {songs.tracks.map((song) => (
-            <ListItem button divider>
-              <ListItemAvatar>
-                <Avatar
-                  variant='square'
-                  alt={song.album.name}
-                  src={`${song.album.images[song.album.images.length - 1].url}`}
-                />
-              </ListItemAvatar>
-              <ListItemText>
-                <Typography variant='h6'>{song.name}</Typography>
-                <Typography component='span'>{song.artists[0].name}</Typography>
-              </ListItemText>
-            </ListItem>
+            <SongBar song={song} />
           ))}
         </List>
       )}
