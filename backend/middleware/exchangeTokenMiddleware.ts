@@ -37,7 +37,6 @@ const exchangeTokenMiddleware = async (
           new URLSearchParams(reqData),
           reqConfig
         );
-      console.log('middleware', access_token, refresh_token);
       req.body.tokens = { access_token, refresh_token };
       next();
       //       return { access_token, refresh_token };

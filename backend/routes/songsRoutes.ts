@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
 import express, { Request, Response } from 'express';
+import { songsterrSearch } from 'songsterr-api-node';
 import exchangeTokenMiddleware from '../middleware/exchangeTokenMiddleware';
 // import exchangeSpotifyToken from '../utils/getSpotifyData';
 
@@ -23,7 +24,6 @@ router.post(
       //       tokenFromStorage
       //     );
       const { access_token, refresh_token } = req.body.tokens;
-      console.log('recent/ route', access_token, refresh_token);
       const { data } = await axios.get(
         `https://api.spotify.com/v1/me/player/recently-played`,
         {
@@ -32,7 +32,6 @@ router.post(
       );
       const idsArray = data.items.map((song: any) => song.track.id);
       const ids = idsArray.join(',');
-      console.log(ids);
 
       const { data: songsData } = await axios.get(
         `https://api.spotify.com/v1/tracks?ids=${ids}`,
@@ -42,7 +41,6 @@ router.post(
           },
         }
       );
-      console.log(songsData);
       res.json({ songsData, refresh_token });
     } catch (err: any) {
       if (err.response) {
@@ -57,5 +55,16 @@ router.post(
     }
   }
 );
+
+router.post('/tabs', async (req, res) => {
+  const { title, artist } = req.body;
+  console.log('tabs route ======================', title, artist);
+  const results = await songsterrSearch(encodeURIComponent(title));
+  //   !Array.isArray(results) && console.log(results);
+  const filteredResults = Array.isArray(results)
+    ? results.filter((song) => song.artist === artist)
+    : results;
+  res.json({ song: filteredResults });
+});
 
 export default router;

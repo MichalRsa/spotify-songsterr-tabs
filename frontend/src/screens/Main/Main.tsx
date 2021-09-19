@@ -52,7 +52,7 @@ const Main = () => {
   return (
     <Container maxWidth='md'>
       <p>Hejka</p>
-      <h2>Your recent played tracks:</h2>
+      <h2>Your recently played tracks:</h2>
       {songs && (
         <List component='ol'>
           {songs.tracks.map((song) => (

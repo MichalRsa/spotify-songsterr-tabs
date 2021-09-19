@@ -42,6 +42,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable camelcase */
 var axios_1 = __importDefault(require("axios"));
 var express_1 = __importDefault(require("express"));
+var songsterr_api_node_1 = require("songsterr-api-node");
 var exchangeTokenMiddleware_1 = __importDefault(require("../middleware/exchangeTokenMiddleware"));
 // import exchangeSpotifyToken from '../utils/getSpotifyData';
 var router = express_1.default.Router();
@@ -64,7 +65,6 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
             case 0:
                 _b.trys.push([0, 3, , 4]);
                 _a = req.body.tokens, access_token = _a.access_token, refresh_token = _a.refresh_token;
-                console.log('recent/ route', access_token, refresh_token);
                 return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played", {
                         headers: { Authorization: "Bearer " + access_token },
                     })];
@@ -72,7 +72,6 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
                 data = (_b.sent()).data;
                 idsArray = data.items.map(function (song) { return song.track.id; });
                 ids = idsArray.join(',');
-                console.log(ids);
                 return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/tracks?ids=" + ids, {
                         headers: {
                             Authorization: "Bearer " + access_token,
@@ -80,7 +79,6 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
                     })];
             case 2:
                 songsData = (_b.sent()).data;
-                console.log(songsData);
                 res.json({ songsData: songsData, refresh_token: refresh_token });
                 return [3 /*break*/, 4];
             case 3:
@@ -98,6 +96,24 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
                 }
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];
+        }
+    });
+}); });
+router.post('/tabs', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, title, artist, results, filteredResults;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _a = req.body, title = _a.title, artist = _a.artist;
+                console.log('tabs route ======================', title, artist);
+                return [4 /*yield*/, (0, songsterr_api_node_1.songsterrSearch)(encodeURIComponent(title))];
+            case 1:
+                results = _b.sent();
+                filteredResults = Array.isArray(results)
+                    ? results.filter(function (song) { return song.artist === artist; })
+                    : results;
+                res.json({ song: filteredResults });
+                return [2 /*return*/];
         }
     });
 }); });
