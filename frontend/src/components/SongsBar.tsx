@@ -1,14 +1,15 @@
-/* eslint-disable no-nested-ternary */
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 import * as React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+// import { Link as RouterLink } from 'react-router-dom';
 import { useHistory } from 'react-router';
 import {
   Avatar,
-  CircularProgress,
-  Link,
+  Button,
+  // Link,
   ListItem,
   ListItemAvatar,
+  // ListItemProps,
   ListItemText,
   makeStyles,
   Typography,
@@ -31,9 +32,12 @@ const useStyles = makeStyles((theme: MyTheme) => ({
   },
 }));
 
+// const ListItemLink = (props: ListItemProps<'a', { button?: true }>) => (
+//   <ListItem button component='a' {...props} />
+// );
+
 const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
   const [tabs, setTabs] = React.useState<{ song: IsongsterrTabs }>();
-  //   const [haveTabs, setHaveTabs] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState(true);
   const styles = useStyles();
   const history = useHistory();
@@ -56,18 +60,18 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
 
   return (
     <ListItem
-      onClick={() =>
-        !loading &&
-        haveTabs() &&
-        history.push(
-          `https://www.songsterr.com/a/wsa/${tabs?.song[0].artist}-${
-            tabs?.song[0].title
-          }-s${tabs?.song[0].songId.toString()}`
-        )
+      component='a'
+      href={
+        !loading && haveTabs()
+          ? `https://www.songsterr.com/a/wsa/${tabs?.song[0].artist}-${
+              tabs?.song[0].title
+            }-s${tabs?.song[0].songId.toString()}`
+          : ''
       }
       button={!loading && haveTabs()}
       divider
       className={!loading && haveTabs() ? styles.rootSuccess : ''}
+      // onClick={() => console.log('klik')}
     >
       <ListItemAvatar>
         <Avatar
@@ -79,19 +83,20 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
       <ListItemText>
         <Typography variant='h6'>{name}</Typography>
         <Typography component='span'>
-          <Link component={RouterLink} to={`/artists/${artists[0].id}`}>
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              history.push(`/artists/${artists[0].id}`);
+            }}
+          >
             {artists[0].name} -{' '}
-          </Link>
-          <Link component={RouterLink} to={`/albums/${album.id}`}>
+          </Button>
+          <Button onClick={() => history.push(`/albums/${album.id}`)}>
             {album.name}
-          </Link>
+          </Button>
         </Typography>
       </ListItemText>
-      {loading ? (
-        <CircularProgress />
-      ) : tabs && tabs.song.length ? (
-        <SongBarTuning tabs={tabs} />
-      ) : null}
+      <SongBarTuning tabs={tabs} loading={loading} />
     </ListItem>
   );
 };

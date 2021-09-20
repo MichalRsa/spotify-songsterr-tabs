@@ -1,11 +1,18 @@
+/* eslint-disable no-nested-ternary */
 import * as React from 'react';
-import { ListItemSecondaryAction } from '@material-ui/core';
+import { CircularProgress, ListItemSecondaryAction } from '@material-ui/core';
 import { InewTuning, IsongsterrTabs } from 'songsterr-api-node/dist/interfaces';
 
 interface Itabs {
   song: IsongsterrTabs;
 }
-const SongBarTuning = ({ tabs }: { tabs: Itabs }) => {
+const SongBarTuning = ({
+  tabs,
+  loading,
+}: {
+  tabs: Itabs | undefined;
+  loading: boolean;
+}) => {
   const showTuning = () => {
     if (tabs && tabs.song.length) {
       if (
@@ -21,11 +28,13 @@ const SongBarTuning = ({ tabs }: { tabs: Itabs }) => {
     }
     return '';
   };
-  return (
+  return loading ? (
+    <CircularProgress />
+  ) : tabs && tabs.song.length ? (
     <ListItemSecondaryAction>
       <p>tuning: {showTuning()}</p>
     </ListItemSecondaryAction>
-  );
+  ) : null;
 };
 
 export default SongBarTuning;
