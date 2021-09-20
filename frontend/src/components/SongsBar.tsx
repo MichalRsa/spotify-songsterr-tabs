@@ -1,15 +1,11 @@
-/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-console */
 import * as React from 'react';
-// import { Link as RouterLink } from 'react-router-dom';
-import { useHistory } from 'react-router';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   Avatar,
-  Button,
-  // Link,
+  Link,
   ListItem,
   ListItemAvatar,
-  // ListItemProps,
   ListItemText,
   makeStyles,
   Typography,
@@ -32,15 +28,10 @@ const useStyles = makeStyles((theme: MyTheme) => ({
   },
 }));
 
-// const ListItemLink = (props: ListItemProps<'a', { button?: true }>) => (
-//   <ListItem button component='a' {...props} />
-// );
-
 const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
   const [tabs, setTabs] = React.useState<{ song: IsongsterrTabs }>();
   const [loading, setLoading] = React.useState(true);
   const styles = useStyles();
-  const history = useHistory();
   React.useEffect(() => {
     const fetchTabs = async () => {
       const { data } = await axios.post(`api/songs/tabs`, {
@@ -60,18 +51,9 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
 
   return (
     <ListItem
-      component='a'
-      href={
-        !loading && haveTabs()
-          ? `https://www.songsterr.com/a/wsa/${tabs?.song[0].artist}-${
-              tabs?.song[0].title
-            }-s${tabs?.song[0].songId.toString()}`
-          : ''
-      }
       button={!loading && haveTabs()}
       divider
       className={!loading && haveTabs() ? styles.rootSuccess : ''}
-      // onClick={() => console.log('klik')}
     >
       <ListItemAvatar>
         <Avatar
@@ -81,19 +63,28 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
         />
       </ListItemAvatar>
       <ListItemText>
-        <Typography variant='h6'>{name}</Typography>
-        <Typography component='span'>
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              history.push(`/artists/${artists[0].id}`);
-            }}
+        {!loading && haveTabs() ? (
+          <Link
+            href={`https://www.songsterr.com/a/wsa/${tabs?.song[0].artist}-${
+              tabs?.song[0].title
+            }-tab-s${tabs?.song[0].songId.toString()}`
+              .split(' ')
+              .join('-')
+              .toLowerCase()}
           >
-            {artists[0].name} -{' '}
-          </Button>
-          <Button onClick={() => history.push(`/albums/${album.id}`)}>
+            <Typography variant='h6'>{name}</Typography>
+          </Link>
+        ) : (
+          <Typography variant='h6'>{name}</Typography>
+        )}
+        <Typography component='span'>
+          <Link component={RouterLink} to={`/artists/${artists[0].id}`}>
+            {artists[0].name}
+          </Link>
+          <span> - </span>
+          <Link component={RouterLink} to={`/albums/${album.id}`}>
             {album.name}
-          </Button>
+          </Link>
         </Typography>
       </ListItemText>
       <SongBarTuning tabs={tabs} loading={loading} />
