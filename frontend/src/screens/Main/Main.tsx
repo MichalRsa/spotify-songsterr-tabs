@@ -30,7 +30,6 @@ const Main = () => {
   // const body = {
   //   code,
   // };
-  console.log('render main component!', songs);
   useEffect(() => {
     const fetchData = async () => {
       const tokenFromStorage = getTokenFromLocalStorage();
@@ -56,7 +55,7 @@ const Main = () => {
       {songs && (
         <List component='ol'>
           {songs.tracks.map((song) => (
-            <SongBar song={song} />
+            <SongBar key={song.id + Math.random()} song={song} />
           ))}
         </List>
       )}

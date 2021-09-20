@@ -1,19 +1,22 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 import * as React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { useHistory } from 'react-router';
 import {
   Avatar,
+  CircularProgress,
   Link,
-  //   IconButton,
   ListItem,
   ListItemAvatar,
-  ListItemSecondaryAction,
   ListItemText,
   makeStyles,
   Typography,
 } from '@material-ui/core';
 import axios from 'axios';
-import { InewTuning, IsongsterrTabs } from 'songsterr-api-node/dist/interfaces';
+import { IsongsterrTabs } from 'songsterr-api-node/dist/interfaces';
 import { Track } from '../screens/Main/interfaces/index';
+import SongBarTuning from './SongsBarTuning';
 
 interface MyTheme {
   palette: { success: { main: string }; error: { main: string } };
@@ -33,6 +36,7 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
   //   const [haveTabs, setHaveTabs] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState(true);
   const styles = useStyles();
+  const history = useHistory();
   React.useEffect(() => {
     const fetchTabs = async () => {
       const { data } = await axios.post(`api/songs/tabs`, {
@@ -41,39 +45,26 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
       });
 
       setTabs(data);
+
+      setLoading(false);
     };
     fetchTabs();
-    setLoading(false);
   }, []);
   console.log(tabs);
 
   const haveTabs = (): any => tabs && !!tabs.song.length;
-  // {
-  //   if (tabs && !!tabs.song.length) {
-  //     return `${styles.rootSuccess}`;
-  //   }
-  //   if (tabs && !tabs.song.length) return `${styles.rootFail}`;
-  //   return null;
-  // };
-
-  const showTuning = () => {
-    if (tabs && tabs.song.length) {
-      if (
-        (tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning)
-          .name === ''
-      )
-        return (
-          tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning
-        ).notes;
-      return (
-        tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning
-      ).name;
-    }
-    return '';
-  };
 
   return (
     <ListItem
+      onClick={() =>
+        !loading &&
+        haveTabs() &&
+        history.push(
+          `https://www.songsterr.com/a/wsa/${tabs?.song[0].artist}-${
+            tabs?.song[0].title
+          }-s${tabs?.song[0].songId.toString()}`
+        )
+      }
       button={!loading && haveTabs()}
       divider
       className={!loading && haveTabs() ? styles.rootSuccess : ''}
@@ -88,21 +79,19 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
       <ListItemText>
         <Typography variant='h6'>{name}</Typography>
         <Typography component='span'>
-          {artists[0].name} - <Link href={album.name}>{album.name}</Link>
+          <Link component={RouterLink} to={`/artists/${artists[0].id}`}>
+            {artists[0].name} -{' '}
+          </Link>
+          <Link component={RouterLink} to={`/albums/${album.id}`}>
+            {album.name}
+          </Link>
         </Typography>
       </ListItemText>
-      <ListItemSecondaryAction>
-        <p>
-          {haveTabs() && 'tuning: '}
-          {/* {tabs &&
-            tabs.song.length &&
-            (
-              tabs.song[0].tracks[tabs.song[0].defaultTrack]
-                .tuning as InewTuning
-            ).name} */}
-          {showTuning()}
-        </p>
-      </ListItemSecondaryAction>
+      {loading ? (
+        <CircularProgress />
+      ) : tabs && tabs.song.length ? (
+        <SongBarTuning tabs={tabs} />
+      ) : null}
     </ListItem>
   );
 };
