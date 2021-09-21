@@ -34,7 +34,7 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
   const styles = useStyles();
   React.useEffect(() => {
     const fetchTabs = async () => {
-      const { data } = await axios.post(`api/songs/tabs`, {
+      const { data } = await axios.post(`/api/songs/tabs`, {
         title: name,
         artist: artists[0].name,
       });
@@ -72,10 +72,10 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
               .join('-')
               .toLowerCase()}
           >
-            <Typography variant='h6'>{name}</Typography>
+            <Typography style={{ fontWeight: 'bold' }}>{name}</Typography>
           </Link>
         ) : (
-          <Typography variant='h6'>{name}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>{name}</Typography>
         )}
         <Typography component='span'>
           <Link component={RouterLink} to={`/artists/${artists[0].id}`}>

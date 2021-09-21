@@ -1,30 +1,23 @@
 /* eslint-disable no-console */
-/* eslint-disable */
 import * as React from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { useHistory } from 'react-router';
-import AuthRedirect from './screens/Redirect';
-import Main from './screens/Main/Main';
 import { Button, CssBaseline } from '@material-ui/core';
 import { useSelector } from 'react-redux';
+import AuthRedirect from './screens/Redirect';
+import Main from './screens/Main/Main';
 import { RootState } from './store';
+import AlbumsScreen from './screens/AlbumsScreen';
+import ArtistsScreen from './screens/ArtistsScreen';
 
 const App = () => {
   const user = useSelector((store: RootState) => store.spotifyAuth?.user);
 
-  const history = useHistory();
   useEffect(() => {
     console.log('app useeffect running!', user);
   }, [user]);
   const redirectToAuth = () => {
-    // const redirectAuth = async () => {
-    //   const { data } = await axios.get('/api/user');
-    //   console.log(data);
-    // };
-
-    // redirectAuth();
     window.location.href = '/api/user';
   };
   const getSongs = async () => {
@@ -37,7 +30,10 @@ const App = () => {
       {user ? (
         <Switch>
           <Route path='/main' component={Main} />
+          <Route path='/albums/:id' component={AlbumsScreen} />
+          <Route path='/artists/:id' component={ArtistsScreen} />
           <Redirect from='/redirect' to='/main' />
+          <Redirect from='/' to='/main' />
         </Switch>
       ) : (
         <Switch>

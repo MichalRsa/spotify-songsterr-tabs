@@ -99,6 +99,92 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
         }
     });
 }); });
+router.post('/artists', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, access_token, refresh_token, _b, id, name_1, data, idsArray, ids, songsData, err_2;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                _c.trys.push([0, 3, , 4]);
+                _a = req.body.tokens, access_token = _a.access_token, refresh_token = _a.refresh_token;
+                _b = req.body, id = _b.id, name_1 = _b.name;
+                console.log(name_1);
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/artists/" + id + "/top-tracks?market=us", {
+                        headers: { Authorization: "Bearer " + access_token },
+                    })];
+            case 1:
+                data = (_c.sent()).data;
+                idsArray = data.tracks.map(function (song) { return song.id; });
+                ids = idsArray.join(',');
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/tracks?ids=" + ids, {
+                        headers: {
+                            Authorization: "Bearer " + access_token,
+                        },
+                    })];
+            case 2:
+                songsData = (_c.sent()).data;
+                res.json({ songsData: songsData, refresh_token: refresh_token });
+                return [3 /*break*/, 4];
+            case 3:
+                err_2 = _c.sent();
+                if (err_2.response) {
+                    console.log(err_2.response.data);
+                    console.log(err_2.response.status);
+                    console.log(err_2.response.headers);
+                }
+                else if (err_2.request) {
+                    console.log(err_2.request);
+                }
+                else {
+                    console.log('Error', err_2.message);
+                }
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+router.post('/albums', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, access_token, refresh_token, id, data, idsArray, ids, songsData, err_3;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
+            case 0:
+                _b.trys.push([0, 3, , 4]);
+                _a = req.body.tokens, access_token = _a.access_token, refresh_token = _a.refresh_token;
+                id = req.body.id;
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/albums/" + id + "/tracks", {
+                        headers: { Authorization: "Bearer " + access_token },
+                    })];
+            case 1:
+                data = (_b.sent()).data;
+                idsArray = data.items.map(function (song) { return song.id; });
+                ids = idsArray.join(',');
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/tracks?ids=" + ids, {
+                        headers: {
+                            Authorization: "Bearer " + access_token,
+                        },
+                    })];
+            case 2:
+                songsData = (_b.sent()).data;
+                console.log(data);
+                res.json({ songsData: songsData, refresh_token: refresh_token });
+                return [3 /*break*/, 4];
+            case 3:
+                err_3 = _b.sent();
+                if (err_3.response) {
+                    console.log(err_3.response.data);
+                    console.log(err_3.response.status);
+                    console.log(err_3.response.headers);
+                }
+                else if (err_3.request) {
+                    console.log(err_3.request);
+                }
+                else {
+                    console.log('Error', err_3.message);
+                }
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
 router.post('/tabs', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var _a, title, artist, results, filteredResults;
     return __generator(this, function (_b) {

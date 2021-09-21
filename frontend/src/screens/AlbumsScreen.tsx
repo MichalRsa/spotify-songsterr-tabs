@@ -1,26 +1,29 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-console */
 import { Container, List } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
-import { useEffect } from 'react';
-import SongBar from '../../components/SongsBar';
-import { getTokenFromLocalStorage } from '../../utils/setLocalStorage';
-import { ISongs } from './interfaces';
+import { useParams } from 'react-router';
+import SongBar from '../components/SongsBar';
+import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
+import { ISongs } from './Main/interfaces';
 
-const Main = () => {
+const AlbumScreen = () => {
   const [songs, setSongs] = React.useState<ISongs>();
-  useEffect(() => {
+  const { id } = useParams<Record<string, string | undefined>>();
+  console.log(id);
+  React.useEffect(() => {
     const fetchData = async () => {
       const tokenFromStorage = getTokenFromLocalStorage();
       console.log(tokenFromStorage);
       try {
         const {
           data: { songsData },
-        } = await axios.post('api/songs/recent', {
+        } = await axios.post(`/api/songs/albums`, {
           tokenFromStorage,
+          id,
         });
         setSongs(songsData);
+        console.log(songsData);
       } catch (err) {
         console.log(err);
       }
@@ -29,8 +32,8 @@ const Main = () => {
   }, []);
   return (
     <Container maxWidth='md'>
-      <p>Hejka</p>
-      <h2>Your recently played tracks:</h2>
+      {/* <h2>{songs?}</h2> */}
+      <p>Most popular songs:</p>
       {songs && (
         <List component='ol'>
           {songs.tracks.map((song) => (
@@ -41,5 +44,4 @@ const Main = () => {
     </Container>
   );
 };
-
-export default Main;
+export default AlbumScreen;
