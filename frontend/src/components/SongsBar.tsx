@@ -2,10 +2,8 @@
 import * as React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import {
-  Avatar,
   Link,
   ListItem,
-  ListItemAvatar,
   ListItemText,
   makeStyles,
   Typography,
@@ -14,6 +12,8 @@ import axios from 'axios';
 import { IsongsterrTabs } from 'songsterr-api-node/dist/interfaces';
 import { Track } from '../screens/Main/interfaces/index';
 import SongBarTuning from './SongsBarTuning';
+import SongAvatar from './SongAvatar';
+import SongTitle from './SongTitle';
 
 interface MyTheme {
   palette: { success: { main: string }; error: { main: string } };
@@ -45,38 +45,23 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
     };
     fetchTabs();
   }, []);
-  console.log(tabs);
 
-  const haveTabs = (): any => tabs && !!tabs.song.length;
+  const haveTabs = (() => !!(tabs && !!tabs.song.length))();
 
   return (
     <ListItem
-      button={!loading && haveTabs()}
+      button={!loading && haveTabs ? undefined : false}
       divider
-      className={!loading && haveTabs() ? styles.rootSuccess : ''}
+      className={!loading && haveTabs ? styles.rootSuccess : ''}
     >
-      <ListItemAvatar>
-        <Avatar
-          variant='square'
-          alt={album.name}
-          src={`${album.images[album.images.length - 1].url}`}
-        />
-      </ListItemAvatar>
+      <SongAvatar album={album} />
       <ListItemText>
-        {!loading && haveTabs() ? (
-          <Link
-            href={`https://www.songsterr.com/a/wsa/${tabs?.song[0].artist}-${
-              tabs?.song[0].title
-            }-tab-s${tabs?.song[0].songId.toString()}`
-              .split(' ')
-              .join('-')
-              .toLowerCase()}
-          >
-            <Typography style={{ fontWeight: 'bold' }}>{name}</Typography>
-          </Link>
-        ) : (
-          <Typography style={{ fontWeight: 'bold' }}>{name}</Typography>
-        )}
+        <SongTitle
+          loading={loading}
+          tabs={tabs}
+          name={name}
+          haveTabs={haveTabs}
+        />
         <Typography component='span'>
           <Link component={RouterLink} to={`/artists/${artists[0].id}`}>
             {artists[0].name}
