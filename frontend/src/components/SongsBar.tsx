@@ -28,7 +28,13 @@ const useStyles = makeStyles((theme: MyTheme) => ({
   },
 }));
 
-const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
+const SongBar = ({
+  song: { album, name, artists },
+  avatarChildren,
+}: {
+  song: Track;
+  avatarChildren?: React.ReactElement<typeof SongAvatar>;
+}) => {
   const [tabs, setTabs] = React.useState<{ song: IsongsterrTabs }>();
   const [loading, setLoading] = React.useState(true);
   const styles = useStyles();
@@ -54,7 +60,7 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
       divider
       className={!loading && haveTabs ? styles.rootSuccess : ''}
     >
-      <SongAvatar album={album} />
+      {avatarChildren}
       <ListItemText>
         <SongTitle
           loading={loading}
@@ -75,6 +81,10 @@ const SongBar = ({ song: { album, name, artists } }: { song: Track }) => {
       <SongBarTuning tabs={tabs} loading={loading} />
     </ListItem>
   );
+};
+
+SongBar.defaultProps = {
+  avatarChildren: undefined,
 };
 
 export default SongBar;

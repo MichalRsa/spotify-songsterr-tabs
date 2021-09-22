@@ -4,6 +4,7 @@ import { Container, List } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
+import SongAvatar from '../../components/SongAvatar';
 import SongBar from '../../components/SongsBar';
 import { getTokenFromLocalStorage } from '../../utils/setLocalStorage';
 import { ISongs } from './interfaces';
@@ -34,7 +35,11 @@ const Main = () => {
       {songs && (
         <List component='ol'>
           {songs.tracks.map((song) => (
-            <SongBar key={song.id + Math.random()} song={song} />
+            <SongBar
+              key={song.id + Math.random()}
+              song={song}
+              avatarChildren={<SongAvatar album={song.album} />}
+            />
           ))}
         </List>
       )}
