@@ -3,13 +3,14 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import { Button, CssBaseline } from '@material-ui/core';
+import { Button, Container, CssBaseline } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import AuthRedirect from './screens/Redirect';
 import Main from './screens/Main/Main';
 import { RootState } from './store';
 import AlbumsScreen from './screens/AlbumsScreen';
 import ArtistsScreen from './screens/ArtistsScreen';
+import NavBar from './components/Nav';
 
 const App = () => {
   const user = useSelector((store: RootState) => store.spotifyAuth?.user);
@@ -27,14 +28,17 @@ const App = () => {
   return (
     <BrowserRouter>
       <CssBaseline />
+      <NavBar />
       {user ? (
-        <Switch>
-          <Route path='/main' component={Main} />
-          <Route path='/albums/:id' component={AlbumsScreen} />
-          <Route path='/artists/:id' component={ArtistsScreen} />
-          <Redirect from='/redirect' to='/main' />
-          <Redirect from='/' to='/main' />
-        </Switch>
+        <Container maxWidth='md'>
+          <Switch>
+            <Route path='/main' component={Main} />
+            <Route path='/albums/:id' component={AlbumsScreen} />
+            <Route path='/artists/:id' component={ArtistsScreen} />
+            <Redirect from='/redirect' to='/main' />
+            <Redirect from='/' to='/main' />
+          </Switch>
+        </Container>
       ) : (
         <Switch>
           <Route path='/redirect' component={AuthRedirect} />

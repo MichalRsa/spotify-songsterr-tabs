@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { Container, List } from '@material-ui/core';
+import { List } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useParams } from 'react-router';
@@ -31,7 +31,7 @@ const AlbumScreen = () => {
     fetchData();
   }, []);
   return (
-    <Container maxWidth='md'>
+    <>
       {/* <h2>{songs?}</h2> */}
       <img
         src={songs?.tracks[0].album.images[1].url}
@@ -46,7 +46,7 @@ const AlbumScreen = () => {
           ))}
         </List>
       )}
-    </Container>
+    </>
   );
 };
 export default AlbumScreen;

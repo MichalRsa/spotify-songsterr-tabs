@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { Container, List } from '@material-ui/core';
+import { List } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useParams } from 'react-router';
@@ -33,7 +33,7 @@ const ArtistsScreen = () => {
     fetchData();
   }, []);
   return (
-    <Container maxWidth='md'>
+    <>
       <h2>{songs?.tracks[0].artists[0].name}</h2>
       <p>Most popular songs:</p>
       {songs && (
@@ -48,7 +48,7 @@ const ArtistsScreen = () => {
           ))}
         </List>
       )}
-    </Container>
+    </>
   );
 };
 export default ArtistsScreen;

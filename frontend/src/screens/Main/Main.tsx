@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-console */
-import { Container, List } from '@material-ui/core';
+import { List } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
@@ -31,7 +31,7 @@ const Main = () => {
     fetchData();
   }, []);
   return (
-    <Container maxWidth='md'>
+    <>
       <p>Hejka</p>
       <h2>Your recently played tracks:</h2>
       {songs && (
@@ -47,7 +47,7 @@ const Main = () => {
           ))}
         </List>
       )}
-    </Container>
+    </>
   );
 };
 
