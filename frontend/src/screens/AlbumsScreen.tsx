@@ -33,6 +33,11 @@ const AlbumScreen = () => {
   return (
     <Container maxWidth='md'>
       {/* <h2>{songs?}</h2> */}
+      <img
+        src={songs?.tracks[0].album.images[1].url}
+        // width={100}
+        alt={songs?.tracks[0].album.name}
+      />
       <p>Most popular songs:</p>
       {songs && (
         <List component='ol'>

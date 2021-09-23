@@ -3,7 +3,9 @@ import { Container, List } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useParams } from 'react-router';
+import SongAlbum from '../components/SongAlbum';
 import SongAvatar from '../components/SongAvatar';
+// import SongArtist from '../components/SongBarArtist';
 import SongBar from '../components/SongsBar';
 import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
 import { ISongs } from './Main/interfaces';
@@ -40,7 +42,8 @@ const ArtistsScreen = () => {
             <SongBar
               key={song.id + Math.random()}
               song={song}
-              avatarChildren={<SongAvatar album={song.album} />}
+              avatarChild={<SongAvatar album={song.album} />}
+              albumChild={<SongAlbum album={song.album} />}
             />
           ))}
         </List>

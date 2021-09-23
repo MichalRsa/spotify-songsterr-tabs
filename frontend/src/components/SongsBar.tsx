@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 import * as React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+// import { Link as RouterLink } from 'react-router-dom';
 import {
-  Link,
+  // Link,
   ListItem,
   ListItemText,
   makeStyles,
@@ -14,6 +14,8 @@ import { Track } from '../screens/Main/interfaces/index';
 import SongBarTuning from './SongsBarTuning';
 import SongAvatar from './SongAvatar';
 import SongTitle from './SongTitle';
+import SongArtist from './SongBarArtist';
+import SongAlbum from './SongAlbum';
 
 interface MyTheme {
   palette: { success: { main: string }; error: { main: string } };
@@ -29,11 +31,15 @@ const useStyles = makeStyles((theme: MyTheme) => ({
 }));
 
 const SongBar = ({
-  song: { album, name, artists },
-  avatarChildren,
+  song: { name, artists },
+  avatarChild,
+  artistChild,
+  albumChild,
 }: {
   song: Track;
-  avatarChildren?: React.ReactElement<typeof SongAvatar>;
+  avatarChild?: React.ReactElement<typeof SongAvatar>;
+  artistChild?: React.ReactElement<typeof SongArtist>;
+  albumChild?: React.ReactElement<typeof SongAlbum>;
 }) => {
   const [tabs, setTabs] = React.useState<{ song: IsongsterrTabs }>();
   const [loading, setLoading] = React.useState(true);
@@ -60,7 +66,7 @@ const SongBar = ({
       divider
       className={!loading && haveTabs ? styles.rootSuccess : ''}
     >
-      {avatarChildren}
+      {avatarChild}
       <ListItemText>
         <SongTitle
           loading={loading}
@@ -69,13 +75,15 @@ const SongBar = ({
           haveTabs={haveTabs}
         />
         <Typography component='span'>
-          <Link component={RouterLink} to={`/artists/${artists[0].id}`}>
+          {artistChild}
+          {/* <Link component={RouterLink} to={`/artists/${artists[0].id}`}>
             {artists[0].name}
-          </Link>
-          <span> - </span>
-          <Link component={RouterLink} to={`/albums/${album.id}`}>
+          </Link> */}
+          {artistChild && albumChild && <span> - </span>}
+          {/* <Link component={RouterLink} to={`/albums/${album.id}`}>
             {album.name}
-          </Link>
+          </Link> */}
+          {albumChild}
         </Typography>
       </ListItemText>
       <SongBarTuning tabs={tabs} loading={loading} />
@@ -84,7 +92,9 @@ const SongBar = ({
 };
 
 SongBar.defaultProps = {
-  avatarChildren: undefined,
+  avatarChild: undefined,
+  artistChild: undefined,
+  albumChild: undefined,
 };
 
 export default SongBar;
