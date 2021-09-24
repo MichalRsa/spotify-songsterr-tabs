@@ -25,7 +25,7 @@ router.post(
       //     );
       const { access_token, refresh_token } = req.body.tokens;
       const { data } = await axios.get(
-        `https://api.spotify.com/v1/me/player/recently-played`,
+        `https://api.spotify.com/v1/me/player/recently-played?limit=50`,
         {
           headers: { Authorization: `Bearer ${access_token}` },
         }

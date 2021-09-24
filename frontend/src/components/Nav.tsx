@@ -16,6 +16,8 @@ import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -180,6 +182,19 @@ const NavBar = () => {
             />
           </div>
           <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
+            <IconButton
+              edge='end'
+              aria-label='home page'
+              aria-controls={menuId}
+              aria-haspopup='true'
+              color='inherit'
+            >
+              <NavLink to='/home'>
+                <HomeRoundedIcon />
+              </NavLink>
+            </IconButton>
+          </div>
           <div className={classes.sectionDesktop}>
             <IconButton
               edge='end'

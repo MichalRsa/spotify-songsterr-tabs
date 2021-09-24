@@ -14,38 +14,44 @@ import { ISongs } from './interfaces';
 const Main = () => {
   const [songs, setSongs] = React.useState<ISongs>();
   useEffect(() => {
-    const fetchData = async () => {
-      const tokenFromStorage = getTokenFromLocalStorage();
-      console.log(tokenFromStorage);
-      try {
-        const {
-          data: { songsData },
-        } = await axios.post('api/songs/recent', {
-          tokenFromStorage,
-        });
-        setSongs(songsData);
-      } catch (err) {
-        console.log(err);
+    const fetchRecent = async () => {
+      if (songs === undefined) {
+        const tokenFromStorage = getTokenFromLocalStorage();
+        console.log(tokenFromStorage);
+        try {
+          const {
+            data: { songsData },
+          } = await axios.post('api/songs/recent', {
+            tokenFromStorage,
+          });
+          setSongs(songsData);
+        } catch (err) {
+          console.log(err);
+        }
       }
     };
-    fetchData();
+    const fetchFavs = async () => {};
+    fetchRecent();
+    fetchFavs();
   }, []);
+
   return (
     <>
-      <p>Hejka</p>
       <h2>Your recently played tracks:</h2>
       {songs && (
-        <List component='ol'>
-          {songs.tracks.map((song) => (
-            <SongBar
-              key={song.id + Math.random()}
-              song={song}
-              avatarChild={<SongAvatar album={song.album} />}
-              artistChild={<SongArtist artists={song.artists} />}
-              albumChild={<SongAlbum album={song.album} />}
-            />
-          ))}
-        </List>
+        <>
+          <List component='ol'>
+            {songs.tracks.slice(0, 10).map((song) => (
+              <SongBar
+                key={song.id + Math.random()}
+                song={song}
+                avatarChild={<SongAvatar album={song.album} />}
+                artistChild={<SongArtist artists={song.artists} />}
+                albumChild={<SongAlbum album={song.album} />}
+              />
+            ))}
+          </List>
+        </>
       )}
     </>
   );

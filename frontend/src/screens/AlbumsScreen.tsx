@@ -1,16 +1,30 @@
 /* eslint-disable no-console */
-import { List } from '@material-ui/core';
+import { Grid, List, makeStyles } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useParams } from 'react-router';
-import SongBar from '../components/SongsBar';
+import SongBar, { MyTheme } from '../components/SongsBar';
 import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
-import { ISongs } from './Main/interfaces';
+import { Album, ISongs } from './Main/interfaces';
+
+const useStyles = makeStyles((theme: MyTheme) => ({
+  rootSuccess: {
+    backgroundColor: theme.palette.success.main,
+  },
+  rootFail: {
+    backgroundColor: theme.palette.error.main,
+  },
+  albumHeader: {
+    marginTop: '1rem',
+  },
+}));
 
 const AlbumScreen = () => {
   const [songs, setSongs] = React.useState<ISongs>();
+  const [album, setAlbum] = React.useState<Album>();
   const { id } = useParams<Record<string, string | undefined>>();
-  console.log(id);
+
+  const classes = useStyles();
   React.useEffect(() => {
     const fetchData = async () => {
       const tokenFromStorage = getTokenFromLocalStorage();
@@ -18,12 +32,16 @@ const AlbumScreen = () => {
       try {
         const {
           data: { songsData },
-        } = await axios.post(`/api/songs/albums`, {
-          tokenFromStorage,
-          id,
-        });
+        }: { data: { songsData: ISongs } } = await axios.post(
+          `/api/songs/albums`,
+          {
+            tokenFromStorage,
+            id,
+          }
+        );
         setSongs(songsData);
-        console.log(songsData);
+        const albumData = songsData.tracks[0].album;
+        setAlbum(albumData);
       } catch (err) {
         console.log(err);
       }
@@ -32,13 +50,17 @@ const AlbumScreen = () => {
   }, []);
   return (
     <>
-      {/* <h2>{songs?}</h2> */}
-      <img
-        src={songs?.tracks[0].album.images[1].url}
-        // width={100}
-        alt={songs?.tracks[0].album.name}
-      />
-      <p>Most popular songs:</p>
+      <Grid className={classes.albumHeader} container spacing={10}>
+        <Grid item xs={6}>
+          <img
+            src={songs?.tracks[0].album.images[1].url}
+            alt={songs?.tracks[0].album.name}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          {album && <h2>{`${album?.name} by ${album?.artists[0].name}`}</h2>}
+        </Grid>
+      </Grid>
       {songs && (
         <List component='ol'>
           {songs.tracks.map((song) => (

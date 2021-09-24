@@ -1,8 +1,6 @@
 /* eslint-disable no-console */
 import * as React from 'react';
-// import { Link as RouterLink } from 'react-router-dom';
 import {
-  // Link,
   ListItem,
   ListItemText,
   makeStyles,
@@ -17,7 +15,7 @@ import SongTitle from './SongTitle';
 import SongArtist from './SongBarArtist';
 import SongAlbum from './SongAlbum';
 
-interface MyTheme {
+export interface MyTheme {
   palette: { success: { main: string }; error: { main: string } };
 }
 
