@@ -22,6 +22,7 @@ export interface Image {
 }
 
 export interface Album {
+  map(arg0: (album: any) => JSX.Element): import('react').ReactNode;
   album_type: string;
   artists: Artist[];
   available_markets: string[];

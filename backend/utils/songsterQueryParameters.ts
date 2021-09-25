@@ -4,7 +4,7 @@ const params = {
   redirect_uri: 'http://localhost:8080/redirect',
   state: '34fFs29kd09',
   scope:
-    'user-read-recently-played&user-top-read&user-library-read&playlist-read-private',
+    'user-read-recently-played user-top-read user-library-read playlist-read-private',
 } as const;
 
 export default params;
