@@ -1,16 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-console */
-import {
-  Button,
-  Grid,
-  List,
-  ListItem,
-  makeStyles,
-  Typography,
-} from '@material-ui/core';
+import { Grid, ListItem, makeStyles } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
+import SectionContainer from '../../components/SectionContainer';
 import SongAlbum from '../../components/SongAlbum';
 import SongAvatar from '../../components/SongAvatar';
 import SongArtist from '../../components/SongBarArtist';
@@ -28,6 +22,7 @@ const useStyles = makeStyles(() => ({
   heading: { width: '100%', padding: '1.4rem 0 .6rem' },
   button: { marginTop: '.6rem' },
 }));
+
 const Main = () => {
   const [songs, setSongs] = React.useState<ISongs>();
   const [albums, setAlbums] =
@@ -70,36 +65,29 @@ const Main = () => {
 
   return (
     <>
-      <Grid container component='section' justifyContent='flex-end'>
-        <Typography component='h1' className={classes.heading}>
-          Your favorite albums:
-        </Typography>
-        <List>
-          <Grid container spacing={2}>
-            {albums &&
-              albums.map((item) => (
-                <Grid item xs={3}>
-                  <ListItem className={classes.listItem}>
-                    <img
-                      className={classes.albumWidth}
-                      src={item.album.images[0].url}
-                      alt='album-cover'
-                    />
-                  </ListItem>
-                </Grid>
-              ))}
-          </Grid>
-        </List>
-        <Button variant='contained' className={classes.button}>
-          More
-        </Button>
-      </Grid>
-      <Grid>
-        <h2>Your recently played tracks:</h2>
-        {songs && (
-          <>
-            <List component='ol'>
-              {songs.tracks.slice(0, 10).map((song) => (
+      <SectionContainer heading='Your favorite albums' btnString='More'>
+        <Grid container spacing={2}>
+          {albums &&
+            albums.map((item) => (
+              <Grid item xs={3} key={item.album.id}>
+                <ListItem className={classes.listItem}>
+                  <img
+                    className={classes.albumWidth}
+                    src={item.album.images[0].url}
+                    alt='album-cover'
+                  />
+                </ListItem>
+              </Grid>
+            ))}
+        </Grid>
+      </SectionContainer>
+
+      <SectionContainer heading='Your recently played tracks:' btnString='More'>
+        <Grid container>
+          {songs &&
+            songs.tracks
+              .slice(0, 10)
+              .map((song) => (
                 <SongBar
                   key={song.id + Math.random()}
                   song={song}
@@ -108,10 +96,8 @@ const Main = () => {
                   albumChild={<SongAlbum album={song.album} />}
                 />
               ))}
-            </List>
-          </>
-        )}
-      </Grid>
+        </Grid>
+      </SectionContainer>
     </>
   );
 };
