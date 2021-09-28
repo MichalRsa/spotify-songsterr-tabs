@@ -34,7 +34,7 @@ const SongBar = ({
   artistChild,
   albumChild,
 }: {
-  song: Track;
+  song: SpotifyApi.TrackObjectSimplified | Track;
   avatarChild?: React.ReactElement<typeof SongAvatar>;
   artistChild?: React.ReactElement<typeof SongArtist>;
   albumChild?: React.ReactElement<typeof SongAlbum>;
