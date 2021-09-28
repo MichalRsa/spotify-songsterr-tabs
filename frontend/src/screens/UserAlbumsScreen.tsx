@@ -5,19 +5,13 @@ import {
   Link,
   Paper,
   Typography,
-  //   ListItemIcon,
   makeStyles,
-  //   Paper,
-  //   Typography,
-  //   createStyles,
 } from '@material-ui/core';
 import axios from 'axios';
 import React, { useEffect } from 'react';
-// import { useHistory } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 import { MyTheme } from '../components/SongsBar';
 import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
-import { Album } from './Main/interfaces';
 
 const useStyles = makeStyles((theme: MyTheme) =>
   //   createStyles
@@ -43,19 +37,15 @@ const useStyles = makeStyles((theme: MyTheme) =>
       },
     },
     textCont: {
-      //       backgroundColor: 'blue',
       height: '100%',
     },
   })
 );
 
 const UserAlbumsScreen = () => {
-  //   const [songs, setSongs] = React.useState<ISongs>();
-  const [albums, setAlbums] =
-    React.useState<{ album: Album; added_at: string }[]>();
+  const [albums, setAlbums] = React.useState<SpotifyApi.SavedAlbumObject[]>();
 
   const classes = useStyles();
-  //   const history = useHistory();
 
   useEffect(() => {
     const fetchUserAlbums = async () => {
@@ -66,13 +56,14 @@ const UserAlbumsScreen = () => {
         } = await axios.post('/api/user-library/albums', {
           tokenFromStorage,
         });
+        console.log('album użytkownika', data);
         setAlbums(data.items);
       } catch (err) {
         console.log(err);
       }
     };
     fetchUserAlbums();
-  });
+  }, []);
 
   return (
     <>
@@ -113,7 +104,9 @@ const UserAlbumsScreen = () => {
                       </Typography>
                     </Grid>
                     <Grid item>
-                      <Typography>{album.total_tracks} trakcs</Typography>
+                      <Typography>
+                        {album.tracks.items.length} trakcs
+                      </Typography>
                     </Grid>
                     <Grid item>
                       <Button variant='outlined'>Tabs</Button>

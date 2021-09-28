@@ -8,7 +8,7 @@ import SongAvatar from '../components/SongAvatar';
 // import SongArtist from '../components/SongBarArtist';
 import SongBar from '../components/SongsBar';
 import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
-import { ISongs } from './Main/interfaces';
+import { ISongs } from '../../typings/index';
 
 const ArtistsScreen = () => {
   const [songs, setSongs] = React.useState<ISongs>();

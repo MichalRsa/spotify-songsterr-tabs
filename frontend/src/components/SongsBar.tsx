@@ -8,12 +8,12 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { IsongsterrTabs } from 'songsterr-api-node/dist/interfaces';
-import { Track } from '../screens/Main/interfaces/index';
 import SongBarTuning from './SongsBarTuning';
 import SongAvatar from './SongAvatar';
 import SongTitle from './SongTitle';
 import SongArtist from './SongBarArtist';
 import SongAlbum from './SongAlbum';
+import { Track } from '../../typings';
 
 export interface MyTheme {
   palette: { success: { main: string }; error: { main: string } };

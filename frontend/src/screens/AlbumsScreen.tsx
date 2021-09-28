@@ -6,7 +6,7 @@ import { useParams } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 import SongBar, { MyTheme } from '../components/SongsBar';
 import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
-import { Album, ISongs } from './Main/interfaces';
+import { Album, ISongs } from '../../typings/index';
 
 const useStyles = makeStyles((theme: MyTheme) => ({
   rootSuccess: {

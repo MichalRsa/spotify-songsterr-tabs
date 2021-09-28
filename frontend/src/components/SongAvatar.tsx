@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Avatar, ListItemAvatar } from '@material-ui/core';
-import { Album } from '../screens/Main/interfaces';
+import { Album } from '../../typings/index';
 
 const SongAvatar = ({ album }: { album: Album }) => (
   <ListItemAvatar>

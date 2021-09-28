@@ -11,13 +11,13 @@ import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
-import SectionContainer from '../../components/SectionContainer';
-import SongAlbum from '../../components/SongAlbum';
-import SongAvatar from '../../components/SongAvatar';
-import SongArtist from '../../components/SongBarArtist';
-import SongBar from '../../components/SongsBar';
-import { getTokenFromLocalStorage } from '../../utils/setLocalStorage';
-import { Album, ISongs } from './interfaces';
+import SectionContainer from '../components/SectionContainer';
+import SongAlbum from '../components/SongAlbum';
+import SongAvatar from '../components/SongAvatar';
+import SongArtist from '../components/SongBarArtist';
+import SongBar from '../components/SongsBar';
+import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
+import { Album, ISongs } from '../../typings';
 
 const useStyles = makeStyles(() => ({
   albumWidth: {

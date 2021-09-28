@@ -6,7 +6,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Button, Container, CssBaseline } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import AuthRedirect from './screens/Redirect';
-import Main from './screens/Main/Main';
+import Main from './screens/Main';
 import { RootState } from './store';
 import AlbumsScreen from './screens/AlbumsScreen';
 import ArtistsScreen from './screens/ArtistsScreen';
