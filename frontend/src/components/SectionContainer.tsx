@@ -3,7 +3,7 @@ import * as React from 'react';
 
 interface SectionContainerProps {
   heading: string;
-  btnString: string;
+  btnAction: () => any;
   children: React.ReactNode;
 }
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles(() => ({
 
 const SectionContainer: React.FunctionComponent<SectionContainerProps> = ({
   heading,
-  btnString,
+  btnAction,
   children,
 }) => {
   const classes = useStyles();
@@ -46,8 +46,12 @@ const SectionContainer: React.FunctionComponent<SectionContainerProps> = ({
             ))}
         </Grid> */}
       </List>
-      <Button variant='contained' className={classes.button}>
-        {btnString}
+      <Button
+        variant='contained'
+        className={classes.button}
+        onClick={btnAction}
+      >
+        More
       </Button>
     </Grid>
   );

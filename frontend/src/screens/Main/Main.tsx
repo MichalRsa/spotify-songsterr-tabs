@@ -1,9 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable no-console */
-import { Grid, ListItem, makeStyles } from '@material-ui/core';
+import {
+  Button,
+  Grid,
+  ImageList,
+  ImageListItem,
+  makeStyles,
+} from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
+import { useHistory } from 'react-router';
 import SectionContainer from '../../components/SectionContainer';
 import SongAlbum from '../../components/SongAlbum';
 import SongAvatar from '../../components/SongAvatar';
@@ -28,6 +35,8 @@ const Main = () => {
   const [albums, setAlbums] =
     React.useState<{ album: Album; added_at: string }[]>();
 
+  const history = useHistory();
+
   const classes = useStyles();
 
   useEffect(() => {
@@ -36,7 +45,7 @@ const Main = () => {
       try {
         const {
           data: { songsData },
-        } = await axios.post('api/user-library/recent', {
+        } = await axios.post('/api/user-library/recent', {
           tokenFromStorage,
         });
         setSongs(songsData);
@@ -65,24 +74,34 @@ const Main = () => {
 
   return (
     <>
-      <SectionContainer heading='Your favorite albums' btnString='More'>
-        <Grid container spacing={2}>
+      <SectionContainer
+        heading='Your favorite albums'
+        btnAction={() => {
+          history.push('/user/albums');
+        }}
+      >
+        <ImageList cols={4} rowHeight='auto' gap={16}>
           {albums &&
-            albums.map((item) => (
-              <Grid item xs={3} key={item.album.id}>
-                <ListItem className={classes.listItem}>
+            albums.slice(0, 4).map((item) => (
+              <ImageListItem key={item.album.id} className={classes.listItem}>
+                <Button
+                  onClick={() => history.push(`/albums/${item.album.id}`)}
+                >
                   <img
                     className={classes.albumWidth}
                     src={item.album.images[0].url}
                     alt='album-cover'
                   />
-                </ListItem>
-              </Grid>
+                </Button>
+              </ImageListItem>
             ))}
-        </Grid>
+        </ImageList>
       </SectionContainer>
 
-      <SectionContainer heading='Your recently played tracks:' btnString='More'>
+      <SectionContainer
+        heading='Your recently played tracks:'
+        btnAction={() => {}}
+      >
         <Grid container>
           {songs &&
             songs.tracks

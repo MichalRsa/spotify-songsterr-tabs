@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
-import { Grid, List, makeStyles } from '@material-ui/core';
+import { Grid, Link, List, makeStyles } from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useParams } from 'react-router';
+import { Link as RouterLink } from 'react-router-dom';
 import SongBar, { MyTheme } from '../components/SongsBar';
 import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
 import { Album, ISongs } from './Main/interfaces';
@@ -58,7 +59,17 @@ const AlbumScreen = () => {
           />
         </Grid>
         <Grid item xs={6}>
-          {album && <h2>{`${album?.name} by ${album?.artists[0].name}`}</h2>}
+          {album && (
+            <h2>
+              {`${album?.name} by `}
+              <Link
+                component={RouterLink}
+                to={`/artists/${album.artists[0].id}`}
+              >
+                {album?.artists[0].name}
+              </Link>
+            </h2>
+          )}
         </Grid>
       </Grid>
       {songs && (

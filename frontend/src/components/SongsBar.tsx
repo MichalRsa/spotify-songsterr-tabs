@@ -42,6 +42,7 @@ const SongBar = ({
   const [tabs, setTabs] = React.useState<{ song: IsongsterrTabs }>();
   const [loading, setLoading] = React.useState(true);
   const styles = useStyles();
+
   React.useEffect(() => {
     const fetchTabs = async () => {
       const { data } = await axios.post(`/api/songs/tabs`, {
