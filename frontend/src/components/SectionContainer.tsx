@@ -3,7 +3,7 @@ import * as React from 'react';
 
 interface SectionContainerProps {
   heading: string;
-  btnAction: () => any;
+  btnAction: undefined | (() => any);
   children: React.ReactNode;
 }
 
@@ -46,13 +46,15 @@ const SectionContainer: React.FunctionComponent<SectionContainerProps> = ({
             ))}
         </Grid> */}
       </List>
-      <Button
-        variant='contained'
-        className={classes.button}
-        onClick={btnAction}
-      >
-        More
-      </Button>
+      {btnAction && (
+        <Button
+          variant='contained'
+          className={classes.button}
+          onClick={btnAction}
+        >
+          More
+        </Button>
+      )}
     </Grid>
   );
 };

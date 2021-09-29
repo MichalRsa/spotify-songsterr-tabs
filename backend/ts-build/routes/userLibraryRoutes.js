@@ -83,7 +83,7 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 access_token = req.body.tokens.access_token;
-                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played?limit=50", {
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played?limit=10", {
                         headers: { Authorization: "Bearer " + access_token },
                     })];
             case 1:
@@ -111,6 +111,79 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
                 }
                 else {
                     console.log('Error', err_2.message);
+                }
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); });
+router.post('/albums', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var access_token, data, err_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                access_token = req.body.tokens.access_token;
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/albums", {
+                        headers: { Authorization: "Bearer " + access_token },
+                    })];
+            case 1:
+                data = (_a.sent()).data;
+                res.json({ data: data });
+                return [3 /*break*/, 3];
+            case 2:
+                err_3 = _a.sent();
+                if (err_3.response) {
+                    console.log(err_3.response.data);
+                    console.log(err_3.response.status);
+                    console.log(err_3.response.headers);
+                }
+                else if (err_3.request) {
+                    console.log(err_3.request);
+                }
+                else {
+                    console.log('Error', err_3.message);
+                }
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); });
+router.post('/tracks', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var access_token, data, idsArray, ids, songsData, err_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                access_token = req.body.tokens.access_token;
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/tracks?limit=10", {
+                        headers: { Authorization: "Bearer " + access_token },
+                    })];
+            case 1:
+                data = (_a.sent()).data;
+                idsArray = data.items.map(function (song) { return song.track.id; });
+                ids = idsArray.join(',');
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/tracks?ids=" + ids, {
+                        headers: {
+                            Authorization: "Bearer " + access_token,
+                        },
+                    })];
+            case 2:
+                songsData = (_a.sent()).data;
+                res.json({ songsData: songsData });
+                return [3 /*break*/, 4];
+            case 3:
+                err_4 = _a.sent();
+                if (err_4.response) {
+                    console.log(err_4.response.data);
+                    console.log(err_4.response.status);
+                    console.log(err_4.response.headers);
+                }
+                else if (err_4.request) {
+                    console.log(err_4.request);
+                }
+                else {
+                    console.log('Error', err_4.message);
                 }
                 return [3 /*break*/, 4];
             case 4: return [2 /*return*/];

@@ -31,7 +31,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Main = () => {
-  const [songs, setSongs] = React.useState<ISongs>();
+  const [recent, setRecent] = React.useState<ISongs>();
+  const [favTracks, setFavTracks] = React.useState<ISongs>();
   const [albums, setAlbums] =
     React.useState<{ album: Album; added_at: string }[]>();
 
@@ -48,7 +49,7 @@ const Main = () => {
         } = await axios.post('/api/user-library/recent', {
           tokenFromStorage,
         });
-        setSongs(songsData);
+        setRecent(songsData);
       } catch (err) {
         console.log(err);
       }
@@ -68,14 +69,28 @@ const Main = () => {
         console.log(err);
       }
     };
+    const fetchFavsSongs = async () => {
+      const tokenFromStorage = getTokenFromLocalStorage();
+      try {
+        const {
+          data: { songsData },
+        } = await axios.post('/api/user-library/tracks', {
+          tokenFromStorage,
+        });
+        setFavTracks(songsData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
     fetchRecent();
     fetchUserAlbums();
+    fetchFavsSongs();
   }, []);
 
   return (
     <>
       <SectionContainer
-        heading='Your favorite albums'
+        heading='Your favorite albums:'
         btnAction={() => {
           history.push('/user/albums');
         }}
@@ -100,11 +115,35 @@ const Main = () => {
 
       <SectionContainer
         heading='Your recently played tracks:'
-        btnAction={() => {}}
+        btnAction={() => {
+          history.push('/user/recent');
+        }}
       >
         <Grid container>
-          {songs &&
-            songs.tracks
+          {recent &&
+            recent.tracks
+              .slice(0, 10)
+              .map((song) => (
+                <SongBar
+                  key={song.id + Math.random()}
+                  song={song}
+                  avatarChild={<SongAvatar album={song.album} />}
+                  artistChild={<SongArtist artists={song.artists} />}
+                  albumChild={<SongAlbum album={song.album} />}
+                />
+              ))}
+        </Grid>
+      </SectionContainer>
+
+      <SectionContainer
+        heading='Your favorite tracks:'
+        btnAction={() => {
+          history.push('/user/tracks');
+        }}
+      >
+        <Grid container>
+          {favTracks &&
+            favTracks.tracks
               .slice(0, 10)
               .map((song) => (
                 <SongBar
