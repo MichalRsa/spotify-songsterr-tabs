@@ -13,6 +13,7 @@ import ArtistsScreen from './screens/ArtistsScreen';
 import UserAlbumsScreen from './screens/UserAlbumsScreen';
 import NavBar from './components/Nav';
 import RecentScreen from './screens/RecentScreen';
+import Footer from './components/Footer';
 
 const App = () => {
   const user = useSelector((store: RootState) => store.spotifyAuth?.user);
@@ -66,6 +67,7 @@ const App = () => {
           </Route>
         </Switch>
       )}
+      <Footer />
     </BrowserRouter>
   );
 };

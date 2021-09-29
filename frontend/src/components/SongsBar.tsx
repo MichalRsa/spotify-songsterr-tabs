@@ -4,6 +4,7 @@ import {
   ListItem,
   ListItemText,
   makeStyles,
+  Theme,
   Typography,
 } from '@material-ui/core';
 import axios from 'axios';
@@ -19,9 +20,9 @@ export interface MyTheme {
   palette: { success: { main: string }; error: { main: string } };
 }
 
-const useStyles = makeStyles((theme: MyTheme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   rootSuccess: {
-    backgroundColor: theme.palette.success.main,
+    backgroundColor: theme.palette.secondary.main,
   },
   rootFail: {
     backgroundColor: theme.palette.error.main,

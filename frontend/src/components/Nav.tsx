@@ -21,7 +21,7 @@ import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    colorBgc: { backgroundColor: theme.palette.success.main },
+    colorBgc: { backgroundColor: theme.palette.secondary.dark },
     grow: {
       flexGrow: 1,
     },
