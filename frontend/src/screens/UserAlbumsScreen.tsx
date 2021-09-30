@@ -11,7 +11,7 @@ const UserAlbumsScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (albums === undefined) dispatch(fetchUserAlbums());
+    dispatch(fetchUserAlbums());
   }, []);
 
   return (

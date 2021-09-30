@@ -39,7 +39,7 @@ export const fetchUserAlbums = () => async (dispatch: Dispatch) => {
   try {
     const {
       data: { data },
-    } = await axios.post('api/user-library/albums', {
+    } = await axios.post('/api/user-library/albums', {
       tokenFromStorage,
     });
     console.log(data.items);

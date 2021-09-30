@@ -11,9 +11,12 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const { access_token } = req.body.tokens;
-      const { data } = await axios.get(`https://api.spotify.com/v1/me/albums`, {
-        headers: { Authorization: `Bearer ${access_token}` },
-      });
+      const { data } = await axios.get(
+        `https://api.spotify.com/v1/me/albums?offset=0&limit=10`,
+        {
+          headers: { Authorization: `Bearer ${access_token}` },
+        }
+      );
       res.json({ data });
     } catch (err: any) {
       if (err.response) {
@@ -66,29 +69,33 @@ router.post(
   }
 );
 
-router.post(
-  '/albums',
-  exchangeTokenMiddleware,
-  async (req: Request, res: Response) => {
-    try {
-      const { access_token } = req.body.tokens;
-      const { data } = await axios.get(`https://api.spotify.com/v1/me/albums`, {
-        headers: { Authorization: `Bearer ${access_token}` },
-      });
-      res.json({ data });
-    } catch (err: any) {
-      if (err.response) {
-        console.log(err.response.data);
-        console.log(err.response.status);
-        console.log(err.response.headers);
-      } else if (err.request) {
-        console.log(err.request);
-      } else {
-        console.log('Error', err.message);
-      }
-    }
-  }
-);
+// router.post(
+//   '/albums',
+//   exchangeTokenMiddleware,
+//   async (req: Request, res: Response) => {
+//     try {
+//       const { access_token } = req.body.tokens;
+//       const { data } = await axios.get(
+//         `https://api.spotify.com/v1/me/albums?offset=0&limit=10`,
+//         {
+//           headers: { Authorization: `Bearer ${access_token}` },
+//         }
+//       );
+//       console.log(data);
+//       res.json({ data });
+//     } catch (err: any) {
+//       if (err.response) {
+//         console.log(err.response.data);
+//         console.log(err.response.status);
+//         console.log(err.response.headers);
+//       } else if (err.request) {
+//         console.log(err.request);
+//       } else {
+//         console.log('Error', err.message);
+//       }
+//     }
+//   }
+// );
 
 router.post(
   '/tracks',
