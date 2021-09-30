@@ -76,13 +76,7 @@ const SongBar = ({
         />
         <Typography component='span'>
           {artistChild}
-          {/* <Link component={RouterLink} to={`/artists/${artists[0].id}`}>
-            {artists[0].name}
-          </Link> */}
           {artistChild && albumChild && <span> - </span>}
-          {/* <Link component={RouterLink} to={`/albums/${album.id}`}>
-            {album.name}
-          </Link> */}
           {albumChild}
         </Typography>
       </ListItemText>

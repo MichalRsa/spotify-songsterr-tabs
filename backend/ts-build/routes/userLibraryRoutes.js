@@ -83,7 +83,7 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 access_token = req.body.tokens.access_token;
-                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played?limit=10", {
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played?limit=50", {
                         headers: { Authorization: "Bearer " + access_token },
                     })];
             case 1:
@@ -156,7 +156,7 @@ router.post('/tracks', exchangeTokenMiddleware_1.default, function (req, res) { 
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 access_token = req.body.tokens.access_token;
-                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/tracks?limit=10", {
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/tracks?limit=50", {
                         headers: { Authorization: "Bearer " + access_token },
                     })];
             case 1:

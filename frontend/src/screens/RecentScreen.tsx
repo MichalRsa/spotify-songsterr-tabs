@@ -40,17 +40,15 @@ const RecentScreen = () => {
       >
         <Grid container>
           {recent &&
-            recent.tracks
-              .slice(0, 10)
-              .map((song) => (
-                <SongBar
-                  key={song.id + Math.random()}
-                  song={song}
-                  avatarChild={<SongAvatar album={song.album} />}
-                  artistChild={<SongArtist artists={song.artists} />}
-                  albumChild={<SongAlbum album={song.album} />}
-                />
-              ))}
+            recent.tracks.map((song) => (
+              <SongBar
+                key={song.id + Math.random()}
+                song={song}
+                avatarChild={<SongAvatar album={song.album} />}
+                artistChild={<SongArtist artists={song.artists} />}
+                albumChild={<SongAlbum album={song.album} />}
+              />
+            ))}
         </Grid>
       </SectionContainer>
     </>

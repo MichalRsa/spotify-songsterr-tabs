@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createTheme } from '@material-ui/core';
 
 const theme = createTheme({
@@ -19,6 +20,7 @@ const theme = createTheme({
     },
     MuiLink: { root: { color: 'black' } },
     MuiTypography: { root: { color: 'black' } },
+    MuiButton: { contained: { backgroundColor: '#1ed760' } },
   },
 });
 

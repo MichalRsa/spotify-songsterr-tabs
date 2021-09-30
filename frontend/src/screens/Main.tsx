@@ -7,17 +7,24 @@ import {
   ImageListItem,
   makeStyles,
 } from '@material-ui/core';
-import axios from 'axios';
+// import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import SectionContainer from '../components/SectionContainer';
 import SongAlbum from '../components/SongAlbum';
 import SongAvatar from '../components/SongAvatar';
 import SongArtist from '../components/SongBarArtist';
 import SongBar from '../components/SongsBar';
-import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
-import { Album, ISongs } from '../../typings';
+// import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
+// import { ISongs } from '../../typings';
+import {
+  fetchFavsSongs,
+  fetchRecent,
+  fetchUserAlbums,
+} from '../actions/spotifyUserDataActions';
+import { RootState } from '../store';
 
 const useStyles = makeStyles(() => ({
   albumWidth: {
@@ -31,60 +38,21 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Main = () => {
-  const [recent, setRecent] = React.useState<ISongs>();
-  const [favTracks, setFavTracks] = React.useState<ISongs>();
-  const [albums, setAlbums] =
-    React.useState<{ album: Album; added_at: string }[]>();
+  // const [favTracks, setFavTracks] = React.useState<ISongs>();
+
+  const dispatch = useDispatch();
+  const recent = useSelector((state: RootState) => state.userRecent?.recent);
+  const favTracks = useSelector((state: RootState) => state.userRecent?.recent);
+  const albums = useSelector((state: RootState) => state.userAlbums?.albums);
 
   const history = useHistory();
 
   const classes = useStyles();
 
   useEffect(() => {
-    const fetchRecent = async () => {
-      const tokenFromStorage = getTokenFromLocalStorage();
-      try {
-        const {
-          data: { songsData },
-        } = await axios.post('/api/user-library/recent', {
-          tokenFromStorage,
-        });
-        setRecent(songsData);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    const fetchUserAlbums = async () => {
-      console.log('fetchAlbums');
-      const tokenFromStorage = getTokenFromLocalStorage();
-      try {
-        const {
-          data: { data },
-        } = await axios.post('api/user-library/albums', {
-          tokenFromStorage,
-        });
-        console.log(data.items);
-        setAlbums(data.items);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    const fetchFavsSongs = async () => {
-      const tokenFromStorage = getTokenFromLocalStorage();
-      try {
-        const {
-          data: { songsData },
-        } = await axios.post('/api/user-library/tracks', {
-          tokenFromStorage,
-        });
-        setFavTracks(songsData);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchRecent();
-    fetchUserAlbums();
-    fetchFavsSongs();
+    if (recent === undefined) dispatch(fetchRecent());
+    if (albums === undefined) dispatch(fetchUserAlbums());
+    if (favTracks === undefined) dispatch(fetchFavsSongs());
   }, []);
 
   return (

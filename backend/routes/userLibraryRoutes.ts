@@ -35,7 +35,7 @@ router.post(
     try {
       const { access_token } = req.body.tokens;
       const { data } = await axios.get(
-        `https://api.spotify.com/v1/me/player/recently-played?limit=10`,
+        `https://api.spotify.com/v1/me/player/recently-played?limit=50`,
         {
           headers: { Authorization: `Bearer ${access_token}` },
         }
@@ -89,6 +89,7 @@ router.post(
     }
   }
 );
+
 router.post(
   '/tracks',
   exchangeTokenMiddleware,
@@ -96,7 +97,7 @@ router.post(
     try {
       const { access_token } = req.body.tokens;
       const { data } = await axios.get(
-        `https://api.spotify.com/v1/me/tracks?limit=10`,
+        `https://api.spotify.com/v1/me/tracks?limit=50`,
         {
           headers: { Authorization: `Bearer ${access_token}` },
         }

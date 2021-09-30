@@ -1,31 +1,17 @@
 /* eslint-disable no-console */
 
-import axios from 'axios';
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserAlbums } from '../actions/spotifyUserDataActions';
 import AlbumCard from '../components/AlbumCard';
-import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
+import { RootState } from '../store';
 
 const UserAlbumsScreen = () => {
-  const [albums, setAlbums] = React.useState<SpotifyApi.SavedAlbumObject[]>();
-
-  // const classes = useStyles();
+  const albums = useSelector((state: RootState) => state.userAlbums?.albums);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchUserAlbums = async () => {
-      const tokenFromStorage = getTokenFromLocalStorage();
-      try {
-        const {
-          data: { data },
-        } = await axios.post('/api/user-library/albums', {
-          tokenFromStorage,
-        });
-        console.log('album użytkownika', data);
-        setAlbums(data.items);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUserAlbums();
+    if (albums === undefined) dispatch(fetchUserAlbums());
   }, []);
 
   return (
