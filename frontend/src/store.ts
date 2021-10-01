@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { ISongs } from '../typings';
 import userLoginReducer, { ILoginState } from './reducers/spotifyAuthReducer';
 import {
   spotifyUserRecentReducer,
@@ -25,8 +24,8 @@ const rootReducer = {
 
 interface IPreloadedState {
   spotifyAuth: ILoginState | undefined;
-  userRecent: IUserState<ISongs> | undefined;
-  userFavorite: IUserState<ISongs> | undefined;
+  userRecent: IUserState<SpotifyApi.MultipleTracksResponse> | undefined;
+  userFavorite: IUserState<SpotifyApi.UsersSavedTracksResponse> | undefined;
   userAlbums: IUserState<SpotifyApi.UsersSavedAlbumsResponse> | undefined;
 }
 

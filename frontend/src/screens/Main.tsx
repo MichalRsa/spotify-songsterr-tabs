@@ -41,8 +41,12 @@ const Main = () => {
   // const [favTracks, setFavTracks] = React.useState<ISongs>();
 
   const dispatch = useDispatch();
-  const recent = useSelector((state: RootState) => state.userRecent?.recent);
-  const favTracks = useSelector((state: RootState) => state.userRecent?.recent);
+  const recent = useSelector(
+    (state: RootState) => state.userRecent?.recent?.tracks
+  );
+  const favTracks = useSelector(
+    (state: RootState) => state.userFavorite?.favSongs?.items
+  );
   const albums = useSelector(
     (state: RootState) => state.userAlbums?.albums?.items
   );
@@ -91,7 +95,7 @@ const Main = () => {
       >
         <Grid container>
           {recent &&
-            recent.tracks
+            recent
               .slice(0, 10)
               .map((song) => (
                 <SongBar
@@ -113,9 +117,9 @@ const Main = () => {
       >
         <Grid container>
           {favTracks &&
-            favTracks.tracks
+            favTracks
               .slice(0, 10)
-              .map((song) => (
+              .map(({ track: song }) => (
                 <SongBar
                   key={song.id + Math.random()}
                   song={song}

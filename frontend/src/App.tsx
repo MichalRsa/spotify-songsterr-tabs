@@ -14,6 +14,7 @@ import UserAlbumsScreen from './screens/UserAlbumsScreen';
 import NavBar from './components/Nav';
 import RecentScreen from './screens/RecentScreen';
 import Footer from './components/Footer';
+import UserTracksScreen from './screens/UserTracksScreen';
 
 const App = () => {
   const user = useSelector((store: RootState) => store.spotifyAuth?.user);
@@ -39,7 +40,7 @@ const App = () => {
             <Route path='/albums/:id' component={AlbumsScreen} />
             <Route path='/user/albums' component={UserAlbumsScreen} />
             <Route path='/user/recent' component={RecentScreen} />
-            <Route path='/user/tracks' component={UserAlbumsScreen} />
+            <Route path='/user/tracks' component={UserTracksScreen} />
             <Route path='/artists/:id' component={ArtistsScreen} />
             <Redirect from='/redirect' to='/main' />
             <Redirect from='/' to='/main' />

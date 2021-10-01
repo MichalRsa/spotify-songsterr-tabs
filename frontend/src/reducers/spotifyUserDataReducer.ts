@@ -1,6 +1,5 @@
 import { Reducer } from 'react';
 import { AnyAction } from 'redux';
-import { ISongs } from '../../typings';
 import {
   ALBUMS_SUCCESS,
   ALBUMS_FAIL,
@@ -8,6 +7,9 @@ import {
   RECENT_FAIL,
   RECENT_REQUEST,
   RECENT_SUCCESS,
+  FAVORITE_REQUEST,
+  FAVORITE_SUCCESS,
+  FAVORITE_FAIL,
 } from '../constants/spotifyUserDataConstants';
 
 type DataKey = 'recent' | 'albums' | 'favSongs';
@@ -20,7 +22,7 @@ export type IUserState<T> = {
 };
 
 export const spotifyUserRecentReducer: Reducer<
-  IUserState<ISongs> | undefined,
+  IUserState<SpotifyApi.MultipleTracksResponse> | undefined,
   AnyAction
 > = (
   state = { loading: true, recent: undefined, error: undefined },
@@ -39,18 +41,18 @@ export const spotifyUserRecentReducer: Reducer<
 };
 
 export const spotifyUserFavoriteReducer: Reducer<
-  IUserState<ISongs> | undefined,
+  IUserState<SpotifyApi.UsersSavedTracksResponse> | undefined,
   AnyAction
 > = (
   state = { loading: true, favSongs: undefined, error: undefined },
   action
 ) => {
   switch (action.type) {
-    case RECENT_REQUEST:
+    case FAVORITE_REQUEST:
       return { loading: true, favSongs: undefined, error: undefined };
-    case RECENT_SUCCESS:
+    case FAVORITE_SUCCESS:
       return { loading: false, favSongs: action.payload, error: undefined };
-    case RECENT_FAIL:
+    case FAVORITE_FAIL:
       return { loading: false, favSongs: undefined, error: action.payload };
     default:
       return state;

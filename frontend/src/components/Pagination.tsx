@@ -4,15 +4,9 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { RootState } from '../store';
-// import useQuery from '../hooks/useQuery';
 
 const Pagination = () => {
   const history = useHistory();
-
-  //   const query = useQuery();
-  //   const QueryOffset = query.get('offset');
-  //    const QueryOffsetNumber =
-  //     typeof QueryOffset === 'string' && parseFloat(QueryOffset);
 
   const pagination = useSelector(
     (state: RootState) => state.userAlbums?.albums

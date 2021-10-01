@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import { Avatar, ListItemAvatar } from '@material-ui/core';
-import { Album } from '../../typings/index';
+// import { Album } from '../../typings/index';
 
-const SongAvatar = ({ album }: { album: Album }) => (
+const SongAvatar = ({ album }: { album: SpotifyApi.AlbumObjectSimplified }) => (
   <ListItemAvatar>
     <Avatar
       variant='square'

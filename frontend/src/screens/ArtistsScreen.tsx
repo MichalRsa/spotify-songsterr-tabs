@@ -8,10 +8,10 @@ import SongAvatar from '../components/SongAvatar';
 // import SongArtist from '../components/SongBarArtist';
 import SongBar from '../components/SongsBar';
 import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
-import { ISongs } from '../../typings/index';
+// import { ISongs } from '../../typings/index';
 
 const ArtistsScreen = () => {
-  const [songs, setSongs] = React.useState<ISongs>();
+  const [songs, setSongs] = React.useState<SpotifyApi.MultipleTracksResponse>();
   const { id } = useParams<Record<string, string | undefined>>();
   React.useEffect(() => {
     const fetchData = async () => {

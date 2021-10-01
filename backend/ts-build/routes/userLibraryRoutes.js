@@ -80,31 +80,33 @@ router.post('/albums', exchangeTokenMiddleware_1.default, function (req, res) { 
         }
     });
 }); });
-router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var access_token, data, idsArray, ids, songsData, err_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+router.post('/tracks', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var access_token, _a, offset, limit, songsData, err_2;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
+                _b.trys.push([0, 2, , 3]);
                 access_token = req.body.tokens.access_token;
-                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played?limit=50", {
+                _a = req.body, offset = _a.offset, limit = _a.limit;
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/tracks?offset=" + offset + "&limit=" + limit, {
                         headers: { Authorization: "Bearer " + access_token },
                     })];
             case 1:
-                data = (_a.sent()).data;
-                idsArray = data.items.map(function (song) { return song.track.id; });
-                ids = idsArray.join(',');
-                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/tracks?ids=" + ids, {
-                        headers: {
-                            Authorization: "Bearer " + access_token,
-                        },
-                    })];
-            case 2:
-                songsData = (_a.sent()).data;
+                songsData = (_b.sent()).data;
+                //       const idsArray = data.items.map((song: any) => song.track.id);
+                //       const ids = idsArray.join(',');
+                //       const { data: songsData } = await axios.get(
+                //         `https://api.spotify.com/v1/tracks?ids=${ids}`,
+                //         {
+                //           headers: {
+                //             Authorization: `Bearer ${access_token}`,
+                //           },
+                //         }
+                //       );
                 res.json({ songsData: songsData });
-                return [3 /*break*/, 4];
-            case 3:
-                err_2 = _a.sent();
+                return [3 /*break*/, 3];
+            case 2:
+                err_2 = _b.sent();
                 if (err_2.response) {
                     console.log(err_2.response.data);
                     console.log(err_2.response.status);
@@ -116,46 +118,19 @@ router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { 
                 else {
                     console.log('Error', err_2.message);
                 }
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
+                return [3 /*break*/, 3];
+            case 3: return [2 /*return*/];
         }
     });
 }); });
-// router.post(
-//   '/albums',
-//   exchangeTokenMiddleware,
-//   async (req: Request, res: Response) => {
-//     try {
-//       const { access_token } = req.body.tokens;
-//       const { data } = await axios.get(
-//         `https://api.spotify.com/v1/me/albums?offset=0&limit=10`,
-//         {
-//           headers: { Authorization: `Bearer ${access_token}` },
-//         }
-//       );
-//       console.log(data);
-//       res.json({ data });
-//     } catch (err: any) {
-//       if (err.response) {
-//         console.log(err.response.data);
-//         console.log(err.response.status);
-//         console.log(err.response.headers);
-//       } else if (err.request) {
-//         console.log(err.request);
-//       } else {
-//         console.log('Error', err.message);
-//       }
-//     }
-//   }
-// );
-router.post('/tracks', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+router.post('/recent', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var access_token, data, idsArray, ids, songsData, err_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 3, , 4]);
                 access_token = req.body.tokens.access_token;
-                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/tracks?limit=50", {
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played?limit=50", {
                         headers: { Authorization: "Bearer " + access_token },
                     })];
             case 1:
