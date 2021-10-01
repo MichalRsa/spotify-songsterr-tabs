@@ -33,21 +33,25 @@ export const fetchRecent = () => async (dispatch: Dispatch) => {
   }
 };
 
-export const fetchUserAlbums = () => async (dispatch: Dispatch) => {
-  dispatch({ type: ALBUMS_REQUEST });
-  const tokenFromStorage = getTokenFromLocalStorage();
-  try {
-    const {
-      data: { data },
-    } = await axios.post('/api/user-library/albums', {
-      tokenFromStorage,
-    });
-    console.log(data.items);
-    dispatch({ type: ALBUMS_SUCCESS, payload: data.items });
-  } catch (err) {
-    dispatch({ type: ALBUMS_FAIL, payload: err });
-  }
-};
+export const fetchUserAlbums =
+  (offset: string = '0', limit: string = '10') =>
+  async (dispatch: Dispatch) => {
+    dispatch({ type: ALBUMS_REQUEST });
+    const tokenFromStorage = getTokenFromLocalStorage();
+    try {
+      const {
+        data: { data },
+      } = await axios.post('/api/user-library/albums', {
+        tokenFromStorage,
+        offset,
+        limit,
+      });
+      console.log(data.items);
+      dispatch({ type: ALBUMS_SUCCESS, payload: data });
+    } catch (err) {
+      dispatch({ type: ALBUMS_FAIL, payload: err });
+    }
+  };
 
 export const fetchFavsSongs = () => async (dispatch: Dispatch) => {
   dispatch({ type: FAVORITE_REQUEST });

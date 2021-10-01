@@ -45,21 +45,25 @@ var express_1 = __importDefault(require("express"));
 var exchangeTokenMiddleware_1 = __importDefault(require("../middleware/exchangeTokenMiddleware"));
 var router = express_1.default.Router();
 router.post('/albums', exchangeTokenMiddleware_1.default, function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var access_token, data, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
+    var access_token, _a, offset, limit, data, err_1;
+    return __generator(this, function (_b) {
+        switch (_b.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
+                _b.trys.push([0, 2, , 3]);
                 access_token = req.body.tokens.access_token;
-                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/albums?offset=0&limit=10", {
+                _a = req.body, offset = _a.offset, limit = _a.limit;
+                //       const indexOfFirst = () => offset;
+                //       const numOfAlbums = () => limit;
+                console.log(offset, limit);
+                return [4 /*yield*/, axios_1.default.get("https://api.spotify.com/v1/me/albums?offset=" + offset + "&limit=" + limit, {
                         headers: { Authorization: "Bearer " + access_token },
                     })];
             case 1:
-                data = (_a.sent()).data;
+                data = (_b.sent()).data;
                 res.json({ data: data });
                 return [3 /*break*/, 3];
             case 2:
-                err_1 = _a.sent();
+                err_1 = _b.sent();
                 if (err_1.response) {
                     console.log(err_1.response.data);
                     console.log(err_1.response.status);

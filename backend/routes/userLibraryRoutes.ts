@@ -11,8 +11,12 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const { access_token } = req.body.tokens;
+      const { offset, limit } = req.body;
+      //       const indexOfFirst = () => offset;
+      //       const numOfAlbums = () => limit;
+      console.log(offset, limit);
       const { data } = await axios.get(
-        `https://api.spotify.com/v1/me/albums?offset=0&limit=10`,
+        `https://api.spotify.com/v1/me/albums?offset=${offset}&limit=${limit}`,
         {
           headers: { Authorization: `Bearer ${access_token}` },
         }

@@ -27,7 +27,7 @@ interface IPreloadedState {
   spotifyAuth: ILoginState | undefined;
   userRecent: IUserState<ISongs> | undefined;
   userFavorite: IUserState<ISongs> | undefined;
-  userAlbums: IUserState<SpotifyApi.SavedAlbumObject[]> | undefined;
+  userAlbums: IUserState<SpotifyApi.UsersSavedAlbumsResponse> | undefined;
 }
 
 const preloadedState: IPreloadedState = {

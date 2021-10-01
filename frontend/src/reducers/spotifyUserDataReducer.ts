@@ -58,7 +58,7 @@ export const spotifyUserFavoriteReducer: Reducer<
 };
 
 export const spotifyUserAlbumsReducer: Reducer<
-  IUserState<SpotifyApi.SavedAlbumObject[]> | undefined,
+  IUserState<SpotifyApi.UsersSavedAlbumsResponse> | undefined,
   AnyAction
 > = (
   state = { loading: true, albums: undefined, error: undefined },

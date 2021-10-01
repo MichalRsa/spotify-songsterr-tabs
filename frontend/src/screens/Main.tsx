@@ -43,7 +43,9 @@ const Main = () => {
   const dispatch = useDispatch();
   const recent = useSelector((state: RootState) => state.userRecent?.recent);
   const favTracks = useSelector((state: RootState) => state.userRecent?.recent);
-  const albums = useSelector((state: RootState) => state.userAlbums?.albums);
+  const albums = useSelector(
+    (state: RootState) => state.userAlbums?.albums?.items
+  );
 
   const history = useHistory();
 
