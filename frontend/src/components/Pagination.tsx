@@ -1,16 +1,10 @@
 /* eslint-disable no-console */
 import { Button, Grid } from '@material-ui/core';
 import * as React from 'react';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { RootState } from '../store';
 
-const Pagination = () => {
+const Pagination = ({ pagination, route }: any) => {
   const history = useHistory();
-
-  const pagination = useSelector(
-    (state: RootState) => state.userAlbums?.albums
-  );
 
   if (pagination) {
     const pagesArray: Array<number> = [];
@@ -19,16 +13,13 @@ const Pagination = () => {
     for (let i = 0; i <= numOfPages; i += 1) {
       pagesArray.push(i);
     }
-    //     console.log(pagesArray);
     return (
       <Grid container justifyContent='center'>
         <Grid item>
           <Button
             disabled={!previous}
             onClick={() =>
-              history.push(
-                `/user/albums?limit=${limit}&offset=${offset - limit}`
-              )
+              history.push(`${route}?limit=${limit}&offset=${offset - limit}`)
             }
           >
             previous
@@ -39,7 +30,7 @@ const Pagination = () => {
               disabled={offset === pageNum * limit}
               onClick={() =>
                 history.push(
-                  `/user/albums?limit=${limit}&offset=${pageNum * limit}`
+                  `${route}?limit=${limit}&offset=${pageNum * limit}`
                 )
               }
             >
@@ -50,9 +41,7 @@ const Pagination = () => {
           <Button
             disabled={!next}
             onClick={() =>
-              history.push(
-                `/user/albums?limit=${limit}&offset=${offset + limit}`
-              )
+              history.push(`${route}?limit=${limit}&offset=${offset + limit}`)
             }
           >
             next

@@ -18,7 +18,7 @@ const UserTracksScreen = () => {
   const offset = query.get('offset') || undefined;
   const limit = query.get('limit') || undefined;
   const favTracks = useSelector(
-    (state: RootState) => state.userFavorite?.favSongs?.items
+    (state: RootState) => state.userFavorite?.favSongs
   );
   const dispatch = useDispatch();
 
@@ -30,7 +30,7 @@ const UserTracksScreen = () => {
     <>
       <Grid container>
         {favTracks &&
-          favTracks.map(({ track: song }) => (
+          favTracks.items.map(({ track: song }) => (
             <SongBar
               key={song.id + Math.random()}
               song={song}
@@ -40,7 +40,7 @@ const UserTracksScreen = () => {
             />
           ))}
       </Grid>
-      <Pagination />
+      <Pagination pagination={favTracks} route='/user/tracks' />
     </>
   );
 };

@@ -12,9 +12,7 @@ const UserAlbumsScreen = () => {
   const query = useQuery();
   const offset = query.get('offset') || undefined;
   const limit = query.get('limit') || undefined;
-  const albums = useSelector(
-    (state: RootState) => state.userAlbums?.albums?.items
-  );
+  const albums = useSelector((state: RootState) => state.userAlbums?.albums);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,8 +22,10 @@ const UserAlbumsScreen = () => {
   return (
     <>
       {albums &&
-        albums.map(({ album }) => <AlbumCard key={album.id} album={album} />)}
-      <Pagination />
+        albums.items.map(({ album }) => (
+          <AlbumCard key={album.id} album={album} />
+        ))}
+      <Pagination pagination={albums} route='/user/albums' />
     </>
   );
 };
