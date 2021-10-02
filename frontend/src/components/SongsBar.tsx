@@ -45,17 +45,31 @@ const SongBar = ({
   const styles = useStyles();
 
   React.useEffect(() => {
+    const { CancelToken } = axios;
+    const source = CancelToken.source();
+
     const fetchTabs = async () => {
-      const { data } = await axios.post(`/api/songs/tabs`, {
-        title: name,
-        artist: artists[0].name,
-      });
+      try {
+        const { data } = await axios.post(
+          `/api/songs/tabs`,
+          {
+            title: name,
+            artist: artists[0].name,
+          },
+          {
+            cancelToken: source.token,
+          }
+        );
 
-      setTabs(data);
+        setTabs(data);
 
-      setLoading(false);
+        setLoading(false);
+      } catch (err) {
+        // console.log(err);
+      }
     };
     fetchTabs();
+    return () => source.cancel();
   }, []);
 
   const haveTabs = (() => !!(tabs && !!tabs.song.length))();
