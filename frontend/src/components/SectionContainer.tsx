@@ -1,10 +1,18 @@
-import { Button, Grid, List, makeStyles, Typography } from '@material-ui/core';
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  List,
+  makeStyles,
+  Typography,
+} from '@material-ui/core';
 import * as React from 'react';
 
 interface SectionContainerProps {
   heading: string;
   btnAction: undefined | (() => any);
   children: React.ReactNode;
+  loading: boolean;
 }
 
 const useStyles = makeStyles(() => ({
@@ -22,6 +30,7 @@ const SectionContainer: React.FunctionComponent<SectionContainerProps> = ({
   heading,
   btnAction,
   children,
+  loading,
 }) => {
   const classes = useStyles();
   return (
@@ -29,31 +38,21 @@ const SectionContainer: React.FunctionComponent<SectionContainerProps> = ({
       <Typography component='h1' className={classes.heading}>
         {heading}
       </Typography>
-      <List>
-        {children}
-        {/* <Grid container spacing={2}>
-          {albums &&
-            albums.map((item) => (
-              <Grid item xs={3}>
-                <ListItem className={classes.listItem}>
-                  <img
-                    className={classes.albumWidth}
-                    src={item.album.images[0].url}
-                    alt='album-cover'
-                  />
-                </ListItem>
-              </Grid>
-            ))}
-        </Grid> */}
-      </List>
-      {btnAction && (
-        <Button
-          variant='contained'
-          className={classes.button}
-          onClick={btnAction}
-        >
-          More
-        </Button>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <List>{children}</List>
+          {btnAction && (
+            <Button
+              variant='contained'
+              className={classes.button}
+              onClick={btnAction}
+            >
+              More
+            </Button>
+          )}
+        </>
       )}
     </Grid>
   );

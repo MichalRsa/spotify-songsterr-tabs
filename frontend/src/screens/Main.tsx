@@ -41,11 +41,24 @@ const Main = () => {
   // const [favTracks, setFavTracks] = React.useState<ISongs>();
 
   const dispatch = useDispatch();
+
+  const recentLoading = useSelector(
+    (state: RootState) => state.userRecent?.loading
+  );
+
   const recent = useSelector(
     (state: RootState) => state.userRecent?.recent?.tracks
   );
+
+  const favTracksLoading = useSelector(
+    (state: RootState) => state.userFavorite?.loading
+  );
   const favTracks = useSelector(
     (state: RootState) => state.userFavorite?.favSongs?.items
+  );
+
+  const albumsLoading = useSelector(
+    (state: RootState) => state.userFavorite?.loading
   );
   const albums = useSelector(
     (state: RootState) => state.userAlbums?.albums?.items
@@ -68,6 +81,7 @@ const Main = () => {
         btnAction={() => {
           history.push('/user/albums');
         }}
+        loading={!!albumsLoading}
       >
         <ImageList cols={4} rowHeight='auto' gap={16}>
           {albums &&
@@ -92,6 +106,7 @@ const Main = () => {
         btnAction={() => {
           history.push('/user/recent');
         }}
+        loading={!!recentLoading}
       >
         <Grid container>
           {recent &&
@@ -107,6 +122,7 @@ const Main = () => {
                 />
               ))}
         </Grid>
+        )
       </SectionContainer>
 
       <SectionContainer
@@ -114,6 +130,7 @@ const Main = () => {
         btnAction={() => {
           history.push('/user/tracks');
         }}
+        loading={!!favTracksLoading}
       >
         <Grid container>
           {favTracks &&
