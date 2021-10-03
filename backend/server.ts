@@ -4,9 +4,16 @@ import renderHeaders from './controllers/renderHeaders';
 import userRoutes from './routes/userRoutes';
 import songsRoutes from './routes/songsRoutes';
 import userLibraryRoutes from './routes/userLibraryRoutes';
+const path = require('path');
 dotenv.config();
 
+let port = typeof process.env.PORT === 'string' && parseFloat(process.env.PORT);
+
 const app = express();
+
+if (port) {
+  app.use(express.static(path.join(__dirname, '..', 'frontend', 'dist')));
+}
 
 app.use(express.json());
 
@@ -18,10 +25,8 @@ app.use('/api/songs', songsRoutes);
 
 app.use('/api/user-library', userLibraryRoutes);
 
-let port = typeof process.env.PORT === 'string' && parseFloat(process.env.PORT);
 if (port == null) {
   port = 3000;
 }
-app.listen(port);
 
 app.listen(port, () => console.log('Server is running'));
