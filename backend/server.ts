@@ -18,4 +18,10 @@ app.use('/api/songs', songsRoutes);
 
 app.use('/api/user-library', userLibraryRoutes);
 
-app.listen(3000, () => console.log('Server is running'));
+let port = typeof process.env.PORT === 'string' && parseFloat(process.env.PORT);
+if (port == null) {
+  port = 3000;
+}
+app.listen(port);
+
+app.listen(port, () => console.log('Server is running'));
