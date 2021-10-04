@@ -11,5 +11,5 @@ module.exports = {
   },
   plugins: ['@typescript-eslint'],
   rules: {},
-  ignorePatterns: ['.eslintrc.js', 'ts-build'],
+  ignorePatterns: ['.eslintrc.js', 'ts-build', 'frontend'],
 };

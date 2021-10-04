@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ts-build/server",
     "nodemon": "nodemon ts-build/server",
-    "client": "npm start --prefix ../frontend",
+    "client": "npm start --prefix ./frontend",
     "dev": "concurrently \"npm run nodemon\" \"npm run client\"",
     "build": "tsc -w"
   },
