@@ -57,7 +57,7 @@ router.post('/auth', function (req, res) { return __awaiter(void 0, void 0, void
                 reqData = {
                     grant_type: 'authorization_code',
                     code: code,
-                    redirect_uri: 'http://localhost:8080/redirect',
+                    redirect_uri: songsterQueryParameters_1.default.redirect_uri,
                 };
                 encodedAuthToken = Buffer.from(process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET).toString('base64');
                 reqConfig = {

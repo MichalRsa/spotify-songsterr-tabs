@@ -16,7 +16,7 @@ router.post('/auth', async (req, res) => {
   const reqData = {
     grant_type: 'authorization_code',
     code,
-    redirect_uri: 'http://localhost:8080/redirect',
+    redirect_uri: params.redirect_uri,
   };
 
   const encodedAuthToken = Buffer.from(

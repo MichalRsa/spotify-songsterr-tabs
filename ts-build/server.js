@@ -13,12 +13,6 @@ var path = require('path');
 dotenv_1.default.config();
 var port = typeof process.env.PORT === 'string' && parseFloat(process.env.PORT);
 var app = (0, express_1.default)();
-if (port) {
-    app.use(express_1.default.static(path.join(__dirname, '..', 'frontend', 'dist')));
-    app.get('*', function (req, res) {
-        res.sendFile(path.join(__dirname, '..', 'frontend', 'dist'));
-    });
-}
 app.use(express_1.default.json());
 app.use(function (req, res, next) { return (0, renderHeaders_1.default)(req, res, next); });
 app.use('/api/user', userRoutes_1.default);
@@ -26,5 +20,11 @@ app.use('/api/songs', songsRoutes_1.default);
 app.use('/api/user-library', userLibraryRoutes_1.default);
 if (typeof port !== 'number') {
     port = 3000;
+}
+if (port) {
+    app.use(express_1.default.static(path.join(__dirname, '..', 'frontend', 'dist')));
+    app.get('*', function (req, res) {
+        res.sendFile(path.join(__dirname, '..', 'frontend', 'dist', 'index.html'));
+    });
 }
 app.listen(port, function () { return console.log('Server is running'); });
