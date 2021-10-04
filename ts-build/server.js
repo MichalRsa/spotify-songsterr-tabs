@@ -14,7 +14,7 @@ dotenv_1.default.config();
 var port = typeof process.env.PORT === 'string' && parseFloat(process.env.PORT);
 var app = (0, express_1.default)();
 if (port) {
-    app.use(express_1.default.static(path.join(__dirname, '..', 'frontend', 'dist')));
+    app.use(express_1.default.static(path.join(__dirname, '.', 'frontend', 'dist')));
 }
 app.use(express_1.default.json());
 app.use(function (req, res, next) { return (0, renderHeaders_1.default)(req, res, next); });

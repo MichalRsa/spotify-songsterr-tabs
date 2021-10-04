@@ -14,7 +14,7 @@ let port = typeof process.env.PORT === 'string' && parseFloat(process.env.PORT);
 const app = express();
 
 if (port) {
-  app.use(express.static(path.join(__dirname, '..', 'frontend', 'dist')));
+  app.use(express.static(path.join(__dirname, '.', 'frontend', 'dist')));
 }
 
 app.use(express.json());
