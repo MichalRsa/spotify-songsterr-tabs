@@ -2,6 +2,7 @@
   "name": "mern-template",
   "version": "1.0.0",
   "description": "",
+  "main": "server.js",
   "scripts": {
     "start": "node ts-build/server",
     "nodemon": "nodemon ts-build/server",
