@@ -18,13 +18,13 @@ app.use(function (req, res, next) { return (0, renderHeaders_1.default)(req, res
 app.use('/api/user', userRoutes_1.default);
 app.use('/api/songs', songsRoutes_1.default);
 app.use('/api/user-library', userLibraryRoutes_1.default);
-if (typeof port !== 'number') {
-    port = 3000;
-}
 if (port) {
     app.use(express_1.default.static(path.join(__dirname, '..', 'frontend', 'dist')));
     app.get('*', function (req, res) {
         res.sendFile(path.join(__dirname, '..', 'frontend', 'dist', 'index.html'));
     });
+}
+if (typeof port !== 'number') {
+    port = 3000;
 }
 app.listen(port, function () { return console.log("Server is running on port " + port); });
