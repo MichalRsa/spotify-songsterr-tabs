@@ -4,7 +4,9 @@ import renderHeaders from './controllers/renderHeaders';
 import userRoutes from './routes/userRoutes';
 import songsRoutes from './routes/songsRoutes';
 import userLibraryRoutes from './routes/userLibraryRoutes';
+
 const path = require('path');
+
 dotenv.config();
 
 let port = typeof process.env.PORT === 'string' && parseFloat(process.env.PORT);
@@ -25,7 +27,7 @@ app.use('/api/songs', songsRoutes);
 
 app.use('/api/user-library', userLibraryRoutes);
 
-if (port == null) {
+if (typeof port !== 'number') {
   port = 3000;
 }
 

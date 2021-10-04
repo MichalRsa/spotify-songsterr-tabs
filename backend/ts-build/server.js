@@ -21,7 +21,7 @@ app.use(function (req, res, next) { return (0, renderHeaders_1.default)(req, res
 app.use('/api/user', userRoutes_1.default);
 app.use('/api/songs', songsRoutes_1.default);
 app.use('/api/user-library', userLibraryRoutes_1.default);
-if (port == null) {
+if (typeof port !== 'number') {
     port = 3000;
 }
 app.listen(port, function () { return console.log('Server is running'); });
