@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --env development",
-    "build": "webpack --env production"
+    "build-static": "webpack --env production"
   },
   "keywords": [],
   "author": "",
