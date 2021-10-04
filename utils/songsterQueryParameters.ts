@@ -3,7 +3,7 @@ const params = {
   response_type: 'code',
   redirect_uri:
     process.env.NODE_ENV === 'production'
-      ? ''
+      ? 'https://fast-ridge-27303.herokuapp.com/redirect'
       : 'http://localhost:5000/redirect',
   state: '34fFs29kd09',
   scope:
