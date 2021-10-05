@@ -17,9 +17,15 @@ const UserTracksScreen = () => {
   const query = useQuery();
   const offset = query.get('offset') || undefined;
   const limit = query.get('limit') || undefined;
+
   const favTracks = useSelector(
     (state: RootState) => state.userFavorite?.favSongs
   );
+
+  const total = useSelector(
+    (state: RootState) => state.userFavorite?.favSongs?.total
+  );
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -29,6 +35,7 @@ const UserTracksScreen = () => {
   return (
     <>
       <Grid container>
+        {total && <h2>You have {total} tracks in collection</h2>}
         {favTracks &&
           favTracks.items.map(({ track: song }) => (
             <SongBar

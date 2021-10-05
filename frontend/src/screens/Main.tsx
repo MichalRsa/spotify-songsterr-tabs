@@ -122,7 +122,6 @@ const Main = () => {
                 />
               ))}
         </Grid>
-        )
       </SectionContainer>
 
       <SectionContainer

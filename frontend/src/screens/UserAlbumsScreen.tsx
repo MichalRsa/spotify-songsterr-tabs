@@ -13,6 +13,9 @@ const UserAlbumsScreen = () => {
   const offset = query.get('offset') || undefined;
   const limit = query.get('limit') || undefined;
   const albums = useSelector((state: RootState) => state.userAlbums?.albums);
+  const total = useSelector(
+    (state: RootState) => state.userAlbums?.albums?.total
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,6 +24,7 @@ const UserAlbumsScreen = () => {
 
   return (
     <>
+      {total && <h2>You have {total} albums in collection</h2>}
       {albums &&
         albums.items.map(({ album }) => (
           <AlbumCard key={album.id} album={album} />
