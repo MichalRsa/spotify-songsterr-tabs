@@ -49,17 +49,6 @@ router.post(
           headers: { Authorization: `Bearer ${access_token}` },
         }
       );
-      //       const idsArray = data.items.map((song: any) => song.track.id);
-      //       const ids = idsArray.join(',');
-
-      //       const { data: songsData } = await axios.get(
-      //         `https://api.spotify.com/v1/tracks?ids=${ids}`,
-      //         {
-      //           headers: {
-      //             Authorization: `Bearer ${access_token}`,
-      //           },
-      //         }
-      //       );
       res.json({ songsData });
     } catch (err: any) {
       if (err.response) {

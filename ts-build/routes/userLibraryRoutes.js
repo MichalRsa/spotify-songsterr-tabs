@@ -93,16 +93,6 @@ router.post('/tracks', exchangeTokenMiddleware_1.default, function (req, res) { 
                     })];
             case 1:
                 songsData = (_b.sent()).data;
-                //       const idsArray = data.items.map((song: any) => song.track.id);
-                //       const ids = idsArray.join(',');
-                //       const { data: songsData } = await axios.get(
-                //         `https://api.spotify.com/v1/tracks?ids=${ids}`,
-                //         {
-                //           headers: {
-                //             Authorization: `Bearer ${access_token}`,
-                //           },
-                //         }
-                //       );
                 res.json({ songsData: songsData });
                 return [3 /*break*/, 3];
             case 2:

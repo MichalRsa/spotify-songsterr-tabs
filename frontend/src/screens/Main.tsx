@@ -38,8 +38,6 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Main = () => {
-  // const [favTracks, setFavTracks] = React.useState<ISongs>();
-
   const dispatch = useDispatch();
 
   const recentLoading = useSelector(
@@ -92,7 +90,7 @@ const Main = () => {
                 >
                   <img
                     className={classes.albumWidth}
-                    src={item.album.images[0].url}
+                    src={item.album.images[2].url}
                     alt='album-cover'
                   />
                 </Button>
