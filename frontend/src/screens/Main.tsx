@@ -90,7 +90,7 @@ const Main = () => {
                 >
                   <img
                     className={classes.albumWidth}
-                    src={item.album.images[2].url}
+                    src={item.album.images[0].url}
                     alt='album-cover'
                   />
                 </Button>

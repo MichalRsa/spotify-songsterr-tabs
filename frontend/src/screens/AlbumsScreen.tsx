@@ -6,7 +6,7 @@ import { useParams } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 import SongBar, { MyTheme } from '../components/SongsBar';
 import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
-import { Album, ISongs } from '../../typings/index';
+// import { Album, ISongs } from '../../typings/index';
 
 const useStyles = makeStyles((theme: MyTheme) => ({
   rootSuccess: {
@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme: MyTheme) => ({
 }));
 
 const AlbumScreen = () => {
-  const [songs, setSongs] = React.useState<ISongs>();
-  const [album, setAlbum] = React.useState<Album>();
+  const [songs, setSongs] = React.useState<SpotifyApi.AlbumTracksResponse>();
+  const [album, setAlbum] = React.useState<SpotifyApi.SingleAlbumResponse>();
   const { id } = useParams<Record<string, string | undefined>>();
 
   const classes = useStyles();
@@ -32,16 +32,13 @@ const AlbumScreen = () => {
       console.log(tokenFromStorage);
       try {
         const {
-          data: { songsData },
-        }: { data: { songsData: ISongs } } = await axios.post(
-          `/api/songs/albums`,
-          {
-            tokenFromStorage,
-            id,
-          }
-        );
+          data: { songsData, albumData },
+        } = await axios.post(`/api/songs/albums`, {
+          tokenFromStorage,
+          id,
+        });
         setSongs(songsData);
-        const albumData = songsData.tracks[0].album;
+        // const albumData = songsData.tracks[0].album;
         setAlbum(albumData);
       } catch (err) {
         console.log(err);
@@ -54,8 +51,10 @@ const AlbumScreen = () => {
       <Grid className={classes.albumHeader} container spacing={10}>
         <Grid item xs={6}>
           <img
-            src={songs?.tracks[0].album.images[1].url}
-            alt={songs?.tracks[0].album.name}
+            // src={songs?.tracks[0].album.images[1].url}
+            src={album?.images[1].url}
+            // alt={songs?.tracks[0].album.name}
+            alt={album?.name}
           />
         </Grid>
         <Grid item xs={6}>
@@ -74,7 +73,7 @@ const AlbumScreen = () => {
       </Grid>
       {songs && (
         <List component='ol'>
-          {songs.tracks.map((song) => (
+          {songs.items.map((song) => (
             <SongBar key={song.id + Math.random()} song={song} />
           ))}
         </List>

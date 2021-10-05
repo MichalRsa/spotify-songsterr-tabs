@@ -20,8 +20,7 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const { access_token, refresh_token } = req.body.tokens;
-      const { id, name } = req.body;
-      console.log(name);
+      const { id } = req.body;
       const { data } = await axios.get(
         `https://api.spotify.com/v1/artists/${id}/top-tracks?market=us`,
         {
@@ -61,24 +60,27 @@ router.post(
     try {
       const { access_token } = req.body.tokens;
       const { id, offset, limit } = req.body;
+      console.log(id);
       const { data } = await axios.get(
         `https://api.spotify.com/v1/artists/${id}/albums?offset=${offset}&limit=${limit}&include_groups=album`,
         {
           headers: { Authorization: `Bearer ${access_token}` },
         }
       );
-      // const idsArray = data.tracks.map((song: any) => song.id);
-      // const ids = idsArray.join(',');
+      const idsArray = data.items.map((song: any) => song.id);
+      const ids = idsArray.join(',');
 
-      // const { data: songsData } = await axios.get(
-      //   `https://api.spotify.com/v1/tracks?ids=${ids}`,
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${access_token}`,
-      //     },
-      //   }
-      // );
-      res.json({ data });
+      const { data: albumsData } = await axios.get(
+        // `https://api.spotify.com/v1/tracks?ids=${ids}`,
+        `https://api.spotify.com/v1/albums?ids=${ids}`,
+        {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        }
+      );
+
+      res.json({ albumsData, paginationData: data });
     } catch (err: any) {
       if (err.response) {
         console.log(err.response.data);
@@ -98,27 +100,33 @@ router.post(
   exchangeTokenMiddleware,
   async (req: Request, res: Response) => {
     try {
-      const { access_token, refresh_token } = req.body.tokens;
+      const { access_token } = req.body.tokens;
       const { id } = req.body;
-      const { data } = await axios.get(
+      const { data: albumData } = await axios.get(
+        `https://api.spotify.com/v1/albums/${id}`,
+        {
+          headers: { Authorization: `Bearer ${access_token}` },
+        }
+      );
+      const { data: songsData } = await axios.get(
         `https://api.spotify.com/v1/albums/${id}/tracks`,
         {
           headers: { Authorization: `Bearer ${access_token}` },
         }
       );
-      const idsArray = data.items.map((song: any) => song.id);
-      const ids = idsArray.join(',');
+      // const idsArray = data.items.map((song: any) => song.id);
+      // const ids = idsArray.join(',');
 
-      const { data: songsData } = await axios.get(
-        `https://api.spotify.com/v1/tracks?ids=${ids}`,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        }
-      );
-      console.log(data);
-      res.json({ songsData, refresh_token });
+      // const { data: songsData } = await axios.get(
+      //   `https://api.spotify.com/v1/tracks?ids=${ids}`,
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${access_token}`,
+      //     },
+      //   }
+      // );
+      // console.log(songsData);
+      res.json({ songsData, albumData });
     } catch (err: any) {
       if (err.response) {
         console.log(err.response.data);

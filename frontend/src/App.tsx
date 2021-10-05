@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import * as React from 'react';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Button, Container, CssBaseline } from '@material-ui/core';
@@ -15,13 +15,14 @@ import NavBar from './components/Nav';
 import RecentScreen from './screens/RecentScreen';
 import Footer from './components/Footer';
 import UserTracksScreen from './screens/UserTracksScreen';
+import ArtistAlbumsScreen from './screens/ArtistAlbumsScreen';
 
 const App = () => {
   const user = useSelector((store: RootState) => store.spotifyAuth?.user);
 
-  useEffect(() => {
-    console.log('app useeffect running!', user);
-  }, [user]);
+  // useEffect(() => {
+  //   console.log('app useeffect running!', user);
+  // }, [user]);
   const redirectToAuth = () => {
     window.location.href = '/api/user';
   };
@@ -42,6 +43,7 @@ const App = () => {
             <Route path='/user/recent' component={RecentScreen} />
             <Route path='/user/tracks' component={UserTracksScreen} />
             <Route path='/artists/:id' component={ArtistsScreen} />
+            <Route path='/:artists/albums' component={ArtistAlbumsScreen} />
             <Redirect from='/redirect' to='/main' />
             <Redirect from='/' to='/main' />
           </Switch>
