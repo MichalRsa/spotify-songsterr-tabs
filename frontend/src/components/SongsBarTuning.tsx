@@ -4,12 +4,28 @@ import {
   CircularProgress,
   Hidden,
   ListItemSecondaryAction,
+  makeStyles,
+  Theme,
+  useMediaQuery,
 } from '@material-ui/core';
 import { InewTuning, IsongsterrTabs } from 'songsterr-api-node/dist/interfaces';
+// import { CallMissedSharp } from '@material-ui/icons';
+
+const useStyles = makeStyles(() => ({
+  horizontal: {
+    '& span': {
+      display: 'block',
+      // marginTop: '0',
+      lineHeight: 0.9,
+    },
+  },
+  myRoot: { position: 'static', transform: 'translateY(0)' },
+}));
 
 interface Itabs {
   song: IsongsterrTabs;
 }
+
 const SongBarTuning = ({
   tabs,
   loading,
@@ -17,6 +33,12 @@ const SongBarTuning = ({
   tabs: Itabs | undefined;
   loading: boolean;
 }) => {
+  const smallScreen = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down(420)
+  );
+
+  const classes = useStyles();
+
   const showTuning = () => {
     if (tabs && tabs.song.length) {
       if (
@@ -32,13 +54,22 @@ const SongBarTuning = ({
     }
     return '';
   };
+
+  const showTuningHorizontal = () => {
+    const tuning = showTuning();
+
+    const tunningLetters = tuning.split('');
+
+    return tunningLetters.map((letter) => <span>{letter}</span>);
+  };
+
   return loading ? (
     <CircularProgress />
   ) : tabs && tabs.song.length ? (
-    <ListItemSecondaryAction>
-      <p>
+    <ListItemSecondaryAction classes={{ root: classes.myRoot }}>
+      <p className={smallScreen ? classes.horizontal : ''}>
         <Hidden xsDown>tuning: </Hidden>
-        {showTuning()}
+        {!smallScreen ? showTuning() : showTuningHorizontal()}
       </p>
     </ListItemSecondaryAction>
   ) : null;
