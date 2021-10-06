@@ -7,6 +7,7 @@ import {
   Paper,
   Typography,
   Theme,
+  useMediaQuery,
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
 import SongBar from './SongsBar';
@@ -24,15 +25,30 @@ const useStyles = makeStyles((theme: Theme) =>
     rootFail: {
       backgroundColor: theme.palette.error.main,
     },
+    card: {
+      [theme.breakpoints.down(420)]: {
+        // width: '260px',
+      },
+    },
     albumHeader: {
       marginTop: '1rem',
       marginBottom: '1rem',
+      [theme.breakpoints.down(420)]: {
+        flexDirection: 'column',
+      },
     },
     img: {
       maxWidth: '100%',
       display: 'block',
+      [theme.breakpoints.down(420)]: {
+        // flexDirection: 'column',
+        // display: 'inline',
+        textAlign: 'center',
+        maxWidth: '100%',
+        margin: '0 auto',
+      },
     },
-    container: {
+    imgContainer: {
       '&&': {
         position: 'relative',
         paddingTop: '0px',
@@ -40,10 +56,17 @@ const useStyles = makeStyles((theme: Theme) =>
         [theme.breakpoints.down('sm')]: {
           paddingRight: '0',
         },
+        [theme.breakpoints.down(420)]: {
+          // flexDirection: 'column',
+          paddingRight: '40px',
+        },
       },
     },
     textCont: {
       height: '100%',
+      [theme.breakpoints.down(420)]: {
+        textAlign: 'center',
+      },
     },
   })
 );
@@ -54,15 +77,20 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
 
   const classes = useStyles();
 
+  const smallScreen = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down(420)
+  );
+
   return (
     <>
-      <Paper>
+      <Paper className={classes.card}>
         <Grid className={classes.albumHeader} container spacing={10}>
           <Grid
             item
-            xs={4}
+            xs={smallScreen ? 12 : 6}
+            sm={4}
             classes={{
-              item: classes.container,
+              item: classes.imgContainer,
             }}
           >
             <img
@@ -71,7 +99,7 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
               className={classes.img}
             />
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={smallScreen ? 12 : 6} sm={8}>
             {album && (
               <Grid
                 container
