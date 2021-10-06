@@ -81,7 +81,7 @@ const Main = () => {
         }}
         loading={!!albumsLoading}
       >
-        <ImageList cols={4} rowHeight='auto' gap={16}>
+        <ImageList cols={4} rowHeight='auto'>
           {albums &&
             albums.slice(0, 4).map((item) => (
               <ImageListItem key={item.album.id} className={classes.listItem}>

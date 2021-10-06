@@ -23,7 +23,12 @@ const useStyles = makeStyles(() => ({
     padding: 0,
   },
   heading: { width: '100%', padding: '1.4rem 0 .6rem' },
-  button: { marginTop: '.6rem' },
+  button: {
+    marginTop: '.6rem',
+    '&:hover': {
+      backgroundColor: 'green',
+    },
+  },
 }));
 
 const SectionContainer: React.FunctionComponent<SectionContainerProps> = ({

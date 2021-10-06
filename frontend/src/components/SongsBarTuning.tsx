@@ -1,6 +1,10 @@
 /* eslint-disable no-nested-ternary */
 import * as React from 'react';
-import { CircularProgress, ListItemSecondaryAction } from '@material-ui/core';
+import {
+  CircularProgress,
+  Hidden,
+  ListItemSecondaryAction,
+} from '@material-ui/core';
 import { InewTuning, IsongsterrTabs } from 'songsterr-api-node/dist/interfaces';
 
 interface Itabs {
@@ -32,7 +36,10 @@ const SongBarTuning = ({
     <CircularProgress />
   ) : tabs && tabs.song.length ? (
     <ListItemSecondaryAction>
-      <p>tuning: {showTuning()}</p>
+      <p>
+        <Hidden xsDown>tuning: </Hidden>
+        {showTuning()}
+      </p>
     </ListItemSecondaryAction>
   ) : null;
 };

@@ -4,7 +4,7 @@ const params = {
   redirect_uri:
     process.env.NODE_ENV === 'production'
       ? 'https://fast-ridge-27303.herokuapp.com/redirect'
-      : 'http://localhost:5000/redirect',
+      : 'http://localhost:8080/redirect',
   state: '34fFs29kd09',
   scope:
     'user-read-recently-played user-top-read user-library-read playlist-read-private',

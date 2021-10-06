@@ -1,5 +1,12 @@
 /* eslint-disable no-console */
-import { Grid, Link, List, makeStyles } from '@material-ui/core';
+import {
+  Grid,
+  Link,
+  List,
+  makeStyles,
+  Theme,
+  useMediaQuery,
+} from '@material-ui/core';
 import axios from 'axios';
 import * as React from 'react';
 import { useParams } from 'react-router';
@@ -12,11 +19,22 @@ const useStyles = makeStyles((theme: MyTheme) => ({
   rootSuccess: {
     backgroundColor: theme.palette.success.main,
   },
+  text: {
+    '&&': {
+      padding: '0 20px',
+      // marginBottom: '0',
+      textAlign: 'center',
+    },
+  },
   rootFail: {
     backgroundColor: theme.palette.error.main,
   },
   albumHeader: {
+    alignItems: 'center',
     marginTop: '1rem',
+  },
+  img: {
+    maxWidth: '100%',
   },
 }));
 
@@ -24,6 +42,10 @@ const AlbumScreen = () => {
   const [songs, setSongs] = React.useState<SpotifyApi.AlbumTracksResponse>();
   const [album, setAlbum] = React.useState<SpotifyApi.SingleAlbumResponse>();
   const { id } = useParams<Record<string, string | undefined>>();
+
+  const smallScreen = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down('sm')
+  );
 
   const classes = useStyles();
   React.useEffect(() => {
@@ -48,18 +70,26 @@ const AlbumScreen = () => {
   }, []);
   return (
     <>
-      <Grid className={classes.albumHeader} container spacing={10}>
-        <Grid item xs={6}>
+      <Grid
+        className={classes.albumHeader}
+        container
+        spacing={10}
+        direction={smallScreen ? 'column-reverse' : 'row'}
+      >
+        <Grid item xs={smallScreen ? 12 : 4}>
           <img
-            // src={songs?.tracks[0].album.images[1].url}
+            className={classes.img}
             src={album?.images[1].url}
-            // alt={songs?.tracks[0].album.name}
             alt={album?.name}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid
+          item
+          xs={smallScreen ? 12 : 8}
+          className={smallScreen ? classes.text : ''}
+        >
           {album && (
-            <h2>
+            <h2 className={smallScreen ? classes.text : ''}>
               {`${album?.name} by `}
               <Link
                 component={RouterLink}

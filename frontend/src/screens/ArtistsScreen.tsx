@@ -92,7 +92,7 @@ const ArtistsScreen = () => {
           }}
           loading={false}
         >
-          <ImageList cols={4} rowHeight='auto' gap={16}>
+          <ImageList cols={4} rowHeight='auto'>
             {albums.albums.slice(0, 4).map((item) => (
               <ImageListItem key={item.id} className={classes.listItem}>
                 <Button onClick={() => history.push(`/albums/${item.id}`)}>

@@ -6,15 +6,16 @@ import {
   makeStyles,
   Paper,
   Typography,
+  Theme,
 } from '@material-ui/core';
 import { Link as RouterLink } from 'react-router-dom';
-import SongBar, { MyTheme } from './SongsBar';
+import SongBar from './SongsBar';
 
 interface AlbumCardProps {
   album: SpotifyApi.AlbumObjectFull;
 }
 
-const useStyles = makeStyles((theme: MyTheme) =>
+const useStyles = makeStyles((theme: Theme) =>
   //   createStyles
   ({
     rootSuccess: {
@@ -28,13 +29,17 @@ const useStyles = makeStyles((theme: MyTheme) =>
       marginBottom: '1rem',
     },
     img: {
-      width: '100%',
+      maxWidth: '100%',
       display: 'block',
     },
-    spacing: {
+    container: {
       '&&': {
+        position: 'relative',
         paddingTop: '0px',
         paddingBottom: '0px',
+        [theme.breakpoints.down('sm')]: {
+          paddingRight: '0',
+        },
       },
     },
     textCont: {
@@ -57,7 +62,7 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
             item
             xs={4}
             classes={{
-              item: classes.spacing,
+              item: classes.container,
             }}
           >
             <img

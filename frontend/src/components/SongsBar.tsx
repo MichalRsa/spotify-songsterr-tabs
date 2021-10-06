@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import {
+  Hidden,
   ListItem,
   ListItemText,
   makeStyles,
@@ -80,7 +81,7 @@ const SongBar = ({
       divider
       className={!loading && haveTabs ? styles.rootSuccess : ''}
     >
-      {avatarChild}
+      {avatarChild && <Hidden xsDown>{avatarChild}</Hidden>}
       <ListItemText>
         <SongTitle
           loading={loading}

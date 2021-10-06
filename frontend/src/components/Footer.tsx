@@ -7,11 +7,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   footer: {
     backgroundColor: theme.palette.secondary.dark,
     marginTop: '2rem',
-    paddingTop: '2rem',
+    paddingTop: '1rem',
     textAlign: 'center',
   },
   paragraph: {
-    paddingBottom: '2rem',
+    paddingBottom: '1rem',
   },
 }));
 
