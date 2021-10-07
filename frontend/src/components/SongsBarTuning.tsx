@@ -13,9 +13,9 @@ import { InewTuning, IsongsterrTabs } from 'songsterr-api-node/dist/interfaces';
 
 const useStyles = makeStyles(() => ({
   horizontal: {
+    margin: '0',
     '& span': {
       display: 'block',
-      // marginTop: '0',
       lineHeight: 0.9,
     },
   },
@@ -41,16 +41,16 @@ const SongBarTuning = ({
 
   const showTuning = () => {
     if (tabs && tabs.song.length) {
-      if (
-        (tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning)
-          .name === ''
-      )
-        return (
-          tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning
-        ).notes;
+      // if (
+      //   (tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning)
+      //     .name === ''
+      // )
       return (
         tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning
-      ).name;
+      ).notes;
+      // return (
+      //   tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning
+      // ).name;
     }
     return '';
   };
@@ -58,7 +58,7 @@ const SongBarTuning = ({
   const showTuningHorizontal = () => {
     const tuning = showTuning();
 
-    const tunningLetters = tuning.split('');
+    const tunningLetters = tuning.split(' ');
 
     return tunningLetters.map((letter) => <span>{letter}</span>);
   };
