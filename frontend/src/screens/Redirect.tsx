@@ -5,7 +5,7 @@ import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import fetchToken from '../actions/spotifyAuthActions';
+import { fetchToken } from '../actions/spotifyAuthActions';
 import useQuery from '../hooks/useQuery';
 import { RootState } from '../store';
 

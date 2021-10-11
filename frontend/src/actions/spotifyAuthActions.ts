@@ -2,15 +2,18 @@ import axios from 'axios';
 import { Dispatch } from 'react';
 import {
   USER_SPOTIFY_AUTH_FAIL,
+  USER_SPOTIFY_AUTH_LOGOUT,
   USER_SPOTIFY_AUTH_REQUEST,
   USER_SPOTIFY_AUTH_SUCCESS,
 } from '../constants/userConstants';
 import {
+  removerTokenFromLocalStorage,
+  removeUserFromLocalStorage,
   setTokenInLocalStorage,
   setUserInLocalStorage,
 } from '../utils/setLocalStorage';
 
-const fetchToken =
+export const fetchToken =
   (user: any, body: object) => async (dispatch: Dispatch<any>) => {
     dispatch({ type: USER_SPOTIFY_AUTH_REQUEST });
     //     if (!user)
@@ -29,4 +32,13 @@ const fetchToken =
     }
   };
 
-export default fetchToken;
+export const userLogout = (history: any) => async (dispatch: Dispatch<any>) => {
+  dispatch({ type: USER_SPOTIFY_AUTH_REQUEST });
+
+  removerTokenFromLocalStorage();
+  removeUserFromLocalStorage();
+
+  history.push('/');
+
+  dispatch({ type: USER_SPOTIFY_AUTH_LOGOUT });
+};

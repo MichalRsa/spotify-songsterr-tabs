@@ -17,7 +17,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLogout } from '../actions/spotifyAuthActions';
+import { RootState } from '../store';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -87,6 +90,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const NavBar = () => {
+  const user = useSelector((store: RootState) => store.spotifyAuth?.user);
+
+  const dispatch = useDispatch();
+
+  const history = useHistory();
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
@@ -123,8 +132,14 @@ const NavBar = () => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem
+        onClick={() => {
+          dispatch(userLogout(history));
+        }}
+      >
+        Logout
+      </MenuItem>
     </Menu>
   );
 
@@ -146,6 +161,17 @@ const NavBar = () => {
           aria-haspopup='true'
           color='inherit'
         >
+          <HomeRoundedIcon />
+        </IconButton>
+        <p>Home</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          aria-label='account of current user'
+          aria-controls='primary-search-account-menu'
+          aria-haspopup='true'
+          color='inherit'
+        >
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
@@ -157,14 +183,6 @@ const NavBar = () => {
     <div className={classes.grow}>
       <AppBar position='static' className={classes.colorBgc}>
         <Toolbar>
-          {/* <IconButton
-            edge='start'
-            className={classes.menuButton}
-            color='inherit'
-            aria-label='open drawer'
-          >
-            <MenuIcon />
-          </IconButton> */}
           <Typography className={classes.title} variant='h6' noWrap>
             Spotify Tab Finder
           </Typography>
@@ -182,42 +200,47 @@ const NavBar = () => {
             />
           </div>
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton
-              edge='end'
-              aria-label='home page'
-              aria-controls={menuId}
-              aria-haspopup='true'
-              color='inherit'
-            >
-              <NavLink to='/home'>
-                <HomeRoundedIcon />
-              </NavLink>
-            </IconButton>
-          </div>
-          <div className={classes.sectionDesktop}>
-            <IconButton
-              edge='end'
-              aria-label='account of current user'
-              aria-controls={menuId}
-              aria-haspopup='true'
-              onClick={handleProfileMenuOpen}
-              color='inherit'
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label='show more'
-              aria-controls={mobileMenuId}
-              aria-haspopup='true'
-              onClick={handleMobileMenuOpen}
-              color='inherit'
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
+
+          {user && (
+            <>
+              <div className={classes.sectionDesktop}>
+                <IconButton
+                  edge='end'
+                  aria-label='home page'
+                  aria-controls={menuId}
+                  aria-haspopup='true'
+                  color='inherit'
+                >
+                  <NavLink to='/home'>
+                    <HomeRoundedIcon />
+                  </NavLink>
+                </IconButton>
+              </div>
+              <div className={classes.sectionDesktop}>
+                <IconButton
+                  edge='end'
+                  aria-label='account of current user'
+                  aria-controls={menuId}
+                  aria-haspopup='true'
+                  onClick={handleProfileMenuOpen}
+                  color='inherit'
+                >
+                  <AccountCircle />
+                </IconButton>
+              </div>
+              <div className={classes.sectionMobile}>
+                <IconButton
+                  aria-label='show more'
+                  aria-controls={mobileMenuId}
+                  aria-haspopup='true'
+                  onClick={handleMobileMenuOpen}
+                  color='inherit'
+                >
+                  <MoreIcon />
+                </IconButton>
+              </div>
+            </>
+          )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

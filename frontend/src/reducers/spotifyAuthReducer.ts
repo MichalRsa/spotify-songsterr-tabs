@@ -43,7 +43,7 @@ const userLoginReducer: Reducer<ILoginState | undefined, AnyAction> = (
     case USER_SPOTIFY_AUTH_FAIL:
       return { loading: false, user: undefined, error: action.payload };
     case USER_SPOTIFY_AUTH_LOGOUT:
-      return {};
+      return { loading: false, user: undefined, error: undefined };
     default:
       return state;
   }
