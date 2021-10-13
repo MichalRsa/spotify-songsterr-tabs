@@ -47,7 +47,7 @@ const SongBarTuning = ({
       // )
       return (
         tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning
-      ).notes;
+      )?.notes;
       // return (
       //   tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning
       // ).name;

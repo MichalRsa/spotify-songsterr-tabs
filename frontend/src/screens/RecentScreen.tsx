@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 // import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecent } from '../actions/spotifyUserDataActions';
 import SectionContainer from '../components/SectionContainer';
 import SongAlbum from '../components/SongAlbum';
@@ -21,24 +21,10 @@ const RecentScreen = () => {
   const recent = useSelector(
     (state: RootState) => state.userRecent?.recent?.tracks
   );
-  // const [recent, setRecent] =
-  //   React.useState<SpotifyApi.MultipleTracksResponse>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    // const fetchRecent = async () => {
-    //   const tokenFromStorage = getTokenFromLocalStorage();
-    //   try {
-    //     const {
-    //       data: { songsData },
-    //     } = await axios.post('/api/user-library/recent', {
-    //       tokenFromStorage,
-    //     });
-    //     setRecent(songsData);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // };
-    fetchRecent();
+    dispatch(fetchRecent());
   }, []);
 
   return (

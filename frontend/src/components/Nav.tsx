@@ -17,7 +17,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
-import { NavLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from '../actions/spotifyAuthActions';
 import { RootState } from '../store';
@@ -154,10 +154,10 @@ const NavBar = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={() => history.push('/')}>
         <IconButton
-          aria-label='account of current user'
-          aria-controls='primary-search-account-menu'
+          aria-label='home page'
+          aria-controls='primary-search-home-page'
           aria-haspopup='true'
           color='inherit'
         >
@@ -210,10 +210,9 @@ const NavBar = () => {
                   aria-controls={menuId}
                   aria-haspopup='true'
                   color='inherit'
+                  onClick={() => history.push('/')}
                 >
-                  <NavLink to='/home'>
-                    <HomeRoundedIcon />
-                  </NavLink>
+                  <HomeRoundedIcon />
                 </IconButton>
               </div>
               <div className={classes.sectionDesktop}>

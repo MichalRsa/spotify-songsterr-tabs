@@ -106,7 +106,9 @@ export const albumsController = async (req: Request, res: Response) => {
 
 export const tabsController = async (req: Request, res: Response) => {
   const { title, artist } = req.body;
-  const results = await songsterrSearch(encodeURIComponent(title));
+  const shortTitle = title.split('-')[0];
+  console.log(shortTitle);
+  const results = await songsterrSearch(encodeURIComponent(shortTitle));
   const filteredResults = Array.isArray(results)
     ? results.filter((song) => song.artist === artist)
     : results;
