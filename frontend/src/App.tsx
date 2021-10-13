@@ -15,6 +15,7 @@ import Footer from './components/Footer';
 import UserTracksScreen from './screens/UserTracksScreen';
 import ArtistAlbumsScreen from './screens/ArtistAlbumsScreen';
 import LoginScreen from './screens/LoginScreen';
+import SearchScreen from './screens/SearchScreen';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -41,6 +42,7 @@ const App = () => {
             <Container maxWidth='md'>
               <Switch>
                 <Route path='/main' component={Main} />
+                <Route path='/search' component={SearchScreen} />
                 <Route path='/albums/:id' component={AlbumsScreen} />
                 <Route path='/user/albums' component={UserAlbumsScreen} />
                 <Route path='/user/recent' component={RecentScreen} />

@@ -17,7 +17,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from '../actions/spotifyAuthActions';
 import { RootState } from '../store';
@@ -95,6 +95,9 @@ const NavBar = () => {
   const dispatch = useDispatch();
 
   const history = useHistory();
+  const location = useLocation();
+  // eslint-disable-next-line no-console
+  console.log(location);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -186,19 +189,34 @@ const NavBar = () => {
           <Typography className={classes.title} variant='h6' noWrap>
             Spotify Tab Finder
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
+
+          {location.pathname !== '/search' ? (
+            <IconButton
+              edge='end'
+              aria-label='search'
+              // aria-controls={menuId}
+              aria-haspopup='true'
+              color='inherit'
+              onClick={() => history.push('search')}
+            >
               <SearchIcon />
+            </IconButton>
+          ) : (
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                autoFocus
+                placeholder='Search…'
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
             </div>
-            <InputBase
-              placeholder='Search…'
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+          )}
           <div className={classes.grow} />
 
           {user && (
