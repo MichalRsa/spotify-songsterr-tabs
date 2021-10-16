@@ -1,9 +1,13 @@
 import axios from 'axios';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { songsterrSearch } from 'songsterr-api-node';
 
 /* eslint-disable camelcase */
-export const artistsController = async (req: Request, res: Response) => {
+export const artistsController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { access_token, refresh_token } = req.body.tokens;
     const { id } = req.body;
@@ -25,20 +29,25 @@ export const artistsController = async (req: Request, res: Response) => {
       }
     );
     res.json({ songsData, refresh_token });
-  } catch (err: any) {
-    if (err.response) {
-      console.log(err.response.data);
-      console.log(err.response.status);
-      console.log(err.response.headers);
-    } else if (err.request) {
-      console.log(err.request);
-    } else {
-      console.log('Error', err.message);
-    }
+  } catch (err) {
+    next(err);
+    // if (err.response) {
+    //   console.log(err.response.data);
+    //   console.log(err.response.status);
+    //   console.log(err.response.headers);
+    // } else if (err.request) {
+    //   console.log(err.request);
+    // } else {
+    //   console.log('Error', err.message);
+    // }
   }
 };
 
-export const artistsAlbumsController = async (req: Request, res: Response) => {
+export const artistsAlbumsController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { access_token } = req.body.tokens;
     const { id, offset, limit } = req.body;
@@ -61,20 +70,25 @@ export const artistsAlbumsController = async (req: Request, res: Response) => {
     );
 
     res.json({ albumsData, paginationData: data });
-  } catch (err: any) {
-    if (err.response) {
-      console.log(err.response.data);
-      console.log(err.response.status);
-      console.log(err.response.headers);
-    } else if (err.request) {
-      console.log(err.request);
-    } else {
-      console.log('Error', err.message);
-    }
+  } catch (err) {
+    next(err);
+    //   if (err.response) {
+    //     console.log(err.response.data);
+    //     console.log(err.response.status);
+    //     console.log(err.response.headers);
+    //   } else if (err.request) {
+    //     console.log(err.request);
+    //   } else {
+    //     console.log('Error', err.message);
+    //   }
   }
 };
 
-export const albumsController = async (req: Request, res: Response) => {
+export const albumsController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { access_token } = req.body.tokens;
     const { id } = req.body;
@@ -91,20 +105,25 @@ export const albumsController = async (req: Request, res: Response) => {
       }
     );
     res.json({ songsData, albumData });
-  } catch (err: any) {
-    if (err.response) {
-      console.log(err.response.data);
-      console.log(err.response.status);
-      console.log(err.response.headers);
-    } else if (err.request) {
-      console.log(err.request);
-    } else {
-      console.log('Error', err.message);
-    }
+  } catch (err) {
+    next(err);
+    // if (err.response) {
+    //   console.log(err.response.data);
+    //   console.log(err.response.status);
+    //   console.log(err.response.headers);
+    // } else if (err.request) {
+    //   console.log(err.request);
+    // } else {
+    //   console.log('Error', err.message);
+    // }
   }
 };
 
-export const tabsController = async (req: Request, res: Response) => {
+export const tabsController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { title, artist } = req.body;
   const shortTitle = title.split('-')[0];
   console.log(shortTitle);
@@ -115,15 +134,23 @@ export const tabsController = async (req: Request, res: Response) => {
   res.json({ song: filteredResults });
 };
 
-export const SearchController = async (req: Request, res: Response) => {
-  const { access_token } = req.body.tokens;
-  const { inputValue } = req.body;
-  const { data } = await axios.get(
-    `https://api.spotify.com/v1/search?q=${inputValue}&type=album,artist,playlist,track`,
-    {
-      headers: { Authorization: `Bearer ${access_token}` },
-    }
-  );
+export const SearchController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { access_token } = req.body.tokens;
+    const { inputValue } = req.body;
+    const { data } = await axios.get(
+      `https://api.spotify.com/v1/search?q=${inputValue}&type=album,artist,playlist,track`,
+      {
+        headers: { Authorization: `Bearer ${access_token}` },
+      }
+    );
 
-  res.json(data);
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
 };

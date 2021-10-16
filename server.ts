@@ -4,6 +4,7 @@ import renderHeaders from './controllers/renderHeaders';
 import userRoutes from './routes/userRoutes';
 import songsRoutes from './routes/songsRoutes';
 import userLibraryRoutes from './routes/userLibraryRoutes';
+import logErrorMiddleware from './middleware/logErrorMiddleware';
 
 const path = require('path');
 
@@ -29,6 +30,8 @@ if (port) {
     res.sendFile(path.join(__dirname, '..', 'frontend', 'dist', 'index.html'));
   });
 }
+
+app.use(logErrorMiddleware);
 
 if (typeof port !== 'number') {
   port = 3000;

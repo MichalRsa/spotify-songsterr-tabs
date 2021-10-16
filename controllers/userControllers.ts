@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import params from '../utils/songsterQueryParameters';
 
 const spotifyAuth = `https://accounts.spotify.com/authorize?client_id=${params.client_id}&scope=${params.scope}&response_type=${params.response_type}&redirect_uri=${params.redirect_uri}&state=${params.state}`;
@@ -9,7 +9,11 @@ export const redirectController = (req: Request, res: Response) => {
   res.redirect(spotifyAuth);
 };
 
-export const authController = async (req: Request, res: Response) => {
+export const authController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { code } = req.body;
   const reqData = {
     grant_type: 'authorization_code',
@@ -41,15 +45,7 @@ export const authController = async (req: Request, res: Response) => {
       }
     );
     res.json({ refresh_token, userData });
-  } catch (err: any) {
-    if (err.response) {
-      console.log(err.response.data);
-      console.log(err.response.status);
-      console.log(err.response.headers);
-    } else if (err.request) {
-      console.log(err.request);
-    } else {
-      console.log('Error', err.message);
-    }
+  } catch (err) {
+    next(err);
   }
 };

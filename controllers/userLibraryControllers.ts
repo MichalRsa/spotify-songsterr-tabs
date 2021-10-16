@@ -1,8 +1,12 @@
 /* eslint-disable camelcase */
 import axios from 'axios';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
-export const userAlbumController = async (req: Request, res: Response) => {
+export const userAlbumController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { access_token } = req.body.tokens;
     const { offset, limit } = req.body;
@@ -14,19 +18,24 @@ export const userAlbumController = async (req: Request, res: Response) => {
     );
     res.json({ data });
   } catch (err: any) {
-    if (err.response) {
-      console.log(err.response.data);
-      console.log(err.response.status);
-      console.log(err.response.headers);
-    } else if (err.request) {
-      console.log(err.request);
-    } else {
-      console.log('Error', err.message);
-    }
+    next(err);
+    // if (err.response) {
+    //   console.log(err.response.data);
+    //   console.log(err.response.status);
+    //   console.log(err.response.headers);
+    // } else if (err.request) {
+    //   console.log(err.request);
+    // } else {
+    //   console.log('Error', err.message);
+    // }
   }
 };
 
-export const userTracksController = async (req: Request, res: Response) => {
+export const userTracksController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { access_token } = req.body.tokens;
     const { offset, limit } = req.body;
@@ -38,19 +47,24 @@ export const userTracksController = async (req: Request, res: Response) => {
     );
     res.json({ songsData });
   } catch (err: any) {
-    if (err.response) {
-      console.log(err.response.data);
-      console.log(err.response.status);
-      console.log(err.response.headers);
-    } else if (err.request) {
-      console.log(err.request);
-    } else {
-      console.log('Error', err.message);
-    }
+    next(err);
+    // if (err.response) {
+    //   console.log(err.response.data);
+    //   console.log(err.response.status);
+    //   console.log(err.response.headers);
+    // } else if (err.request) {
+    //   console.log(err.request);
+    // } else {
+    //   console.log('Error', err.message);
+    // }
   }
 };
 
-export const userRecentController = async (req: Request, res: Response) => {
+export const userRecentController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { access_token } = req.body.tokens;
     const { data } = await axios.get(
@@ -72,14 +86,15 @@ export const userRecentController = async (req: Request, res: Response) => {
     );
     res.json({ songsData });
   } catch (err: any) {
-    if (err.response) {
-      console.log(err.response.data);
-      console.log(err.response.status);
-      console.log(err.response.headers);
-    } else if (err.request) {
-      console.log(err.request);
-    } else {
-      console.log('Error', err.message);
-    }
+    next(err);
+    // if (err.response) {
+    //   console.log(err.response.data);
+    //   console.log(err.response.status);
+    //   console.log(err.response.headers);
+    // } else if (err.request) {
+    //   console.log(err.request);
+    // } else {
+    //   console.log('Error', err.message);
+    // }
   }
 };
