@@ -114,3 +114,16 @@ export const tabsController = async (req: Request, res: Response) => {
     : results;
   res.json({ song: filteredResults });
 };
+
+export const SearchController = async (req: Request, res: Response) => {
+  const { access_token } = req.body.tokens;
+  const { inputValue } = req.body;
+  const { data } = await axios.get(
+    `https://api.spotify.com/v1/search?q=${inputValue}&type=album,artist,playlist,track`,
+    {
+      headers: { Authorization: `Bearer ${access_token}` },
+    }
+  );
+
+  res.json(data);
+};

@@ -9,7 +9,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
+// import InputBase from '@material-ui/core/InputBase';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 // import MenuIcon from '@material-ui/icons/Menu';
@@ -21,6 +21,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from '../actions/spotifyAuthActions';
 import { RootState } from '../store';
+import SearchBar from './SearchBar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -97,7 +98,6 @@ const NavBar = () => {
   const history = useHistory();
   const location = useLocation();
   // eslint-disable-next-line no-console
-  console.log(location);
 
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -202,20 +202,7 @@ const NavBar = () => {
               <SearchIcon />
             </IconButton>
           ) : (
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                autoFocus
-                placeholder='Search…'
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ 'aria-label': 'search' }}
-              />
-            </div>
+            <SearchBar />
           )}
           <div className={classes.grow} />
 

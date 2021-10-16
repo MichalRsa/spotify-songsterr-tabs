@@ -3,6 +3,7 @@ import {
   albumsController,
   artistsAlbumsController,
   artistsController,
+  SearchController,
   tabsController,
 } from '../controllers/songsControllers';
 import exchangeTokenMiddleware from '../middleware/exchangeTokenMiddleware';
@@ -20,5 +21,7 @@ router.post(
 router.post('/albums', exchangeTokenMiddleware, albumsController);
 
 router.post('/tabs', tabsController);
+
+router.post('/search', exchangeTokenMiddleware, SearchController);
 
 export default router;
