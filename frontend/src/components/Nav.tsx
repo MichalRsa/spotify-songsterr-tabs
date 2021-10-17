@@ -197,7 +197,7 @@ const NavBar = () => {
               // aria-controls={menuId}
               aria-haspopup='true'
               color='inherit'
-              onClick={() => history.push('search')}
+              onClick={() => history.push('/search')}
             >
               <SearchIcon />
             </IconButton>
