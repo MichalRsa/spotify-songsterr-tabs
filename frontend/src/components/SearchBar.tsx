@@ -7,9 +7,9 @@ import {
   InputBase,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
-import axios from 'axios';
 import * as React from 'react';
-import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
+import { useDispatch } from 'react-redux';
+import spotifySearch from '../actions/spotifySearchActions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -79,18 +79,16 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const SearchBar = () => {
+  const dispatch = useDispatch();
+
   const classes = useStyles();
 
   const search = async (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    const tokenFromStorage = getTokenFromLocalStorage();
     const inputValue = e.target.value;
-    const { data } = await axios.post('/api/songs/search', {
-      tokenFromStorage,
-      inputValue,
-    });
-    console.log(data);
+
+    dispatch(spotifySearch(inputValue));
   };
 
   return (

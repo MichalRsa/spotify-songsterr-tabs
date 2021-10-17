@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userLoginReducer, { ILoginState } from './reducers/spotifyAuthReducer';
+import spotifySearchReducer, { ISearch } from './reducers/spotifySearchReducer';
 import {
   spotifyUserRecentReducer,
   IUserState,
@@ -20,6 +21,7 @@ const rootReducer = {
   userRecent: spotifyUserRecentReducer,
   userFavorite: spotifyUserFavoriteReducer,
   userAlbums: spotifyUserAlbumsReducer,
+  spotifySearch: spotifySearchReducer,
 };
 
 interface IPreloadedState {
@@ -27,6 +29,7 @@ interface IPreloadedState {
   userRecent: IUserState<SpotifyApi.MultipleTracksResponse> | undefined;
   userFavorite: IUserState<SpotifyApi.UsersSavedTracksResponse> | undefined;
   userAlbums: IUserState<SpotifyApi.UsersSavedAlbumsResponse> | undefined;
+  spotifySearch: ISearch | undefined;
 }
 
 const preloadedState: IPreloadedState = {
@@ -34,6 +37,7 @@ const preloadedState: IPreloadedState = {
   userRecent: undefined,
   userAlbums: undefined,
   userFavorite: undefined,
+  spotifySearch: undefined,
 };
 
 const store = configureStore({ reducer: rootReducer, preloadedState });
