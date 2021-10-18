@@ -31,15 +31,6 @@ export const artistsController = async (
     res.json({ songsData, refresh_token });
   } catch (err) {
     next(err);
-    // if (err.response) {
-    //   console.log(err.response.data);
-    //   console.log(err.response.status);
-    //   console.log(err.response.headers);
-    // } else if (err.request) {
-    //   console.log(err.request);
-    // } else {
-    //   console.log('Error', err.message);
-    // }
   }
 };
 
@@ -72,15 +63,6 @@ export const artistsAlbumsController = async (
     res.json({ albumsData, paginationData: data });
   } catch (err) {
     next(err);
-    //   if (err.response) {
-    //     console.log(err.response.data);
-    //     console.log(err.response.status);
-    //     console.log(err.response.headers);
-    //   } else if (err.request) {
-    //     console.log(err.request);
-    //   } else {
-    //     console.log('Error', err.message);
-    //   }
   }
 };
 
@@ -107,15 +89,6 @@ export const albumsController = async (
     res.json({ songsData, albumData });
   } catch (err) {
     next(err);
-    // if (err.response) {
-    //   console.log(err.response.data);
-    //   console.log(err.response.status);
-    //   console.log(err.response.headers);
-    // } else if (err.request) {
-    //   console.log(err.request);
-    // } else {
-    //   console.log('Error', err.message);
-    // }
   }
 };
 
@@ -124,14 +97,18 @@ export const tabsController = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { title, artist } = req.body;
-  const shortTitle = title.split('-')[0];
-  console.log(shortTitle);
-  const results = await songsterrSearch(encodeURIComponent(shortTitle));
-  const filteredResults = Array.isArray(results)
-    ? results.filter((song) => song.artist === artist)
-    : results;
-  res.json({ song: filteredResults });
+  try {
+    const { title, artist } = req.body;
+    const shortTitle = title.split('-')[0];
+    console.log(shortTitle);
+    const results = await songsterrSearch(encodeURIComponent(shortTitle));
+    const filteredResults = Array.isArray(results)
+      ? results.filter((song) => song.artist === artist)
+      : results;
+    res.json({ song: filteredResults });
+  } catch (err) {
+    next(err);
+  }
 };
 
 export const SearchController = async (

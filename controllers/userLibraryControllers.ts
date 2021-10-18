@@ -19,15 +19,6 @@ export const userAlbumController = async (
     res.json({ data });
   } catch (err: any) {
     next(err);
-    // if (err.response) {
-    //   console.log(err.response.data);
-    //   console.log(err.response.status);
-    //   console.log(err.response.headers);
-    // } else if (err.request) {
-    //   console.log(err.request);
-    // } else {
-    //   console.log('Error', err.message);
-    // }
   }
 };
 
@@ -48,15 +39,6 @@ export const userTracksController = async (
     res.json({ songsData });
   } catch (err: any) {
     next(err);
-    // if (err.response) {
-    //   console.log(err.response.data);
-    //   console.log(err.response.status);
-    //   console.log(err.response.headers);
-    // } else if (err.request) {
-    //   console.log(err.request);
-    // } else {
-    //   console.log('Error', err.message);
-    // }
   }
 };
 
@@ -67,13 +49,37 @@ export const userRecentController = async (
 ) => {
   try {
     const { access_token } = req.body.tokens;
-    const { data } = await axios.get(
-      `https://api.spotify.com/v1/me/player/recently-played?limit=50`,
-      {
-        headers: { Authorization: `Bearer ${access_token}` },
-      }
+    // eslint-disable-next-line no-undef
+    const { data }: { data: SpotifyApi.UsersRecentlyPlayedTracksResponse } =
+      await axios.get(
+        `https://api.spotify.com/v1/me/player/recently-played?limit=50`,
+        {
+          headers: { Authorization: `Bearer ${access_token}` },
+        }
+      );
+    const removeDuplicates = (a: any) => {
+      const seen = new Set();
+      const filtered = [...a];
+      return filtered.filter((item: any) => {
+        const trackId = item.track.id;
+        return seen.has(trackId) ? false : seen.add(trackId);
+      });
+    };
+    const filteredData = removeDuplicates(data.items);
+    const dataWithoutDuplicates = { ...data, items: filteredData };
+    console.log(filteredData);
+    console.log(
+      '================================================',
+      dataWithoutDuplicates.items.length
     );
-    const idsArray = data.items.map((song: any) => song.track.id);
+    console.log(
+      '================================================',
+      data.items.length
+    );
+
+    const idsArray = dataWithoutDuplicates.items.map(
+      (song: any) => song.track.id
+    );
     const ids = idsArray.join(',');
 
     const { data: songsData } = await axios.get(
@@ -87,14 +93,5 @@ export const userRecentController = async (
     res.json({ songsData });
   } catch (err: any) {
     next(err);
-    // if (err.response) {
-    //   console.log(err.response.data);
-    //   console.log(err.response.status);
-    //   console.log(err.response.headers);
-    // } else if (err.request) {
-    //   console.log(err.request);
-    // } else {
-    //   console.log('Error', err.message);
-    // }
   }
 };

@@ -38,7 +38,7 @@ const RecentScreen = () => {
           {recent &&
             recent.map((song) => (
               <SongBar
-                key={song.id + Math.random()}
+                key={song.id}
                 song={song}
                 avatarChild={<SongAvatar album={song.album} />}
                 artistChild={<SongArtist artists={song.artists} />}

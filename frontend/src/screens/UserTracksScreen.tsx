@@ -39,7 +39,7 @@ const UserTracksScreen = () => {
         {favTracks &&
           favTracks.items.map(({ track: song }) => (
             <SongBar
-              key={song.id + Math.random()}
+              key={Math.random()}
               song={song}
               avatarChild={<SongAvatar album={song.album} />}
               artistChild={<SongArtist artists={song.artists} />}

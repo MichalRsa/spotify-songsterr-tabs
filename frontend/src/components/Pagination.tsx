@@ -27,6 +27,7 @@ const Pagination = ({ pagination, route }: any) => {
 
           {pagesArray.map((pageNum) => (
             <Button
+              key={pageNum}
               disabled={offset === pageNum * limit}
               onClick={() =>
                 history.push(

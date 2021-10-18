@@ -133,7 +133,8 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
             )}
           </Grid>
         </Grid>
-        {showSongs && songs.map((song) => <SongBar song={song} />)}
+        {showSongs &&
+          songs.map((song) => <SongBar key={song.name} song={song} />)}
       </Paper>
     </>
   );
