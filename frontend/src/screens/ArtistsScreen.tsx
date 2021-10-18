@@ -45,7 +45,6 @@ const ArtistsScreen = () => {
           tokenFromStorage,
           id,
         });
-        setSongs(songsData);
 
         const limit = 4;
         const offset = 0;
@@ -58,6 +57,8 @@ const ArtistsScreen = () => {
           limit,
           offset,
         });
+
+        setSongs(songsData);
         setAlbums(albumsData);
       } catch (err) {
         console.log(err);
@@ -66,7 +67,6 @@ const ArtistsScreen = () => {
     fetchData();
   }, []);
 
-  console.log(albums && albums.albums);
   return (
     <>
       <h2>{songs?.tracks[0].artists[0].name}</h2>
@@ -75,7 +75,7 @@ const ArtistsScreen = () => {
         <List component='ol'>
           {songs.tracks.map((song) => (
             <SongBar
-              key={song.id + Math.random()}
+              key={song.id}
               song={song}
               avatarChild={<SongAvatar album={song.album} />}
               albumChild={<SongAlbum album={song.album} />}

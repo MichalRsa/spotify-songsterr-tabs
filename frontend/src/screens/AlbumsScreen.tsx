@@ -51,7 +51,6 @@ const AlbumScreen = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       const tokenFromStorage = getTokenFromLocalStorage();
-      console.log(tokenFromStorage);
       try {
         const {
           data: { songsData, albumData },
@@ -60,7 +59,6 @@ const AlbumScreen = () => {
           id,
         });
         setSongs(songsData);
-        // const albumData = songsData.tracks[0].album;
         setAlbum(albumData);
       } catch (err) {
         console.log(err);
@@ -104,7 +102,7 @@ const AlbumScreen = () => {
       {songs && (
         <List component='ol'>
           {songs.items.map((song) => (
-            <SongBar key={song.id + Math.random()} song={song} />
+            <SongBar key={song.id} song={song} />
           ))}
         </List>
       )}

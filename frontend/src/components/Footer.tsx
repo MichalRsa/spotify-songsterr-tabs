@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   paragraph: {
     paddingBottom: '1rem',
+    color: 'white',
   },
 }));
 
@@ -25,7 +26,7 @@ const Footer = () => {
 
       <Typography className={classes.paragraph}>Find me on</Typography>
       <div className={classes.paragraph}>
-        <Link href='https://github.com/MichalRsa'>
+        <Link className={classes.paragraph} href='https://github.com/MichalRsa'>
           <GitHubIcon />
         </Link>
       </div>

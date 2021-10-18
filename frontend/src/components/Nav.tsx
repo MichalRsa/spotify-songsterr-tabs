@@ -17,7 +17,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogout } from '../actions/spotifyAuthActions';
 import { RootState } from '../store';
@@ -25,6 +25,9 @@ import SearchBar from './SearchBar';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    link: {
+      textDecoration: 'none',
+    },
     colorBgc: { backgroundColor: theme.palette.secondary.dark },
     grow: {
       flexGrow: 1,
@@ -33,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     title: {
+      color: 'white',
       display: 'none',
       [theme.breakpoints.up('sm')]: {
         display: 'block',
@@ -186,10 +190,11 @@ const NavBar = () => {
     <div className={classes.grow}>
       <AppBar position='static' className={classes.colorBgc}>
         <Toolbar>
-          <Typography className={classes.title} variant='h6' noWrap>
-            Spotify Tab Finder
-          </Typography>
-
+          <Link className={classes.link} to='/'>
+            <Typography className={classes.title} variant='h6' noWrap>
+              Spotify Tab Finder
+            </Typography>
+          </Link>
           {location.pathname !== '/search' ? (
             <IconButton
               edge='end'
