@@ -41,16 +41,9 @@ const SongBarTuning = ({
 
   const showTuning = () => {
     if (tabs && tabs.song.length) {
-      // if (
-      //   (tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning)
-      //     .name === ''
-      // )
       return (
         tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning
       )?.notes;
-      // return (
-      //   tabs.song[0].tracks[tabs.song[0].defaultTrack].tuning as InewTuning
-      // ).name;
     }
     return '';
   };
@@ -58,9 +51,12 @@ const SongBarTuning = ({
   const showTuningHorizontal = () => {
     const tuning = showTuning();
 
-    const tunningLetters = tuning.split(' ');
+    const tunningLetters = tuning?.split(' ');
 
-    return tunningLetters.map((letter) => <span>{letter}</span>);
+    return tunningLetters?.map((letter, index) => (
+      // eslint-disable-next-line react/no-array-index-key
+      <span key={index}>{letter}</span>
+    ));
   };
 
   return loading ? (

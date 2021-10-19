@@ -15,7 +15,6 @@ import {
 import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
 
 export const fetchRecent = () => async (dispatch: Dispatch) => {
-  console.log('fetchRecent running');
   dispatch({ type: RECENT_REQUEST });
   const tokenFromStorage = getTokenFromLocalStorage();
   try {
@@ -46,7 +45,6 @@ export const fetchUserAlbums =
         offset,
         limit,
       });
-      console.log(data.items);
       dispatch({ type: ALBUMS_SUCCESS, payload: data });
     } catch (err) {
       dispatch({ type: ALBUMS_FAIL, payload: err });

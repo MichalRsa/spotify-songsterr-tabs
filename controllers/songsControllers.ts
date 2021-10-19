@@ -100,7 +100,6 @@ export const tabsController = async (
   try {
     const { title, artist } = req.body;
     const shortTitle = title.split('-')[0];
-    console.log(shortTitle);
     const results = await songsterrSearch(encodeURIComponent(shortTitle));
     const filteredResults = Array.isArray(results)
       ? results.filter((song) => song.artist === artist)

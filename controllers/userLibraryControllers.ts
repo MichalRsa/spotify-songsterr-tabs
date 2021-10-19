@@ -67,15 +67,6 @@ export const userRecentController = async (
     };
     const filteredData = removeDuplicates(data.items);
     const dataWithoutDuplicates = { ...data, items: filteredData };
-    console.log(filteredData);
-    console.log(
-      '================================================',
-      dataWithoutDuplicates.items.length
-    );
-    console.log(
-      '================================================',
-      data.items.length
-    );
 
     const idsArray = dataWithoutDuplicates.items.map(
       (song: any) => song.track.id
