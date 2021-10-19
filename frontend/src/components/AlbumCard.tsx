@@ -35,6 +35,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: '1rem',
       [theme.breakpoints.down(420)]: {
         flexDirection: 'column',
+        margin: '1rem auto',
+        padding: 0,
       },
     },
     img: {
@@ -44,7 +46,6 @@ const useStyles = makeStyles((theme: Theme) =>
         // flexDirection: 'column',
         // display: 'inline',
         textAlign: 'center',
-        maxWidth: '100%',
         margin: '0 auto',
       },
     },
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         [theme.breakpoints.down(420)]: {
           // flexDirection: 'column',
-          paddingRight: '40px',
+          // paddingRight: '40px',
         },
       },
     },
@@ -80,11 +81,19 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
   const smallScreen = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down(420)
   );
+  const mediumScreen = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down(1000)
+  );
 
   return (
     <>
       <Paper className={classes.card}>
-        <Grid className={classes.albumHeader} container spacing={10}>
+        <Grid
+          className={classes.albumHeader}
+          container
+          // eslint-disable-next-line no-nested-ternary
+          spacing={smallScreen ? 0 : mediumScreen ? 4 : 10}
+        >
           <Grid
             item
             xs={smallScreen ? 12 : 6}

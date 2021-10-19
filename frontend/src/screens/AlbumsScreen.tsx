@@ -46,6 +46,9 @@ const AlbumScreen = () => {
   const smallScreen = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down('sm')
   );
+  const mediumScreen = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down(1000)
+  );
 
   const classes = useStyles();
   React.useEffect(() => {
@@ -71,7 +74,7 @@ const AlbumScreen = () => {
       <Grid
         className={classes.albumHeader}
         container
-        spacing={10}
+        spacing={mediumScreen ? 4 : 10}
         direction={smallScreen ? 'column-reverse' : 'row'}
       >
         <Grid item xs={smallScreen ? 12 : 4}>
