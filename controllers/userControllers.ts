@@ -49,3 +49,5 @@ export const authController = async (
     next(err);
   }
 };
+
+// const sendTestUserToken = () => {};

@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable no-console */
-// import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +7,6 @@ import useQuery from '../hooks/useQuery';
 import { RootState } from '../store';
 
 const Redirect = () => {
-  // const [user, setUser] = useState('');
   const user = useSelector((state: RootState) => state.spotifyAuth?.user);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -22,9 +18,8 @@ const Redirect = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchToken(user, body));
-    user && history.push('/main');
-    console.log('redirect useeffect running!', user);
+    dispatch(fetchToken(body));
+    if (user) history.push('/main');
   }, [code, user]);
   return <p>Authorizing your Accout ...</p>;
 };

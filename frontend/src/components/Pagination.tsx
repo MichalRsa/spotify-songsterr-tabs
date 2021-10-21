@@ -113,6 +113,7 @@ const Pagination = ({ pagination, route }: any) => {
         <Grid item>
           <Button
             variant='contained'
+            color='secondary'
             disabled={!previous}
             onClick={() =>
               history.push(`${route}?limit=${limit}&offset=${offset - limit}`)
@@ -131,6 +132,7 @@ const Pagination = ({ pagination, route }: any) => {
         <Grid item>
           <Button
             variant='contained'
+            color='secondary'
             disabled={!next}
             onClick={() =>
               history.push(`${route}?limit=${limit}&offset=${offset + limit}`)

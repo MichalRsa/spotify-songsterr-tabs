@@ -38,11 +38,7 @@ const LoginScreen = () => {
           or interfere it
         </p>
         <h2>Log in with your Spotify account</h2>
-        <Button
-          color='primary'
-          variant='contained'
-          onClick={() => redirectToAuth()}
-        >
+        <Button color='primary' variant='contained' onClick={redirectToAuth}>
           Sign in
         </Button>
       </Container>

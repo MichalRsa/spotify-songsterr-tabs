@@ -13,24 +13,22 @@ import {
   setUserInLocalStorage,
 } from '../utils/setLocalStorage';
 
-export const fetchToken =
-  (user: any, body: object) => async (dispatch: Dispatch<any>) => {
-    dispatch({ type: USER_SPOTIFY_AUTH_REQUEST });
-    //     if (!user)
-    try {
-      const { data } = await axios.post(`/api/user/auth`, body, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+export const fetchToken = (body: object) => async (dispatch: Dispatch<any>) => {
+  dispatch({ type: USER_SPOTIFY_AUTH_REQUEST });
+  try {
+    const { data } = await axios.post(`/api/user/auth`, body, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-      setTokenInLocalStorage(data.refresh_token);
-      setUserInLocalStorage(data.userData);
-      dispatch({ type: USER_SPOTIFY_AUTH_SUCCESS, payload: data.userData });
-    } catch (err) {
-      dispatch({ type: USER_SPOTIFY_AUTH_FAIL, payload: err });
-    }
-  };
+    setTokenInLocalStorage(data.refresh_token);
+    setUserInLocalStorage(data.userData);
+    dispatch({ type: USER_SPOTIFY_AUTH_SUCCESS, payload: data.userData });
+  } catch (err) {
+    dispatch({ type: USER_SPOTIFY_AUTH_FAIL, payload: err });
+  }
+};
 
 export const userLogout = (history: any) => async (dispatch: Dispatch<any>) => {
   dispatch({ type: USER_SPOTIFY_AUTH_REQUEST });
