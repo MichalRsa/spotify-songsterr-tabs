@@ -40,3 +40,22 @@ export const userLogout = (history: any) => async (dispatch: Dispatch<any>) => {
 
   dispatch({ type: USER_SPOTIFY_AUTH_LOGOUT });
 };
+
+export const fetchTestToken = () => async (dispatch: Dispatch<any>) => {
+  // eslint-disable-next-line no-console
+  console.log('redux action');
+  dispatch({ type: USER_SPOTIFY_AUTH_REQUEST });
+  try {
+    const { data } = await axios.post(`/api/user/test-user`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    setTokenInLocalStorage(data.refresh_token);
+    setUserInLocalStorage(data.userData);
+    dispatch({ type: USER_SPOTIFY_AUTH_SUCCESS, payload: data.userData });
+  } catch (err) {
+    dispatch({ type: USER_SPOTIFY_AUTH_FAIL, payload: err });
+  }
+};

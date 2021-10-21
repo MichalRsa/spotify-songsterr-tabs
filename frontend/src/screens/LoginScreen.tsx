@@ -1,6 +1,9 @@
+/* eslint-disable no-console */
 import { Button, Container, makeStyles } from '@material-ui/core';
 import * as React from 'react';
+import { useDispatch } from 'react-redux';
 import { Route } from 'react-router';
+import { fetchTestToken } from '../actions/spotifyAuthActions';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -20,11 +23,19 @@ const useStyles = makeStyles(() => ({
 }));
 
 const LoginScreen = () => {
+  const dispatch = useDispatch();
+
   const classes = useStyles();
 
   const redirectToAuth = () => {
     window.location.href = '/api/user';
   };
+
+  const logTestUser = () => {
+    dispatch(fetchTestToken());
+    console.log('click');
+  };
+
   return (
     <Route>
       <Container maxWidth='md' className={classes.container}>
@@ -41,6 +52,9 @@ const LoginScreen = () => {
         <Button color='primary' variant='contained' onClick={redirectToAuth}>
           Sign in
         </Button>
+        <p>
+          or use <Button onClick={logTestUser}>test user</Button> account
+        </p>
       </Container>
     </Route>
   );

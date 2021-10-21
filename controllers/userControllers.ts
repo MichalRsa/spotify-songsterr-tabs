@@ -50,4 +50,22 @@ export const authController = async (
   }
 };
 
-// const sendTestUserToken = () => {};
+export const sendTestUserTokenController = (req: Request, res: Response) => {
+  const refresh_token =
+    'AQDn1bKlGv-FiQ2hJ8VEkaS29Qd2quXI8qmnyVhqm2OO78ZshcR8vIXkqNYPPKvl8GKFNdA0gL3_dv8aEki-tJnFu8oPSGLpRLP9UmO1jdnERFe-rkClOEO0EFeRvbXNuwI';
+  const userData = {
+    display_name: 'TestUser',
+    external_urls: {
+      spotify: 'https://open.spotify.com/user/0bqpqp05sgu2gyvqbjp5ox5uv',
+    },
+    followers: { href: null, total: 0 },
+    href: 'https://api.spotify.com/v1/users/0bqpqp05sgu2gyvqbjp5ox5uv',
+    id: '0bqpqp05sgu2gyvqbjp5ox5uv',
+    images: [],
+    type: 'user',
+    uri: 'spotify:user:0bqpqp05sgu2gyvqbjp5ox5uv',
+  };
+
+  res.json({ refresh_token, userData });
+  console.log('================================================== path called');
+};
