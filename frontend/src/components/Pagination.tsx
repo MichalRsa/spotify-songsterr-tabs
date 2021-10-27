@@ -13,6 +13,7 @@ import * as React from 'react';
 import { useHistory } from 'react-router';
 
 const useStyles = makeStyles(() => ({
+  container: { marginTop: '10px' },
   numberButtonsList: {
     transform: 'translateX(-15px)',
   },
@@ -109,6 +110,7 @@ const Pagination = ({ pagination, route }: any) => {
         container
         justifyContent={width ? 'center' : 'space-between'}
         spacing={2}
+        className={classes.container}
       >
         <Grid item>
           <Button

@@ -3,13 +3,34 @@ import { NextFunction, Request, Response } from 'express';
 import { songsterrSearch } from 'songsterr-api-node';
 
 /* eslint-disable camelcase */
-export const artistsController = async (
+
+export const artistController = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const { access_token, refresh_token } = req.body.tokens;
+    const { access_token } = req.body.tokens;
+    const { id } = req.body;
+    const { data } = await axios.get(
+      `https://api.spotify.com/v1/artists/${id}`,
+      {
+        headers: { Authorization: `Bearer ${access_token}` },
+      }
+    );
+    res.json({ data });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const artistsTracksController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { access_token } = req.body.tokens;
     const { id } = req.body;
     const { data } = await axios.get(
       `https://api.spotify.com/v1/artists/${id}/top-tracks?market=us`,
@@ -28,7 +49,7 @@ export const artistsController = async (
         },
       }
     );
-    res.json({ songsData, refresh_token });
+    res.json({ songsData });
   } catch (err) {
     next(err);
   }

@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+import { CircularProgress } from '@material-ui/core';
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router';
@@ -11,6 +11,8 @@ const ArtistAlbumsScreen = () => {
   const [albums, setAlbums] =
     React.useState<SpotifyApi.MultipleAlbumsResponse>();
 
+  const [loading, setLoading] = React.useState<boolean>(true);
+
   const [pagination, setPagination] =
     React.useState<SpotifyApi.ArtistsAlbumsResponse>();
 
@@ -21,7 +23,6 @@ const ArtistAlbumsScreen = () => {
   const { artists } = useParams<Record<string, string | undefined>>();
 
   useEffect(() => {
-    console.log(artists);
     const fetchUserAlbums = async () => {
       const tokenFromStorage = getTokenFromLocalStorage();
       try {
@@ -33,8 +34,9 @@ const ArtistAlbumsScreen = () => {
         });
         setAlbums(data.albumsData);
         setPagination(data.paginationData);
-        console.log(data.paginationData);
+        setLoading(false);
       } catch (err) {
+        // eslint-disable-next-line no-console
         console.log(err);
       }
     };
@@ -43,9 +45,10 @@ const ArtistAlbumsScreen = () => {
 
   return (
     <>
-      <h2> Artist Albums</h2>
+      <h2>Artist Albums</h2>
+      {loading && <CircularProgress />}
       {albums &&
-        albums.albums.map((item) => <AlbumCard key={item.id} album={item} />)}
+        albums?.albums?.map((item) => <AlbumCard key={item.id} album={item} />)}
       <Pagination pagination={pagination} route={`/${artists}/albums`} />
     </>
   );

@@ -9,6 +9,7 @@ import {
 import axios from 'axios';
 import * as React from 'react';
 import { useHistory, useParams } from 'react-router';
+import ArtistHeader from '../components/ArtistHeader';
 import SectionContainer from '../components/SectionContainer';
 import SongAlbum from '../components/SongAlbum';
 import SongAvatar from '../components/SongAvatar';
@@ -41,7 +42,7 @@ const ArtistsScreen = () => {
       try {
         const {
           data: { songsData },
-        } = await axios.post(`/api/songs/artists`, {
+        } = await axios.post(`/api/songs/artist-tracks`, {
           tokenFromStorage,
           id,
         });
@@ -69,7 +70,7 @@ const ArtistsScreen = () => {
 
   return (
     <>
-      <h2>{songs?.tracks[0].artists[0].name}</h2>
+      <ArtistHeader id={id} />
       <p>Most popular songs:</p>
       {songs && (
         <List component='ol'>

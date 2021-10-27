@@ -2,7 +2,8 @@ import express from 'express';
 import {
   albumsController,
   artistsAlbumsController,
-  artistsController,
+  artistController,
+  artistsTracksController,
   SearchController,
   tabsController,
 } from '../controllers/songsControllers';
@@ -10,7 +11,9 @@ import exchangeTokenMiddleware from '../middleware/exchangeTokenMiddleware';
 
 const router = express.Router();
 
-router.post('/artists', exchangeTokenMiddleware, artistsController);
+router.post('/artist', exchangeTokenMiddleware, artistController);
+
+router.post('/artist-tracks', exchangeTokenMiddleware, artistsTracksController);
 
 router.post(
   '/artists/albums',
