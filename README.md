@@ -2,7 +2,7 @@
 
 [`Live preview`](https://fast-ridge-27303.herokuapp.com/)
 
-![app main page](imgs\aplikacjaMain.png)
+![app main page](https://github.com/MichalRsa/spotify-songsterr-tabs/blob/main/imgs/aplikacjaMain.png)
 
 This app integrate two APIs. First, it fetches user privte data from Spotify, then looks at Songsterr if tabs for given song exist.
 It is necessary for user to login with his Spotify account and allow app to fetch his private data. 
