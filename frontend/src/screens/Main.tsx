@@ -78,7 +78,9 @@ const Main = () => {
                 </ImageListItem>
               ))}
             </ImageList>
-            <ListButton btnAction='/user/albums' />
+            {albums?.items?.length > 4 && (
+              <ListButton btnAction='/user/albums' />
+            )}
           </>
         ) : (
           <p>Your playlist is empty</p>
@@ -100,7 +102,9 @@ const Main = () => {
                 albumChild={<SongAlbum album={song.album} />}
               />
             ))}
-            <ListButton btnAction='/user/recent' />
+            {recent?.tracks?.length > 10 && (
+              <ListButton btnAction='/user/recent' />
+            )}
           </>
         ) : (
           <p>Your playlist is empty</p>
@@ -123,7 +127,9 @@ const Main = () => {
               />
             ))}
 
-            <ListButton btnAction='/user/tracks' />
+            {favSongs?.items?.length > 10 && (
+              <ListButton btnAction='/user/tracks' />
+            )}
           </>
         ) : (
           <p>Your playlist is empty</p>

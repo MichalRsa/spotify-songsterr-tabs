@@ -97,13 +97,7 @@ const ArtistsScreen = () => {
       )}
 
       {albums && (
-        <SectionContainer
-          heading='Albums:'
-          // btnAction={() => {
-          //   history.push(`/${id}/albums`);
-          // }}
-          loading={false}
-        >
+        <SectionContainer heading='Albums:' loading={false}>
           <ImageList cols={4} rowHeight='auto'>
             {albums.albums.slice(0, 4).map((item) => (
               <ImageListItem key={item.id} className={classes.listItem}>
