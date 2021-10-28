@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import renderHeaders from './controllers/renderHeaders';
 import userRoutes from './routes/userRoutes';
@@ -32,6 +32,15 @@ if (port) {
 }
 
 app.use(logErrorMiddleware);
+
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  if (err.response?.status === 400) {
+    res
+      .status(400)
+      .send({ error: err.response.data.error.message, status: 400 });
+    console.log('====================== status 400');
+  }
+});
 
 if (typeof port !== 'number') {
   port = 3000;

@@ -35,27 +35,14 @@ const useStyles = makeStyles(() => ({
 const Main = () => {
   const dispatch = useDispatch();
 
-  const recentLoading = useSelector(
-    (state: RootState) => state.userRecent?.loading
-  );
+  const userRecent = useSelector((state: RootState) => state.userRecent!);
+  const { loading: recentLoading, recent } = userRecent;
 
-  const recent = useSelector(
-    (state: RootState) => state.userRecent?.recent?.tracks
-  );
+  const userFavofite = useSelector((state: RootState) => state.userFavorite!);
+  const { loading: favTracksLoading, favSongs } = userFavofite;
 
-  const favTracksLoading = useSelector(
-    (state: RootState) => state.userFavorite?.loading
-  );
-  const favTracks = useSelector(
-    (state: RootState) => state.userFavorite?.favSongs?.items
-  );
-
-  const albumsLoading = useSelector(
-    (state: RootState) => state.userFavorite?.loading
-  );
-  const albums = useSelector(
-    (state: RootState) => state.userAlbums?.albums?.items
-  );
+  const userAlbums = useSelector((state: RootState) => state.userAlbums!);
+  const { loading: albumsLoading, albums } = userAlbums;
 
   const history = useHistory();
 
@@ -64,21 +51,19 @@ const Main = () => {
   useEffect(() => {
     if (recent === undefined) dispatch(fetchRecent());
     if (albums === undefined) dispatch(fetchUserAlbums());
-    if (favTracks === undefined) dispatch(fetchFavsSongs());
+    if (favSongs === undefined) dispatch(fetchFavsSongs());
   }, []);
 
   return (
     <>
       <SectionContainer
         heading='Your favorite albums:'
-        btnAction={() => {
-          history.push('/user/albums');
-        }}
+        btnAction={() => history.push('/user/albums')}
         loading={!!albumsLoading}
       >
-        <ImageList cols={4} rowHeight='auto'>
-          {albums &&
-            albums.slice(0, 4).map((item) => (
+        {!albums?.items?.length ? (
+          <ImageList cols={4} rowHeight='auto'>
+            {albums?.items?.slice(0, 4).map((item) => (
               <ImageListItem key={item.album.id} className={classes.listItem}>
                 <Button
                   onClick={() => history.push(`/albums/${item.album.id}`)}
@@ -91,7 +76,10 @@ const Main = () => {
                 </Button>
               </ImageListItem>
             ))}
-        </ImageList>
+          </ImageList>
+        ) : (
+          <p>Your playlist is empty</p>
+        )}
       </SectionContainer>
 
       <SectionContainer
@@ -102,18 +90,15 @@ const Main = () => {
         loading={!!recentLoading}
       >
         <Grid container>
-          {recent &&
-            recent
-              .slice(0, 10)
-              .map((song) => (
-                <SongBar
-                  key={song.id + Math.random()}
-                  song={song}
-                  avatarChild={<SongAvatar album={song.album} />}
-                  artistChild={<SongArtist artists={song.artists} />}
-                  albumChild={<SongAlbum album={song.album} />}
-                />
-              ))}
+          {recent?.tracks?.slice(0, 10).map((song) => (
+            <SongBar
+              key={song.id + Math.random()}
+              song={song}
+              avatarChild={<SongAvatar album={song.album} />}
+              artistChild={<SongArtist artists={song.artists} />}
+              albumChild={<SongAlbum album={song.album} />}
+            />
+          ))}
         </Grid>
       </SectionContainer>
 
@@ -125,18 +110,15 @@ const Main = () => {
         loading={!!favTracksLoading}
       >
         <Grid container>
-          {favTracks &&
-            favTracks
-              .slice(0, 10)
-              .map(({ track: song }) => (
-                <SongBar
-                  key={song.id + Math.random()}
-                  song={song}
-                  avatarChild={<SongAvatar album={song.album} />}
-                  artistChild={<SongArtist artists={song.artists} />}
-                  albumChild={<SongAlbum album={song.album} />}
-                />
-              ))}
+          {favSongs?.items?.slice(0, 10).map(({ track: song }) => (
+            <SongBar
+              key={song.id + Math.random()}
+              song={song}
+              avatarChild={<SongAvatar album={song.album} />}
+              artistChild={<SongArtist artists={song.artists} />}
+              albumChild={<SongAlbum album={song.album} />}
+            />
+          ))}
         </Grid>
       </SectionContainer>
     </>

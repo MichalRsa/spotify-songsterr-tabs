@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme: MyTheme) => ({
 const AlbumScreen = () => {
   const [songs, setSongs] = React.useState<SpotifyApi.AlbumTracksResponse>();
   const [album, setAlbum] = React.useState<SpotifyApi.SingleAlbumResponse>();
+  const [error, setError] = React.useState<unknown>();
   const { id } = useParams<Record<string, string | undefined>>();
 
   const smallScreen = useMediaQuery((theme: Theme) =>
@@ -65,10 +66,15 @@ const AlbumScreen = () => {
         setAlbum(albumData);
       } catch (err) {
         console.log(err);
+        setError(err);
       }
     };
     fetchData();
   }, []);
+
+  if (error) {
+    return <p>Cant find this item in database</p>;
+  }
   return (
     <>
       <Grid

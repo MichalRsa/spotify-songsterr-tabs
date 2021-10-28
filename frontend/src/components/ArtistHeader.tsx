@@ -1,12 +1,10 @@
 import { makeStyles, Theme } from '@material-ui/core';
-import axios from 'axios';
 import * as React from 'react';
-import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
 
 const useStyles = makeStyles((theme: Theme) => ({
   img: {
     width: '100%',
-    transform: 'translateY(-20%)',
+    //     transform: 'translateY(-20%)',
     height: 'auto',
     zIndex: 0,
     filter: 'brightness(50%)',
@@ -21,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     left: 0,
     position: 'absolute',
     color: 'white',
-    fontSize: 'min(14vw, 160px)',
+    fontSize: 'min(14vw, 120px)',
     margin: 0,
     lineHeight: '1',
 
@@ -30,10 +28,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
   },
   imgContainer: {
-    height: '360px',
+    width: '100%',
+    maxHeight: '460px',
     overflow: 'hidden',
     position: 'relative',
-    marginTop: '20px',
+    //     marginTop: '20px',
 
     [theme.breakpoints.down(500)]: {
       height: 'auto',
@@ -41,27 +40,13 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const ArtistHeader = ({ id }: any) => {
-  const [artist, setArtist] = React.useState<
-    SpotifyApi.ArtistObjectFull | undefined
-  >();
-
+const ArtistHeader = ({
+  artist,
+}: {
+  artist: SpotifyApi.ArtistObjectFull | undefined;
+}) => {
   const classes = useStyles();
-  React.useEffect(() => {
-    const fetchArtist = async () => {
-      const tokenFromStorage = getTokenFromLocalStorage();
-      const {
-        data: { data },
-      } = await axios.post(`/api/songs/artist/`, {
-        tokenFromStorage,
-        id,
-      });
-      // eslint-disable-next-line no-console
-      console.log(data);
-      setArtist(data);
-    };
-    fetchArtist();
-  }, []);
+
   return (
     <>
       <div className={classes.imgContainer}>

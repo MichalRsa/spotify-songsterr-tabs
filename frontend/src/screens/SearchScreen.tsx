@@ -9,6 +9,7 @@ import {
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import ArtistHeader from '../components/ArtistHeader';
 import SectionContainer from '../components/SectionContainer';
 import SongAlbum from '../components/SongAlbum';
 import SongAvatar from '../components/SongAvatar';
@@ -34,8 +35,8 @@ const SearchScreen = () => {
   const loading = useSelector(
     (state: RootState) => state.spotifySearch.loading
   );
-  const artists = useSelector(
-    (state: RootState) => state.spotifySearch.search?.artists?.items
+  const artist = useSelector(
+    (state: RootState) => state.spotifySearch.search?.artists?.items[0]
   );
   const tracks = useSelector(
     (state: RootState) => state.spotifySearch.search?.tracks?.items
@@ -47,6 +48,9 @@ const SearchScreen = () => {
 
   return (
     <>
+      <Button fullWidth onClick={() => history.push(`/artists/${artist?.id}`)}>
+        <ArtistHeader artist={artist} />
+      </Button>
       <SectionContainer
         heading='Albums:'
         btnAction={undefined}
@@ -68,7 +72,7 @@ const SearchScreen = () => {
         </ImageList>
       </SectionContainer>
 
-      <SectionContainer
+      {/* <SectionContainer
         heading='Artists:'
         btnAction={undefined}
         loading={!!loading}
@@ -87,7 +91,7 @@ const SearchScreen = () => {
               </ImageListItem>
             ))}
         </ImageList>
-      </SectionContainer>
+      </SectionContainer> */}
 
       <SectionContainer
         heading='Tracks:'

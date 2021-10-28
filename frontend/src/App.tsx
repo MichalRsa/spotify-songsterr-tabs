@@ -16,6 +16,7 @@ import UserTracksScreen from './screens/UserTracksScreen';
 import ArtistAlbumsScreen from './screens/ArtistAlbumsScreen';
 import LoginScreen from './screens/LoginScreen';
 import SearchScreen from './screens/SearchScreen';
+import NotFoundScreen from './screens/NotFoundScreen';
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -50,7 +51,8 @@ const App = () => {
                 <Route path='/artists/:id' component={ArtistsScreen} />
                 <Route path='/:artists/albums' component={ArtistAlbumsScreen} />
                 <Redirect from='/redirect' to='/main' />
-                <Redirect from='/' to='/main' />
+                <Redirect from='/' exact to='/main' />
+                <Route component={NotFoundScreen} />
               </Switch>
             </Container>
           ) : (

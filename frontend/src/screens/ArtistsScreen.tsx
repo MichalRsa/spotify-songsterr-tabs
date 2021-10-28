@@ -31,6 +31,9 @@ const ArtistsScreen = () => {
   const [songs, setSongs] = React.useState<SpotifyApi.MultipleTracksResponse>();
   const [albums, setAlbums] =
     React.useState<SpotifyApi.MultipleAlbumsResponse>();
+  const [artist, setArtist] = React.useState<
+    SpotifyApi.ArtistObjectFull | undefined
+  >();
   const { id } = useParams<Record<string, string | undefined>>();
 
   const history = useHistory();
@@ -58,19 +61,26 @@ const ArtistsScreen = () => {
           limit,
           offset,
         });
+        const {
+          data: { artistData },
+        } = await axios.post(`/api/songs/artist/`, {
+          tokenFromStorage,
+          id,
+        });
 
         setSongs(songsData);
         setAlbums(albumsData);
+        setArtist(artistData);
       } catch (err) {
         console.log(err);
       }
     };
     fetchData();
   }, []);
-
+  console.log(artist);
   return (
     <>
-      <ArtistHeader id={id} />
+      <ArtistHeader artist={artist} />
       <p>Most popular songs:</p>
       {songs && (
         <List component='ol'>

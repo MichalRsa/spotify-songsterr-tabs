@@ -12,13 +12,13 @@ export const artistController = async (
   try {
     const { access_token } = req.body.tokens;
     const { id } = req.body;
-    const { data } = await axios.get(
+    const { data: artistData } = await axios.get(
       `https://api.spotify.com/v1/artists/${id}`,
       {
         headers: { Authorization: `Bearer ${access_token}` },
       }
     );
-    res.json({ data });
+    res.json({ artistData });
   } catch (err) {
     next(err);
   }
