@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import {
+  CircularProgress,
   Grid,
   Link,
   List,
@@ -13,7 +14,6 @@ import { useParams } from 'react-router';
 import { Link as RouterLink } from 'react-router-dom';
 import SongBar, { MyTheme } from '../components/SongsBar';
 import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
-// import { Album, ISongs } from '../../typings/index';
 
 const useStyles = makeStyles((theme: MyTheme) => ({
   rootSuccess: {
@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme: MyTheme) => ({
   text: {
     '&&': {
       padding: '0 20px',
-      // marginBottom: '0',
       textAlign: 'center',
     },
   },
@@ -41,6 +40,8 @@ const useStyles = makeStyles((theme: MyTheme) => ({
 const AlbumScreen = () => {
   const [songs, setSongs] = React.useState<SpotifyApi.AlbumTracksResponse>();
   const [album, setAlbum] = React.useState<SpotifyApi.SingleAlbumResponse>();
+  const [loading, setLoading] = React.useState(true);
+
   const [error, setError] = React.useState<unknown>();
   const { id } = useParams<Record<string, string | undefined>>();
 
@@ -53,6 +54,7 @@ const AlbumScreen = () => {
 
   const classes = useStyles();
   React.useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       const tokenFromStorage = getTokenFromLocalStorage();
       try {
@@ -68,6 +70,7 @@ const AlbumScreen = () => {
         console.log(err);
         setError(err);
       }
+      setLoading(false);
     };
     fetchData();
   }, []);
@@ -75,6 +78,9 @@ const AlbumScreen = () => {
   if (error) {
     return <p>Cant find this item in database</p>;
   }
+
+  if (loading) return <CircularProgress />;
+
   return (
     <>
       <Grid

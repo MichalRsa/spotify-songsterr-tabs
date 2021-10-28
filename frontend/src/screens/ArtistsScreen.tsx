@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import {
   Button,
+  CircularProgress,
   ImageList,
   ImageListItem,
   List,
@@ -35,6 +36,8 @@ const ArtistsScreen = () => {
   const [artist, setArtist] = React.useState<
     SpotifyApi.ArtistObjectFull | undefined
   >();
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<unknown>();
   const { id } = useParams<Record<string, string | undefined>>();
 
   const history = useHistory();
@@ -74,11 +77,15 @@ const ArtistsScreen = () => {
         setArtist(artistData);
       } catch (err) {
         console.log(err);
+        setError(err);
       }
+      setLoading(false);
     };
     fetchData();
   }, []);
-  console.log(artist);
+
+  if (error) return <p>Cant&apos;t find this item in database</p>;
+  if (loading) return <CircularProgress />;
   return (
     <>
       <ArtistHeader artist={artist} />

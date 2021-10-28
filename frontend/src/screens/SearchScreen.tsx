@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   ImageList,
   ImageListItem,
   makeStyles,
@@ -44,16 +45,22 @@ const SearchScreen = () => {
 
   const classes = useStyles();
 
+  if (loading) return <CircularProgress />;
   return (
     <>
-      <Button fullWidth onClick={() => history.push(`/artists/${artist?.id}`)}>
-        <ArtistHeader artist={artist} />
-      </Button>
+      {artist && (
+        <Button
+          fullWidth
+          onClick={() => history.push(`/artists/${artist?.id}`)}
+        >
+          <ArtistHeader artist={artist} />
+        </Button>
+      )}
 
-      <SectionContainer heading='Albums:' loading={!!loading}>
-        <ImageList cols={4} rowHeight='auto'>
-          {albums &&
-            albums.slice(0, 4).map((item) => (
+      {albums && (
+        <SectionContainer heading='Albums:' loading={!!loading}>
+          <ImageList cols={4} rowHeight='auto'>
+            {albums.slice(0, 4).map((item) => (
               <ImageListItem key={item.id} className={classes.listItem}>
                 <Button onClick={() => history.push(`/albums/${item.id}`)}>
                   <img
@@ -64,23 +71,22 @@ const SearchScreen = () => {
                 </Button>
               </ImageListItem>
             ))}
-        </ImageList>
-      </SectionContainer>
-
-      <SectionContainer heading='Tracks:' loading={!!loading}>
-        {tracks &&
-          tracks
-            .slice(0, 10)
-            .map((song) => (
-              <SongBar
-                key={song.id + Math.random()}
-                song={song}
-                avatarChild={<SongAvatar album={song.album} />}
-                artistChild={<SongArtist artists={song.artists} />}
-                albumChild={<SongAlbum album={song.album} />}
-              />
-            ))}
-      </SectionContainer>
+          </ImageList>
+        </SectionContainer>
+      )}
+      {tracks && (
+        <SectionContainer heading='Tracks:' loading={!!loading}>
+          {tracks.slice(0, 10).map((song) => (
+            <SongBar
+              key={song.id + Math.random()}
+              song={song}
+              avatarChild={<SongAvatar album={song.album} />}
+              artistChild={<SongArtist artists={song.artists} />}
+              albumChild={<SongAlbum album={song.album} />}
+            />
+          ))}
+        </SectionContainer>
+      )}
     </>
   );
 };

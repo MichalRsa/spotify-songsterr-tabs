@@ -1,7 +1,6 @@
-/* eslint-disable no-console */
-
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CircularProgress } from '@material-ui/core';
 import { fetchUserAlbums } from '../actions/spotifyUserDataActions';
 import AlbumCard from '../components/AlbumCard';
 import Pagination from '../components/Pagination';
@@ -16,11 +15,15 @@ const UserAlbumsScreen = () => {
   const total = useSelector(
     (state: RootState) => state.userAlbums?.albums?.total
   );
+
+  const loading = useSelector((state: RootState) => state.userAlbums?.loading);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchUserAlbums(offset, limit));
   }, [offset, limit]);
+
+  if (loading) return <CircularProgress />;
 
   return (
     <>

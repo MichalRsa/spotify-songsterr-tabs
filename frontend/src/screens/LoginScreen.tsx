@@ -33,7 +33,6 @@ const LoginScreen = () => {
 
   const logTestUser = () => {
     dispatch(fetchTestToken());
-    console.log('click');
   };
 
   return (
@@ -45,15 +44,23 @@ const LoginScreen = () => {
           tabs.
         </p>
         <p>
-          It is only read your data, and don&apos;t store it on external databse
-          or interfere it
+          It is only reading your data, and don&apos;t store it on external
+          databse or interfere it
         </p>
         <h2>Log in with your Spotify account</h2>
-        <Button color='primary' variant='contained' onClick={redirectToAuth}>
-          Sign in
-        </Button>
         <p>
-          or use <Button onClick={logTestUser}>test user</Button> account
+          <Button
+            color='secondary'
+            variant='contained'
+            onClick={redirectToAuth}
+          >
+            Sign in
+          </Button>{' '}
+          or use{' '}
+          <Button variant='outlined' onClick={logTestUser}>
+            test user
+          </Button>{' '}
+          account
         </p>
       </Container>
     </Route>

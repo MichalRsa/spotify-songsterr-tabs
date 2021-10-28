@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxHeight: '460px',
     overflow: 'hidden',
     position: 'relative',
-    //     marginTop: '20px',
 
     [theme.breakpoints.down(500)]: {
       height: 'auto',
@@ -51,7 +50,7 @@ const ArtistHeader = ({
     <>
       <div className={classes.imgContainer}>
         <img
-          src={artist?.images[0].url}
+          src={artist?.images[0]?.url}
           alt={artist?.name}
           className={classes.img}
         />

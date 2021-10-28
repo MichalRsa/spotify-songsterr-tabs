@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid } from '@material-ui/core';
 import { fetchFavsSongs } from '../actions/spotifyUserDataActions';
 // import AlbumCard from '../components/AlbumCard';
 import Pagination from '../components/Pagination';
@@ -34,19 +33,17 @@ const UserTracksScreen = () => {
 
   return (
     <>
-      <Grid container>
-        {total && <h2>You have {total} tracks in collection</h2>}
-        {favTracks &&
-          favTracks.items.map(({ track: song }) => (
-            <SongBar
-              key={Math.random()}
-              song={song}
-              avatarChild={<SongAvatar album={song.album} />}
-              artistChild={<SongArtist artists={song.artists} />}
-              albumChild={<SongAlbum album={song.album} />}
-            />
-          ))}
-      </Grid>
+      {total && <h2>You have {total} tracks in collection</h2>}
+      {favTracks &&
+        favTracks.items.map(({ track: song }) => (
+          <SongBar
+            key={Math.random()}
+            song={song}
+            avatarChild={<SongAvatar album={song.album} />}
+            artistChild={<SongArtist artists={song.artists} />}
+            albumChild={<SongAlbum album={song.album} />}
+          />
+        ))}
       <Pagination pagination={favTracks} route='/user/tracks' />
     </>
   );

@@ -87,8 +87,9 @@ const SearchBar = () => {
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     const inputValue = e.target.value;
-
-    dispatch(spotifySearch(inputValue));
+    if (inputValue.length) {
+      dispatch(spotifySearch(inputValue));
+    }
   };
 
   return (

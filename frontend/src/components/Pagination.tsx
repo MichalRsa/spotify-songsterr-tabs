@@ -75,7 +75,7 @@ const Pagination = ({ pagination, route }: any) => {
         {/* <List component='div' disablePadding> */}
         {pagesArray.map((pageNum) => (
           // <ListItem>
-          <Grid item className={classes.numberButtonsList}>
+          <Grid key={pageNum} item className={classes.numberButtonsList}>
             <Button
               className={classes.numberButtonSmallWidth}
               variant='outlined'
