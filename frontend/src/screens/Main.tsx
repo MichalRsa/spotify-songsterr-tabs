@@ -1,6 +1,6 @@
 import {
   Button,
-  Grid,
+  // Grid,
   ImageList,
   ImageListItem,
   makeStyles,
@@ -20,6 +20,7 @@ import {
   fetchUserAlbums,
 } from '../actions/spotifyUserDataActions';
 import { RootState } from '../store';
+import ListButton from '../components/ListButton';
 
 const useStyles = makeStyles(() => ({
   albumWidth: {
@@ -58,25 +59,27 @@ const Main = () => {
     <>
       <SectionContainer
         heading='Your favorite albums:'
-        btnAction={() => history.push('/user/albums')}
         loading={!!albumsLoading}
       >
-        {!albums?.items?.length ? (
-          <ImageList cols={4} rowHeight='auto'>
-            {albums?.items?.slice(0, 4).map((item) => (
-              <ImageListItem key={item.album.id} className={classes.listItem}>
-                <Button
-                  onClick={() => history.push(`/albums/${item.album.id}`)}
-                >
-                  <img
-                    className={classes.albumWidth}
-                    src={item.album.images[0].url}
-                    alt='album-cover'
-                  />
-                </Button>
-              </ImageListItem>
-            ))}
-          </ImageList>
+        {albums?.items?.length ? (
+          <>
+            <ImageList cols={4} rowHeight='auto'>
+              {albums?.items?.slice(0, 4).map((item) => (
+                <ImageListItem key={item.album.id} className={classes.listItem}>
+                  <Button
+                    onClick={() => history.push(`/albums/${item.album.id}`)}
+                  >
+                    <img
+                      className={classes.albumWidth}
+                      src={item.album.images[0].url}
+                      alt='album-cover'
+                    />
+                  </Button>
+                </ImageListItem>
+              ))}
+            </ImageList>
+            <ListButton btnAction='/user/albums' />
+          </>
         ) : (
           <p>Your playlist is empty</p>
         )}
@@ -84,42 +87,47 @@ const Main = () => {
 
       <SectionContainer
         heading='Your recently played tracks:'
-        btnAction={() => {
-          history.push('/user/recent');
-        }}
         loading={!!recentLoading}
       >
-        <Grid container>
-          {recent?.tracks?.slice(0, 10).map((song) => (
-            <SongBar
-              key={song.id + Math.random()}
-              song={song}
-              avatarChild={<SongAvatar album={song.album} />}
-              artistChild={<SongArtist artists={song.artists} />}
-              albumChild={<SongAlbum album={song.album} />}
-            />
-          ))}
-        </Grid>
+        {recent?.tracks?.length ? (
+          <>
+            {recent?.tracks?.slice(0, 10).map((song) => (
+              <SongBar
+                key={song.id + Math.random()}
+                song={song}
+                avatarChild={<SongAvatar album={song.album} />}
+                artistChild={<SongArtist artists={song.artists} />}
+                albumChild={<SongAlbum album={song.album} />}
+              />
+            ))}
+            <ListButton btnAction='/user/recent' />
+          </>
+        ) : (
+          <p>Your playlist is empty</p>
+        )}
       </SectionContainer>
 
       <SectionContainer
         heading='Your favorite tracks:'
-        btnAction={() => {
-          history.push('/user/tracks');
-        }}
         loading={!!favTracksLoading}
       >
-        <Grid container>
-          {favSongs?.items?.slice(0, 10).map(({ track: song }) => (
-            <SongBar
-              key={song.id + Math.random()}
-              song={song}
-              avatarChild={<SongAvatar album={song.album} />}
-              artistChild={<SongArtist artists={song.artists} />}
-              albumChild={<SongAlbum album={song.album} />}
-            />
-          ))}
-        </Grid>
+        {favSongs?.items?.length ? (
+          <>
+            {favSongs?.items?.slice(0, 10).map(({ track: song }) => (
+              <SongBar
+                key={song.id + Math.random()}
+                song={song}
+                avatarChild={<SongAvatar album={song.album} />}
+                artistChild={<SongArtist artists={song.artists} />}
+                albumChild={<SongAlbum album={song.album} />}
+              />
+            ))}
+
+            <ListButton btnAction='/user/tracks' />
+          </>
+        ) : (
+          <p>Your playlist is empty</p>
+        )}
       </SectionContainer>
     </>
   );

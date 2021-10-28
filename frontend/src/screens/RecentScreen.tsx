@@ -1,6 +1,3 @@
-/* eslint-disable no-console */
-import { Grid } from '@material-ui/core';
-// import axios from 'axios';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +8,6 @@ import SongAvatar from '../components/SongAvatar';
 import SongArtist from '../components/SongBarArtist';
 import SongBar from '../components/SongsBar';
 import { RootState } from '../store';
-// import { getTokenFromLocalStorage } from '../utils/setLocalStorage';
-// import { ISongs } from '../../typings';
 
 const RecentScreen = () => {
   const recentLoading = useSelector(
@@ -31,21 +26,18 @@ const RecentScreen = () => {
     <>
       <SectionContainer
         heading='Your recently played tracks:'
-        btnAction={undefined}
         loading={!!recentLoading}
       >
-        <Grid container>
-          {recent &&
-            recent.map((song) => (
-              <SongBar
-                key={song.id}
-                song={song}
-                avatarChild={<SongAvatar album={song.album} />}
-                artistChild={<SongArtist artists={song.artists} />}
-                albumChild={<SongAlbum album={song.album} />}
-              />
-            ))}
-        </Grid>
+        {recent &&
+          recent.map((song) => (
+            <SongBar
+              key={song.id}
+              song={song}
+              avatarChild={<SongAvatar album={song.album} />}
+              artistChild={<SongArtist artists={song.artists} />}
+              albumChild={<SongAlbum album={song.album} />}
+            />
+          ))}
       </SectionContainer>
     </>
   );

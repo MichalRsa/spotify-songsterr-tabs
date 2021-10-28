@@ -1,7 +1,5 @@
-/* eslint-disable no-console */
 import {
   Button,
-  Grid,
   ImageList,
   ImageListItem,
   makeStyles,
@@ -51,11 +49,8 @@ const SearchScreen = () => {
       <Button fullWidth onClick={() => history.push(`/artists/${artist?.id}`)}>
         <ArtistHeader artist={artist} />
       </Button>
-      <SectionContainer
-        heading='Albums:'
-        btnAction={undefined}
-        loading={!!loading}
-      >
+
+      <SectionContainer heading='Albums:' loading={!!loading}>
         <ImageList cols={4} rowHeight='auto'>
           {albums &&
             albums.slice(0, 4).map((item) => (
@@ -72,46 +67,19 @@ const SearchScreen = () => {
         </ImageList>
       </SectionContainer>
 
-      {/* <SectionContainer
-        heading='Artists:'
-        btnAction={undefined}
-        loading={!!loading}
-      >
-        <ImageList cols={4} rowHeight='auto'>
-          {artists &&
-            artists.slice(0, 4).map((item) => (
-              <ImageListItem key={item.id} className={classes.listItem}>
-                <Button onClick={() => history.push(`/artists/${item.id}`)}>
-                  <img
-                    className={classes.albumWidth}
-                    src={item?.images[0]?.url}
-                    alt='album-cover'
-                  />
-                </Button>
-              </ImageListItem>
+      <SectionContainer heading='Tracks:' loading={!!loading}>
+        {tracks &&
+          tracks
+            .slice(0, 10)
+            .map((song) => (
+              <SongBar
+                key={song.id + Math.random()}
+                song={song}
+                avatarChild={<SongAvatar album={song.album} />}
+                artistChild={<SongArtist artists={song.artists} />}
+                albumChild={<SongAlbum album={song.album} />}
+              />
             ))}
-        </ImageList>
-      </SectionContainer> */}
-
-      <SectionContainer
-        heading='Tracks:'
-        btnAction={undefined}
-        loading={!!loading}
-      >
-        <Grid container>
-          {tracks &&
-            tracks
-              .slice(0, 10)
-              .map((song) => (
-                <SongBar
-                  key={song.id + Math.random()}
-                  song={song}
-                  avatarChild={<SongAvatar album={song.album} />}
-                  artistChild={<SongArtist artists={song.artists} />}
-                  albumChild={<SongAlbum album={song.album} />}
-                />
-              ))}
-        </Grid>
       </SectionContainer>
     </>
   );

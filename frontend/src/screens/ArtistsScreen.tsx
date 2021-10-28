@@ -10,6 +10,7 @@ import axios from 'axios';
 import * as React from 'react';
 import { useHistory, useParams } from 'react-router';
 import ArtistHeader from '../components/ArtistHeader';
+import ListButton from '../components/ListButton';
 import SectionContainer from '../components/SectionContainer';
 import SongAlbum from '../components/SongAlbum';
 import SongAvatar from '../components/SongAvatar';
@@ -98,9 +99,9 @@ const ArtistsScreen = () => {
       {albums && (
         <SectionContainer
           heading='Albums:'
-          btnAction={() => {
-            history.push(`/${id}/albums`);
-          }}
+          // btnAction={() => {
+          //   history.push(`/${id}/albums`);
+          // }}
           loading={false}
         >
           <ImageList cols={4} rowHeight='auto'>
@@ -116,6 +117,7 @@ const ArtistsScreen = () => {
               </ImageListItem>
             ))}
           </ImageList>
+          <ListButton btnAction={`/${id}/albums`} />
         </SectionContainer>
       )}
     </>
