@@ -15,7 +15,7 @@ import SongAvatar from './SongAvatar';
 import SongTitle from './SongTitle';
 import SongArtist from './SongBarArtist';
 import SongAlbum from './SongAlbum';
-import { Track } from '../../typings';
+import { Track } from '../../typings/declaration';
 
 export interface MyTheme {
   palette: { success: { main: string }; error: { main: string } };

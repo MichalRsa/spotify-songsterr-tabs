@@ -1,6 +1,5 @@
 import {
   Button,
-  // Grid,
   ImageList,
   ImageListItem,
   makeStyles,

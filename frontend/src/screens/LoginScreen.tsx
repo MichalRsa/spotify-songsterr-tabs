@@ -1,14 +1,15 @@
-/* eslint-disable no-console */
-import { Button, Container, makeStyles } from '@material-ui/core';
+import { Button, Container, Grid, makeStyles } from '@material-ui/core';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route } from 'react-router';
 import { fetchTestToken } from '../actions/spotifyAuthActions';
 
+const Image2 = require('../public/kartaUtworu.png');
+
 const useStyles = makeStyles(() => ({
   container: {
     //     position: 'relative',
-    textAlign: 'center',
+    textAlign: 'left',
     width: '100vw',
     //     margin: '5rem',
 
@@ -37,31 +38,38 @@ const LoginScreen = () => {
 
   return (
     <Route>
-      <Container maxWidth='md' className={classes.container}>
-        <h1 className={classes.heading}>Welcome!</h1>
-        <p>
-          Tab finder is an app that use your spotify data to look for songsterr
-          tabs.
-        </p>
-        <p>
-          It is only reading your data, and don&apos;t store it on external
-          databse or interfere it
-        </p>
-        <h2>Log in with your Spotify account</h2>
-        <p>
-          <Button
-            color='secondary'
-            variant='contained'
-            onClick={redirectToAuth}
-          >
-            Sign in
-          </Button>{' '}
-          or use{' '}
-          <Button variant='outlined' onClick={logTestUser}>
-            test user
-          </Button>{' '}
-          account
-        </p>
+      <Container maxWidth='lg' className={classes.container}>
+        <Grid container>
+          <Grid item>
+            <h1>Use your spotify data to look for songsterr tabs.</h1>
+            <p>
+              It is only reading your data, and don&apos;t store it on external
+              databse or interfere it
+            </p>
+            <h2>Log in with your Spotify account</h2>
+            <p>
+              <Button
+                color='secondary'
+                variant='contained'
+                onClick={redirectToAuth}
+              >
+                Sign in
+              </Button>{' '}
+              or use{' '}
+              <Button
+                variant='outlined'
+                color='secondary'
+                onClick={logTestUser}
+              >
+                test user
+              </Button>{' '}
+              account
+            </p>
+          </Grid>
+          <Grid item>
+            <img src={Image2} alt='song bar display' />
+          </Grid>
+        </Grid>
       </Container>
     </Route>
   );
