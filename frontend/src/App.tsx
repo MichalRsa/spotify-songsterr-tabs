@@ -25,7 +25,11 @@ const useStyles = makeStyles(() => ({
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
-  main: { flexGrow: 10, position: 'relative' },
+  main: {
+    display: 'flex',
+    flexGrow: 10,
+    position: 'relative',
+  },
 }));
 
 const App = () => {
