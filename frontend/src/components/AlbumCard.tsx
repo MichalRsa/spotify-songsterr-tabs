@@ -122,6 +122,7 @@ const AlbumCard = ({ album }: AlbumCardProps) => {
                     <Link
                       component={RouterLink}
                       to={`/artists/${album.artists[0].id}`}
+                      underline='always'
                     >
                       {album?.artists[0].name}
                     </Link>

@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       color: 'white',
-      display: 'none',
+      // display: 'none',
       [theme.breakpoints.up('sm')]: {
         display: 'block',
       },
@@ -168,6 +168,17 @@ const NavBar = () => {
         </IconButton>
         <p>Home</p>
       </MenuItem>
+      <MenuItem onClick={() => history.push('/search')}>
+        <IconButton
+          aria-label='search'
+          // aria-controls={menuId}
+          aria-haspopup='true'
+          color='inherit'
+        >
+          <SearchIcon />
+        </IconButton>
+        <p>Search</p>
+      </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label='account of current user'
@@ -187,11 +198,13 @@ const NavBar = () => {
       <AppBar position='static' className={classes.colorBgc}>
         <Toolbar>
           <Link className={classes.link} to='/'>
-            <Typography className={classes.title} variant='h6' noWrap>
-              Spotify Tab Finder
-            </Typography>
+            {location.pathname !== '/search' && (
+              <Typography className={classes.title} variant='h6' noWrap>
+                Spotify Tab Finder
+              </Typography>
+            )}
           </Link>
-          {location.pathname !== '/search' ? (
+          {/* {location.pathname !== '/search' ? (
             <IconButton
               edge='end'
               aria-label='search'
@@ -204,7 +217,8 @@ const NavBar = () => {
             </IconButton>
           ) : (
             <SearchBar />
-          )}
+          )} */}
+          {location.pathname === '/search' && <SearchBar />}
           <div className={classes.grow} />
 
           {user && (
@@ -219,6 +233,18 @@ const NavBar = () => {
                   onClick={() => history.push('/')}
                 >
                   <HomeRoundedIcon />
+                </IconButton>
+              </div>
+              <div className={classes.sectionDesktop}>
+                <IconButton
+                  edge='end'
+                  aria-label='search'
+                  // aria-controls={menuId}
+                  aria-haspopup='true'
+                  color='inherit'
+                  onClick={() => history.push('/search')}
+                >
+                  <SearchIcon />
                 </IconButton>
               </div>
               <div className={classes.sectionDesktop}>

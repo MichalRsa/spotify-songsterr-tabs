@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
   img: {
     width: 'min(600px, 100%)',
-    borderRadius: '25px',
+    borderRadius: '20px',
   },
   imgContainer: {
     textAlign: 'right',
