@@ -2,6 +2,7 @@ import express from 'express';
 import {
   authController,
   redirectController,
+  sendEmailController,
   sendTestUserTokenController,
 } from '../controllers/userControllers';
 
@@ -12,5 +13,7 @@ router.get('/', redirectController);
 router.post('/auth', authController);
 
 router.post('/test-user', sendTestUserTokenController);
+
+router.post('/send-email', sendEmailController);
 
 export default router;

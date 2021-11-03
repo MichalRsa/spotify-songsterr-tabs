@@ -45,8 +45,15 @@ export const authController = async (
       }
     );
     res.json({ refresh_token, userData });
-  } catch (err) {
-    next(err);
+  } catch (err: any) {
+    if (
+      err?.response?.data === 'User not registered in the Developer Dashboard'
+    ) {
+      res.status(403).send({
+        error: err,
+        status: 403,
+      });
+    } else next(err);
   }
 };
 
@@ -68,4 +75,8 @@ export const sendTestUserTokenController = (req: Request, res: Response) => {
 
   res.json({ refresh_token, userData });
   console.log('================================================== path called');
+};
+
+export const sendEmailController = (req: Request, res: Response) => {
+  console.log(req.body);
 };

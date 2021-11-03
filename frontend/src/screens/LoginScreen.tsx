@@ -1,14 +1,22 @@
 import {
   Button,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
   makeStyles,
+  TextField,
   Theme,
   useMediaQuery,
 } from '@material-ui/core';
+import axios from 'axios';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route } from 'react-router';
+import { Link } from 'react-router-dom';
 import { fetchTestToken } from '../actions/spotifyAuthActions';
 
 const Image1 = require('../public/kartaUtworu.png');
@@ -21,15 +29,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingTop: '20px',
     paddingBottom: '20px',
     flexDirection: 'column',
-    //     position: 'relative',
-    // textAlign: 'left',
-    // width: '100vw',
-    //     margin: '5rem',
-
-    // position: 'absolute',
-    // top: '40%',
-    // left: '50%',
-    // transform: 'translate(-50%, -50%)',
     backgroundImage: `url(${Rectangle})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'contain',
@@ -79,6 +78,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const LoginScreen = () => {
+  const [formValue, setFormValue] = React.useState('');
+  const [open, setOpen] = React.useState(false);
+
   const dispatch = useDispatch();
 
   const classes = useStyles();
@@ -87,16 +89,19 @@ const LoginScreen = () => {
     theme.breakpoints.down(940)
   );
 
-  const redirectToAuth = () => {
-    window.location.href = '/api/user';
-  };
+  // const redirectToAuth = () => {
+  //   window.location.href = '/api/user';
+  // };
 
   const logTestUser = () => {
     dispatch(fetchTestToken());
   };
 
-  // eslint-disable-next-line no-console
-  console.log(smallScreen);
+  const sendEmail = () => {
+    axios.post('/api/user/send-email', { formValue });
+    // redirectToAuth();
+  };
+
   return (
     <Route>
       <Container maxWidth='md' className={classes.container}>
@@ -104,10 +109,7 @@ const LoginScreen = () => {
           className={classes.firstSection}
           container
           justifyContent='space-between'
-          // justifyContent={smallScreen ? 'center' : 'space-between'}
           direction={!smallScreen ? 'row' : 'column'}
-          // direction='column'
-          // direction={smallScreen ? 'column' : 'row'}
           alignItems='center'
         >
           <Grid item className={classes.gridText}>
@@ -121,7 +123,8 @@ const LoginScreen = () => {
               <Button
                 color='secondary'
                 variant='contained'
-                onClick={redirectToAuth}
+                // onClick={redirectToAuth}
+                onClick={() => setOpen(true)}
               >
                 Sign in
               </Button>{' '}
@@ -146,6 +149,39 @@ const LoginScreen = () => {
           <img src={Image1} className={classes.img} alt='song bar display' />
         </Grid>
       </Container>
+
+      <Dialog
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby='form-dialog-title'
+      >
+        <DialogTitle id='form-dialog-title'>Send email</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Due to development mode of this app, if You want to use your account
+            I have to add it manualy. It araises from Spotify API Policy.{' '}
+            <Link to='$'>See More</Link>
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin='dense'
+            id='name'
+            label='Email Address'
+            type='email'
+            fullWidth
+            color='secondary'
+            onChange={(e) => setFormValue(e.currentTarget.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={sendEmail} color='secondary'>
+            Send email
+          </Button>
+          <Button onClick={logTestUser} color='secondary'>
+            Use test user
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Route>
   );
 };

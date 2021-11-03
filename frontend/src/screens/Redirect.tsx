@@ -8,6 +8,7 @@ import { RootState } from '../store';
 
 const Redirect = () => {
   const user = useSelector((state: RootState) => state.spotifyAuth?.user);
+  const error = useSelector((state: RootState) => state.spotifyAuth?.error);
   const dispatch = useDispatch();
   const history = useHistory();
   const query = useQuery();
@@ -21,6 +22,14 @@ const Redirect = () => {
     dispatch(fetchToken(body));
     if (user) history.push('/main');
   }, [code, user]);
+
+  if (error?.message === 'Request failed with status code 403')
+    return (
+      <p>
+        I have to manualy add your email to white list, it might take few hours.
+        Please be patient.
+      </p>
+    );
   return <p>Authorizing your Accout ...</p>;
 };
 

@@ -26,6 +26,8 @@ export const fetchToken = (body: object) => async (dispatch: Dispatch<any>) => {
     setUserInLocalStorage(data.userData);
     dispatch({ type: USER_SPOTIFY_AUTH_SUCCESS, payload: data.userData });
   } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log(err);
     dispatch({ type: USER_SPOTIFY_AUTH_FAIL, payload: err });
   }
 };

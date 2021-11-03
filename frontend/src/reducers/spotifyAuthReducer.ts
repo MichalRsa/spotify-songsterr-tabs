@@ -29,7 +29,7 @@ export interface IUser {
 export interface ILoginState {
   loading?: boolean;
   user?: IUser;
-  error?: string;
+  error?: any;
 }
 const userLoginReducer: Reducer<ILoginState | undefined, AnyAction> = (
   state = { loading: true, user: undefined, error: undefined },
