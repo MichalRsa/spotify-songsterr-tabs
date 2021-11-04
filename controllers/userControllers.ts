@@ -2,6 +2,9 @@
 import axios from 'axios';
 import { NextFunction, Request, Response } from 'express';
 import params from '../utils/songsterQueryParameters';
+// import dotenv from 'dotenv';
+
+// dotenv.config();
 
 const spotifyAuth = `https://accounts.spotify.com/authorize?client_id=${params.client_id}&scope=${params.scope}&response_type=${params.response_type}&redirect_uri=${params.redirect_uri}&state=${params.state}`;
 
@@ -79,4 +82,38 @@ export const sendTestUserTokenController = (req: Request, res: Response) => {
 
 export const sendEmailController = (req: Request, res: Response) => {
   console.log(req.body);
+
+  const nodemailer = require('nodemailer');
+
+  // async..await is not allowed in global scope, must use a wrapper
+  async function main() {
+    // create reusable transporter object using the default SMTP transport
+    const transporter = nodemailer.createTransport({
+      host: 'smtp-mail.outlook.com',
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: process.env.EMAIL_NAME, // generated ethereal user
+        pass: process.env.EMAIL_PASSWORD, // generated ethereal password
+      },
+    });
+
+    // send mail with defined transport object
+    const info = await transporter.sendMail({
+      from: '"Spotify Tab Finder" <rosa_michal@outlook.com>', // sender address
+      to: 'michalrosa17@gmail.com', // list of receivers
+      subject: 'Hello ✔', // Subject line
+      text: req.body.formValue, // plain text body
+      // html: '<b>Hello world?</b>', // html body
+    });
+
+    console.log('Message sent: %s', info.messageId);
+    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+
+    // Preview only available when sending through an Ethereal account
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  }
+
+  main().catch(console.error);
 };

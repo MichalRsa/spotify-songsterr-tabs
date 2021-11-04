@@ -89,9 +89,9 @@ const LoginScreen = () => {
     theme.breakpoints.down(940)
   );
 
-  // const redirectToAuth = () => {
-  //   window.location.href = '/api/user';
-  // };
+  const redirectToAuth = () => {
+    window.location.href = '/api/user';
+  };
 
   const logTestUser = () => {
     dispatch(fetchTestToken());
@@ -99,7 +99,7 @@ const LoginScreen = () => {
 
   const sendEmail = () => {
     axios.post('/api/user/send-email', { formValue });
-    // redirectToAuth();
+    redirectToAuth();
   };
 
   return (
@@ -174,11 +174,11 @@ const LoginScreen = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={sendEmail} color='secondary'>
+          <Button onClick={sendEmail} color='secondary' variant='contained'>
             Send email
           </Button>
-          <Button onClick={logTestUser} color='secondary'>
-            Use test user
+          <Button onClick={redirectToAuth} color='secondary'>
+            I already sent email
           </Button>
         </DialogActions>
       </Dialog>
