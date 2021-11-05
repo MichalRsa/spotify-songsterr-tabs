@@ -4,19 +4,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  // mode: 'development',
-  // devtool: 'inline-source-map',
   entry: './src/index.tsx',
-  // devServer: {
-  //   historyApiFallback: true,
-  //   open: true,
-  //   proxy: {
-  //     '/api': 'http://localhost:3000',
-  //   },
-  //   static: {
-  //     directory: path.join(__dirname, 'public'),
-  //   },
-  // },
   module: {
     rules: [
       {

@@ -76,7 +76,6 @@ const ArtistsScreen = () => {
         setAlbums(albumsData);
         setArtist(artistData);
       } catch (err) {
-        console.log(err);
         setError(err);
       }
       setLoading(false);

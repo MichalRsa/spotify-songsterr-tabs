@@ -123,7 +123,6 @@ const LoginScreen = () => {
               <Button
                 color='secondary'
                 variant='contained'
-                // onClick={redirectToAuth}
                 onClick={() => setOpen(true)}
               >
                 Sign in
@@ -158,15 +157,15 @@ const LoginScreen = () => {
         <DialogTitle id='form-dialog-title'>Send email</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Due to development mode of this app, if You want to use your account
-            I have to add it manualy. It araises from Spotify API Policy.{' '}
-            <Link to='$'>See More</Link>
+            Due to development mode of this app, if you want to use your account
+            I have to add your Spotify email manualy. It araises from Spotify
+            API Policy. <Link to='$'>See More</Link>
           </DialogContentText>
           <TextField
             autoFocus
             margin='dense'
             id='name'
-            label='Email Address'
+            label='Spotify Email Address'
             type='email'
             fullWidth
             color='secondary'
