@@ -57,6 +57,11 @@ export const userRecentController = async (
           headers: { Authorization: `Bearer ${access_token}` },
         }
       );
+
+    if (data.items.length === 0) {
+      return res.json({ songsData: { tracks: [] } });
+    }
+
     const removeDuplicates = (a: any) => {
       const seen = new Set();
       const filtered = [...a];
