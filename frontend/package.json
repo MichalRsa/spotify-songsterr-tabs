@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "private": true,
+  "engines": {
+    "node": "16.20.0"
+  },
   "scripts": {
     "start": "webpack serve --config webpack.dev.js",
     "build-static": "webpack --config webpack.prod.js"
