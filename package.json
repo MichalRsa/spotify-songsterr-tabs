@@ -10,6 +10,8 @@
     "dev": "concurrently \"npm run nodemon\" \"npm run client\"",
     "build-watch": "tsc -w",
     "build-tsc": "tsc",
+    "build-all": "npm run build-tsc && npm run build-static --prefix frontend",
+    "run-all": "npm run build-tsc && npm run build-static --prefix frontend",
     "heroku-postbuild": "npm install --prefix frontend && npm run build-tsc && npm run build-static --prefix frontend"
   },
   "author": "",
