@@ -1,6 +1,6 @@
 # spotify-songsterr-tabs
 
-[`Live preview`](https://fast-ridge-27303.herokuapp.com/)
+[`Live preview`](http://spotify-songsterr-tabs-dev.eu-central-1.elasticbeanstalk.com/)
 
 ![app main page](https://github.com/MichalRsa/spotify-songsterr-tabs/blob/main/imgs/aplikacjaMain.png)
 
