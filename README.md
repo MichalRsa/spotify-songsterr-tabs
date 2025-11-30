@@ -1,6 +1,6 @@
 # spotify-songsterr-tabs
 
-[`Live preview`](https://web-production-69ef1.up.railway.app/)
+[`Live preview`](http://138.197.184.106:3456/)
 
 ![app main page](https://github.com/MichalRsa/spotify-songsterr-tabs/blob/main/imgs/aplikacjaMain.png)
 
